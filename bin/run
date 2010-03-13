@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+$: << File.expand_path('../../lib', __FILE__)
+
+begin
+  require File.expand_path('../../.bundle/environment', __FILE__)
+rescue LoadError
+  require 'rubygems'
+  require 'bundler'
+  
+  Bundler.setup
+end
+
+require 'octopi'
+require 'burt_central'
+
+
+Hoptoad::Error.find(:all).each do |error|
+  puts error.error_message
+end
+
+PivotalTracker::Story.find(:all, :params => {:project_id => '19935', :filter => "state:delivered"}).each do |story|
+  puts story.inspect
+end
+
+repository = Octopi::Repository.find(:name => 'rich_webapp', :user => 'burtcorp')
+repository.commits.each do |commit|
+  puts "#{commit.committer['name']}: #{commit.message}"
+end
+
+Highrise::Kase.find(:all).each do |kase|
+  puts kase.inspect
+end
