@@ -10,10 +10,27 @@ rescue LoadError
   Bundler.setup
 end
 
+require 'yaml'
 require 'burt_central'
-require 'config'
 
 
-task :default do
-  
+task :default => :events do
+end
+
+task :events => :config do
+  BurtCentral::History.new.events(Date.yesterday).each do |event|
+    puts '%s %6s %20s: %-40s %s' % [
+      event.date.strftime('%Y-%m-%d'),
+      event.type,
+      event.instigator,
+      event.title,
+      event.url
+    ]
+  end
+end
+
+task :config do
+  config_path = File.expand_path('../config/common.yml', __FILE__)
+  config = YAML::load(open(config_path))
+  BurtCentral::configure(config)
 end

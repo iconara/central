@@ -1,0 +1,12 @@
+hoptoad:
+  token: 1234
+
+pivotal_tracker:
+  token: 1234
+
+github:
+  user: someone
+  token: 1234
+
+highrise:
+  token: 1234
