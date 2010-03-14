@@ -6,6 +6,7 @@ module BurtCentral
     missing_keys = [:hoptoad, :pivotal_tracker, :github, :highrise].reject { |k| conf.has_key?(k) }
     raise "Missing configuration keys: #{missing_keys.join(', ')}" unless missing_keys.empty?
 
+    configure_logging(conf[:log_level])
     configure_hoptoad(conf[:hoptoad])
     configure_pivotal_tracker(conf[:pivotal_tracker])
     configure_github(conf[:github])
@@ -21,6 +22,10 @@ private
       c[k.to_sym] = symbolize_keys(conf[k])
       c
     end
+  end
+  
+  def self.configure_logging(log_level)
+    Logging.log_level = log_level if log_level
   end
 
   def self.configure_hoptoad(conf)
