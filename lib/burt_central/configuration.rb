@@ -48,7 +48,9 @@ module BurtCentral
     end
   
     def configure_logging(log_level)
-      Logging.log_level = log_level if log_level
+      Logging.send(:define_method, :default_log_level) do
+        log_level
+      end
     end
 
     def configure_hoptoad(conf)

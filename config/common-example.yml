@@ -10,3 +10,5 @@ github:
 
 highrise:
   token: 1234
+  
+log_level: WARN
