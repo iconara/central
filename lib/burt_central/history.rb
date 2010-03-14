@@ -2,8 +2,15 @@ module BurtCentral
   class History
     include Logging
     
+    def initialize(configuration)
+      @configuration = configuration
+    end
+    
     def events(since=Date.today)
+      @configuration.set
+      
       logger.info("Loading events since #{since}")
+      
       events = stories(since) + commits(since) + errors(since) + case_notes(since)
       events.sort.reverse
     end

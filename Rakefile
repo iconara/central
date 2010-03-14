@@ -17,8 +17,12 @@ require 'burt_central'
 task :default => :events do
 end
 
-task :events => :config do
-  BurtCentral::History.new.events(Date.yesterday).each do |event|
+task :events do
+  configuration_path = File.expand_path('../config/common.yml', __FILE__)
+  configuration = BurtCentral::Configuration.load(configuration_path)
+  
+  history = BurtCentral::History.new(configuration)
+  history.events(Date.yesterday).each do |event|
     puts '%s %6s %20s: %-40s %s' % [
       event.date.strftime('%Y-%m-%d'),
       event.type,
@@ -27,10 +31,4 @@ task :events => :config do
       event.url
     ]
   end
-end
-
-task :config do
-  config_path = File.expand_path('../config/common.yml', __FILE__)
-  config = YAML::load(open(config_path))
-  BurtCentral::configure(config)
 end
