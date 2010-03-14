@@ -1,3 +1,7 @@
+require 'date'
+require 'octopi'
+
+
 module BurtCentral
   class History
     include Logging

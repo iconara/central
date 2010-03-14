@@ -1,3 +1,6 @@
+require 'log4r'
+
+
 module BurtCentral
   module Logging
     include Log4r

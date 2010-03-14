@@ -1,3 +1,6 @@
+require 'yaml'
+
+
 module BurtCentral
   class Configuration
     def initialize(conf)
