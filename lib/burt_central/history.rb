@@ -20,7 +20,7 @@ module BurtCentral
   private
   
     def sources
-      [Sources::PivotalTracker, Sources::Github, Sources::Hoptoad, Sources::Highrise]
+      [Sources::PivotalTracker, Sources::Github, Sources::Hoptoad, Sources::Highrise, Sources::Twitter]
     end
   end
 end

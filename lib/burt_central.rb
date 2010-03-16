@@ -13,5 +13,6 @@ module BurtCentral
     autoload :Highrise, 'burt_central/sources/highrise'
     autoload :Hoptoad, 'burt_central/sources/hoptoad'
     autoload :Github, 'burt_central/sources/github'
+    autoload :Twitter, 'burt_central/sources/twitter'
   end
 end
