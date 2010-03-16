@@ -1,4 +1,5 @@
 require 'yaml'
+require 'octopi'
 
 
 module BurtCentral
