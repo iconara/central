@@ -5,7 +5,7 @@ pivotal_tracker:
   token: 1234
 
 github:
-  user: someone
+  login: someone
   token: 1234
 
 highrise:

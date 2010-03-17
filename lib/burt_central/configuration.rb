@@ -1,5 +1,4 @@
 require 'yaml'
-require 'octopi'
 
 
 module BurtCentral
@@ -35,7 +34,7 @@ module BurtCentral
       raise "Missing configuration keys: #{missing_keys.join(', ')}" unless missing_keys.empty?
       raise 'Hoptoad configuration missing or incomplete' unless @configuration[:hoptoad].has_key?(:token)
       raise 'Pivotal Tracker configuration missing or incomplete' unless @configuration[:pivotal_tracker].has_key?(:token)
-      raise 'GitHub configuration missing or incomplete' unless @configuration[:github].has_key?(:user) && @configuration[:github].has_key?(:token)
+      raise 'GitHub configuration missing or incomplete' unless @configuration[:github].has_key?(:login) && @configuration[:github].has_key?(:token)
       raise 'Highrise configuration missing or incomplete' unless @configuration[:highrise].has_key?(:token)
     end
 
@@ -65,10 +64,8 @@ module BurtCentral
     end
   
     def configure_github(conf)
-      Octopi::Api.api = Octopi::AuthApi.instance
-      Octopi::Api.api.login = conf[:user]
-      Octopi::Api.api.token = conf[:token]
-      APICache.logger.level = Logger::FATAL
+      Sources::Github.send(:define_method, :login) { conf[:login] }
+      Sources::Github.send(:define_method, :token) { conf[:token] }
     end
   
     def configure_highrise(conf)
