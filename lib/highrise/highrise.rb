@@ -35,16 +35,16 @@ module Highrise
 
   # Abstract super-class, don't instantiate directly. Use Kase, Company, Person instead.
   class Subject < Base
-    def notes
-      Note.find_all_across_pages(:from => "/#{self.class.collection_name}/#{id}/notes.xml")
+    def notes(params = {})
+      Note.find_all_across_pages(:from => "/#{self.class.collection_name}/#{id}/notes.xml", :params => params)
     end
 
-    def emails
-      Email.find_all_across_pages(:from => "/#{self.class.collection_name}/#{id}/emails.xml")
+    def emails(params = {})
+      Email.find_all_across_pages(:from => "/#{self.class.collection_name}/#{id}/emails.xml", :params => params)
     end
 
-    def upcoming_tasks
-      Task.find(:all, :from => "/#{self.class.collection_name}/#{id}/tasks.xml")
+    def upcoming_tasks(params = {})
+      Task.find(:all, :from => "/#{self.class.collection_name}/#{id}/tasks.xml", :params => params)
     end
   end
 
