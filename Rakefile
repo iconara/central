@@ -10,7 +10,6 @@ rescue LoadError
   Bundler.setup
 end
 
-require 'date'
 require 'mongo'
 require 'burt_central'
 
@@ -60,7 +59,7 @@ task :cache do
   database = Mongo::Connection.new.db('burt_central')
   events = database.collection('events')
   
-  since = Date.civil(2000, 1, 1)
+  since = Time.local(2000, 1, 1)
   
   item = events.find_one({}, {:fields => [:date], :sort => [:date, :descending]})
   

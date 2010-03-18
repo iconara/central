@@ -1,6 +1,3 @@
-require 'date'
-
-
 module BurtCentral
   class History
     include Logging
@@ -14,7 +11,7 @@ module BurtCentral
       @events.dup
     end
     
-    def load(since=Date.today)
+    def load(since=Time.today)
       @configuration.set
       
       logger.info("Loading events since #{since}")
@@ -37,8 +34,8 @@ module BurtCentral
       end
     end
     
-    def restore(repository)
-      @events = repository.find({}, {:sort => [:date, :descending]}).map do |h|
+    def restore(repository, since=Time.today)
+      @events = repository.find({:date => {'$gt' => since.getutc}}, {:sort => [:date, :descending]}).map do |h|
         Event.new(symbolize_keys(h))
       end
       

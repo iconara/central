@@ -1,3 +1,6 @@
+require 'ext/time'
+
+
 autoload :Hoptoad, 'hoptoad/error'
 autoload :PivotalTracker, 'pivotal_tracker/story'
 autoload :Highrise, 'highrise/highrise'

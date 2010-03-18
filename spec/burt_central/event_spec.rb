@@ -5,12 +5,12 @@ describe BurtCentral::Event do
   
   describe '#to_h' do
     before do
-      @hash = BurtCentral::Event.new(:title => 'Hello world', :date => Date.today, :instigator => 'Phil', :url => 'http://example.com', :type => :test).to_h
+      @hash = BurtCentral::Event.new(:title => 'Hello world', :date => Time.today, :instigator => 'Phil', :url => 'http://example.com', :type => :test).to_h
     end
     
     it 'creates a hash from the event' do
       @hash[:title].should == 'Hello world'
-      @hash[:date].should == Date.today
+      @hash[:date].should == Time.today
       @hash[:instigator].should == 'Phil'
       @hash[:url].should == 'http://example.com'
       @hash[:type].should == :test
