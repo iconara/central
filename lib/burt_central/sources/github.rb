@@ -36,7 +36,7 @@ module BurtCentral
                 throw :all_found unless Time.parse(commit['committed_date']) >= since
                 
                 events << Event.new(
-                  :title => commit['message'].split("\n").first,
+                  :title => repository['name'] + ': ' + commit['message'].split("\n").first,
                   :date => Time.parse(commit['committed_date']),
                   :instigator => commit['author']['name'],
                   :url => commit['url'],
