@@ -11,6 +11,7 @@ rescue LoadError
 end
 
 require 'mongo'
+require 'spec/rake/spectask'
 require 'burt_central'
 
 
@@ -69,4 +70,9 @@ task :cache do
   history.load(since)
   
   history.persist(events)
+end
+
+Spec::Rake::SpecTask.new(:spec) do |spec|
+  spec.spec_opts << '--options' << 'spec/spec.opts'
+  spec.pattern = 'spec/**/*_spec.rb'
 end
