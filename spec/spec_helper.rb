@@ -9,5 +9,17 @@ rescue LoadError
   Bundler.setup
 end
 
+require 'logger'
+require 'burt_central'
+
+
+module BurtCentral
+  module Logging
+    def logger
+      @logger ||= Logger.new(File.new('/dev/null', 'w'))
+    end
+  end
+end
+
 
 alias :running :lambda

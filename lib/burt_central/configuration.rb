@@ -3,6 +3,8 @@ require 'yaml'
 
 module BurtCentral
   class Configuration
+    include Utils
+    
     def initialize(conf)
       @configuration = symbolize_keys(conf)
 
@@ -36,15 +38,6 @@ module BurtCentral
       raise 'Pivotal Tracker configuration missing or incomplete' unless @configuration[:pivotal_tracker].has_key?(:token)
       raise 'GitHub configuration missing or incomplete' unless @configuration[:github].has_key?(:login) && @configuration[:github].has_key?(:token)
       raise 'Highrise configuration missing or incomplete' unless @configuration[:highrise].has_key?(:token)
-    end
-
-    # Recursively changes all keys to symbols
-    def symbolize_keys(conf)
-      return conf unless conf.is_a?(Hash)
-      conf.keys.inject({}) do |c, k|
-        c[k.to_sym] = symbolize_keys(conf[k])
-        c
-      end
     end
   
     def configure_logging(log_level)

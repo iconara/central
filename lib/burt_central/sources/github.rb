@@ -28,10 +28,12 @@ module BurtCentral
             
               cs = commits('burtcorp', repository, page)
               
+              throw :all_found if cs.empty?
+              
               logger.debug("Found #{cs.size} commits")
               
               cs.each do |commit|
-                throw :all_found unless Date.parse(commit['committed_date']) >= since
+                throw :all_found unless Time.parse(commit['committed_date']) >= since
                 
                 events << Event.new(
                   :title => commit['message'].split("\n").first,

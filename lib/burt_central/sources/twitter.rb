@@ -10,6 +10,8 @@ module BurtCentral
       def events(since)
         logger.info('Loading tweets')
         
+        twitter = ::Twitter::Base.new(::Twitter::HTTPAuth.new('', ''))
+        
         events = []
         page = 1
         
@@ -17,10 +19,17 @@ module BurtCentral
           loop do
             logger.debug("Loading page #{page}")
           
-            tweets = ::Twitter.list_timeline('burtcorp', 'meet-the-burts', :page => page)
+            begin
+              tweets = twitter.list_timeline('burtcorp', 'meet-the-burts', :page => page)
+            rescue
+              logger.warn("Error while listing timeline #{$!.message}")
+              tweets = []
+            end
+            
+            throw :all_found if tweets.empty?
         
             tweets.each do |tweet|
-              throw :all_found unless Date.parse(tweet.created_at) >= since
+              throw :all_found unless Time.parse(tweet.created_at) >= since
               
               events << Event.new(
                 :title => tweet.text,

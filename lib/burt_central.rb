@@ -7,6 +7,7 @@ module BurtCentral
   autoload :Event, 'burt_central/event'
   autoload :History, 'burt_central/history'
   autoload :Logging, 'burt_central/logging'
+  autoload :Utils, 'burt_central/utils'
   
   module Sources
     autoload :PivotalTracker, 'burt_central/sources/pivotal_tracker'
