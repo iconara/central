@@ -17,7 +17,7 @@ require 'burt_central'
 
 task :default => :events
 
-task :events do
+task :setup do
   configuration_path = File.expand_path('../config/common.yml', __FILE__)
   configuration = BurtCentral::Configuration.load(configuration_path)
   sources = [
@@ -28,13 +28,15 @@ task :events do
     BurtCentral::Sources::Twitter
   ]
 
-  database = Mongo::Connection.new.db('burt_central')
-  events = database.collection('events')
+  $database = Mongo::Connection.new.db('burt_central')
+  $events_collection = $database.collection('events')
   
-  history = BurtCentral::History.new(configuration, sources)
-  history.restore(events)
-  
-  history.events.each do |event|
+  $history = BurtCentral::History.new(configuration, sources)
+end
+
+task :events => :setup do
+  $history.restore(events, Time.yesterday)
+  $history.events.each do |event|
     puts '%s %6s %20s: %-40s %s' % [
       event.date.strftime('%Y-%m-%d'),
       event.type,
@@ -46,30 +48,14 @@ task :events do
     
 end
 
-task :cache do
-  configuration_path = File.expand_path('../config/common.yml', __FILE__)
-  configuration = BurtCentral::Configuration.load(configuration_path)
-  sources = [
-    BurtCentral::Sources::PivotalTracker,
-    BurtCentral::Sources::Github,
-    BurtCentral::Sources::Hoptoad,
-    BurtCentral::Sources::Highrise,
-    BurtCentral::Sources::Twitter
-  ]
+task :cache => :setup do
+  #default_since = Time.local(2000, 1, 1)
+  default_since = Time.today
+  
+  newest_item = $events_collection.find_one({}, {:fields => [:date], :sort => [:date, :descending]}) || {'date' => default_since}
 
-  database = Mongo::Connection.new.db('burt_central')
-  events = database.collection('events')
-  
-  since = Time.local(2000, 1, 1)
-  
-  item = events.find_one({}, {:fields => [:date], :sort => [:date, :descending]})
-  
-  since = item['date'] if item
-
-  history = BurtCentral::History.new(configuration, sources)
-  history.load(since)
-  
-  history.persist(events)
+  $history.load(newest_item['date'])
+  $history.persist($events_collection)
 end
 
 Spec::Rake::SpecTask.new(:spec) do |spec|
