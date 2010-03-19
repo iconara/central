@@ -1,6 +1,6 @@
 class Time
   def self.today
     now = Time.now
-    Time.local(now.year, now.month, now.day)
+    Time.utc(now.year, now.month, now.day, 0, 0, 0, 0, 0)
   end
 end
