@@ -10,4 +10,5 @@ gem 'httparty'
 gem 'sinatra'
 gem 'shotgun', :group => :development
 gem 'json'
+gem 'yard', :group => :development
 gem 'rspec', :group => :testing

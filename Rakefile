@@ -12,6 +12,7 @@ end
 
 require 'mongo'
 require 'spec/rake/spectask'
+require 'yard'
 require 'burt_central'
 
 
@@ -20,22 +21,16 @@ task :default => :events
 task :setup do
   configuration_path = File.expand_path('../config/common.yml', __FILE__)
   configuration = BurtCentral::Configuration.load(configuration_path)
-  sources = [
-    BurtCentral::Sources::PivotalTracker,
-    BurtCentral::Sources::Github,
-    BurtCentral::Sources::Hoptoad,
-    BurtCentral::Sources::Highrise,
-    BurtCentral::Sources::Twitter
-  ]
+  configuration.set!
 
   $database = Mongo::Connection.new.db('burt_central')
   $events_collection = $database.collection('events')
   
-  $history = BurtCentral::History.new(configuration, sources)
+  $history = BurtCentral::History.new
 end
 
 task :events => :setup do
-  $history.restore(events, Time.yesterday)
+  $history.restore($events_collection, :since => Time.yesterday)
   $history.events.each do |event|
     puts '%s %6s %20s: %-40s %s' % [
       event.date.strftime('%Y-%m-%d'),
@@ -44,8 +39,7 @@ task :events => :setup do
       event.title,
       event.url
     ]
-  end
-    
+  end    
 end
 
 task :cache => :setup do
@@ -54,11 +48,24 @@ task :cache => :setup do
   
   newest_item = $events_collection.find_one({}, {:fields => [:date], :sort => [:date, :descending]}) || {'date' => default_since}
 
-  $history.load(newest_item['date'])
+  sources = [
+    BurtCentral::Sources::PivotalTracker.new,
+    BurtCentral::Sources::Github.new,
+    BurtCentral::Sources::Hoptoad.new,
+    BurtCentral::Sources::Highrise.new,
+    BurtCentral::Sources::Twitter.new
+  ]
+
+  $history.load(sources, :since => newest_item['date'])
   $history.persist($events_collection)
 end
 
 Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.spec_opts << '--options' << 'spec/spec.opts'
   spec.pattern = 'spec/**/*_spec.rb'
+end
+
+YARD::Rake::YardocTask.new do |t|
+  t.files   = ['lib/**/*.rb']
+  t.options = []
 end

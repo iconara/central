@@ -17,7 +17,7 @@ module BurtCentral
 
     # Configures all services. Most things that are configured are global (e.g.
     # ActiveResource models), so running this has quite extensive side effects.
-    def set
+    def set!
       configure_logging(@configuration[:log_level])
       configure_hoptoad(@configuration[:hoptoad])
       configure_pivotal_tracker(@configuration[:pivotal_tracker])

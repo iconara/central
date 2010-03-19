@@ -2,3 +2,5 @@
 /.bundle
 /config/*.yml
 !/config/*-example.yml
+/.yardoc
+/doc
