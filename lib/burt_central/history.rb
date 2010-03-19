@@ -30,13 +30,17 @@ module BurtCentral
       logger.info("Persisting events")
       
       @events.each do |event|
-        repository.update({:url => event.url}, event.to_h, {:upsert => true})
+        e = event.to_h
+        e[:_id] = e.delete(:url)
+        repository.save(e)
       end
     end
     
     def restore(repository, since=Time.today)
       @events = repository.find({:date => {'$gt' => since.getutc}}, {:sort => [:date, :descending]}).map do |h|
-        Event.new(symbolize_keys(h))
+        e = symbolize_keys(h)
+        e[:url] = e.delete(:_id)
+        Event.new(e)
       end
       
       logger.info("Restored #{@events.size} events")

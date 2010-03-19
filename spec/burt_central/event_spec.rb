@@ -15,9 +15,26 @@ describe BurtCentral::Event do
       @hash[:url].should == 'http://example.com'
       @hash[:type].should == :test
     end
+  end
+  
+  describe '#eql?' do
+    it 'is equal to another event with the same URL' do
+      BurtCentral::Event.new(:url => 'http://example.com/1').should eql(BurtCentral::Event.new(:url => 'http://example.com/1'))
+    end
+
+    it 'is equal to another object with the same URL' do
+      obj = Object.new
+      def obj.url; 'http://example.com/1' end
+      BurtCentral::Event.new(:url => 'http://example.com/1').should eql(obj)
+    end
     
-    it 'puts the URL in the special key _id' do
-      @hash[:_id].should == 'http://example.com'
+    it 'is not equal to an event with another URL' do
+      BurtCentral::Event.new(:url => 'http://example.com/1').should_not eql(BurtCentral::Event.new(:url => 'http://example.com/2'))
+    end
+    
+    it 'responds to == in the same was as eql?' do
+      BurtCentral::Event.new(:url => 'http://example.com/1').should     == (BurtCentral::Event.new(:url => 'http://example.com/1'))
+      BurtCentral::Event.new(:url => 'http://example.com/1').should_not == (BurtCentral::Event.new(:url => 'http://example.com/2'))
     end
   end
   
