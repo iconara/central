@@ -7,4 +7,7 @@ gem 'mongo'
 gem 'mongo_ext', :group => :production
 gem 'twitter'
 gem 'httparty'
+gem 'sinatra'
+gem 'shotgun', :group => :development
+gem 'json'
 gem 'rspec', :group => :testing

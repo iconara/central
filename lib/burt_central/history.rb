@@ -3,7 +3,7 @@ module BurtCentral
     include Logging
     include Utils
     
-    def initialize(configuration, sources)
+    def initialize(configuration, sources=[])
       @configuration, @sources = configuration, sources
     end
 
