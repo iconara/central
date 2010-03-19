@@ -1,14 +1,25 @@
 source :gemcutter
+
 gem 'rake'
 gem 'activeresource'
 gem 'immutable_struct', :git => 'git://github.com/iconara/immutable_struct.git'
 gem 'log4r'
 gem 'mongo'
-gem 'mongo_ext', :group => :production
 gem 'twitter'
 gem 'httparty'
-gem 'sinatra'
-gem 'shotgun', :group => :development
+gem 'sinatra', :git => 'git://github.com/sinatra/sinatra.git', :tag => '1.0.b'
+gem 'less'
 gem 'json'
-gem 'yard', :group => :development
-gem 'rspec', :group => :testing
+
+group :development do
+  gem 'shotgun'
+  gem 'yard'
+end
+
+group :testing do
+  gem 'rspec'
+end
+
+group :production do
+  gem 'mongo_ext'
+end

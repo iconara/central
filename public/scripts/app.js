@@ -2,13 +2,13 @@ var app = (function() {
   var app = {}
   
   app.start = function() {
-    load()
+    load(40)
   }
   
-  function load() {
+  function load(n) {
     $("#events").append('<li class="loading">loading…</li>')
     $.ajax({
-      url: "/history",
+      url: "/history/" + n,
       dataType: "json",
       success: populate,
       error: function() {
