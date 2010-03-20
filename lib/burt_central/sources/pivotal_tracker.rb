@@ -21,13 +21,21 @@ module BurtCentral
           else
             instigator = story.requested_by
           end
+          
+          type = case story.story_type
+                 when 'bug' then :bug
+                 when 'chore' then :todo
+                 when 'feature' then :feature
+                 when 'release' then :release
+                 else :feature
+                 end
 
           Event.new(
             :title => story.name,
             :date => story.updated_at,
             :instigator => instigator,
             :url => story.url,
-            :type => :story
+            :type => type
           )
         end
       rescue
