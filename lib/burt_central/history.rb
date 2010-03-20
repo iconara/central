@@ -12,9 +12,9 @@ module BurtCentral
     # Load events from the specified sources. The events will be merged and
     # sorted in historical order.
     #
-    # @param [Array] sources A list of sources (objects responding to #events,
-    #                        taking the time object passed as the :since option
-    #                        to this method).
+    # @param [Array<#events>] sources A list of sources (objects responding to 
+    #                                 #events, taking the time object passed as
+    #                                 the :since option to this method).
     # @param [Hash] options 
     # @option options [Time] :since (Time.today) Load events newer than this.
     # @return [Array<Event>] The loaded events (also available through {#events})
