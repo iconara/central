@@ -1,0 +1,25 @@
+@margin-width: 10px;
+@col-width: 70px;
+
+.col {
+  float: left;
+  margin-right: @margin-width;
+}
+
+.one-col    { .col; width: @col-width *  1 + @margin-width *  0; }
+.two-col    { .col; width: @col-width *  2 + @margin-width *  1; }
+.three-col  { .col; width: @col-width *  3 + @margin-width *  2; }
+.four-col   { .col; width: @col-width *  4 + @margin-width *  3; }
+.five-col   { .col; width: @col-width *  5 + @margin-width *  4; }
+.six-col    { .col; width: @col-width *  6 + @margin-width *  5; }
+.seven-col  { .col; width: @col-width *  7 + @margin-width *  6; }
+.eight-col  { .col; width: @col-width *  8 + @margin-width *  7; }
+.nine-col   { .col; width: @col-width *  9 + @margin-width *  8; }
+.ten-col    { .col; width: @col-width * 10 + @margin-width *  9; }
+.eleven-col { .col; width: @col-width * 11 + @margin-width * 10; }
+.twelve-col { .col; width: @col-width * 12 + @margin-width * 11; }
+
+.twelve-col,
+.last {
+  margin-right: 0 !important;
+}

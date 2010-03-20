@@ -1,10 +1,106 @@
-ol {
-  padding: 0;
+// Macros & constants
+
+#colors {
+  @sub-header: #ff7e00;
+  @link: rgb(0, 124, 195);
+  @background: #f0f0f0;
+  @text: black;
+  @header-background: #20201f;
+}
+
+.list-icon (@url: url("")) {
+  background-image: @url;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+
+
+// Reset
+
+* {
   margin: 0;
-  list-style-type: none;
+  padding: 0;
+}
+
+
+// Includes
+
+@import "views/layout";
+
+// Rules
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #colors[@background];
+  color: #colors[@text];
+  font: 16px/150% "Helvetica Neue", Arial, Verdana, sans-serif;
+  text-align: center;
+}
+
+.wrapper {
+  position: relative;
+  width: 980px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+a {
+  outline: none;
+  color: #colors[@link];
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  
+}
+
+#header {
+  float: left;
+  width: 100%;
+  height: 45px;
+  margin: 0 0 30px;
+  background: #colors[@header-background] url(../images/top-shadow.png) bottom left repeat-x; 
+  
+  #logo {
+    float: left;
+    margin-top: 9px;
+  }
+}
+
+section {
+  .twelve-col;
+  
+  padding: 1em;
+  margin-bottom: 1em;
+
+  background-color: white;
+}
+
+ul.events {
   line-height: 150%;
 
   li {
     height: 1.5em;
+    overflow: hidden;
   }
 }
+
+ul.legend {
+  li {
+    display: inline;
+    margin-right: 1em;
+  }
+}
+
+li         { .list-icon(url("../images/icons/bullet_black.png")); }
+li.loading { .list-icon(url("../images/icons/time.png")); }
+li.tweet   { .list-icon(url("../images/icons/comment.png")); }
+li.story   { .list-icon(url("../images/icons/note.png")); }
+li.error   { .list-icon(url("../images/icons/error.png")); }
+li.commit  { .list-icon(url("../images/icons/page_white_go.png")); }
+li.note    { .list-icon(url("../images/icons/note.png")); }
+li.todo    { .list-icon(url("../images/icons/cog.png")); }
+li.feature { .list-icon(url("../images/icons/star.png")); }
+li.bug     { .list-icon(url("../images/icons/bug.png")); }

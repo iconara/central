@@ -7,7 +7,33 @@
     <link rel="stylesheet" href="styles/app.css" type="text/css" media="screen" charset="utf-8"/>
   </head>
   <body>
-    <ol id="events"></ol>
+    <div id="header">
+      <div class="wrapper">
+        <div id="logo">
+          <img src="images/logo-burt.png" class="logo" alt="Burt" width="63" height="20" />
+        </div>
+      </div>
+    </div>
+    
+    <div id="content">
+      <div class="wrapper">
+        <section>
+          <ul class="legend">
+            <li class="bug">Bug</li>
+            <li class="commit">Commit</li>
+            <li class="error">Error</li>
+            <li class="feature">Feature</li>
+            <li class="release">Release</li>
+            <li class="todo">Todo/chore</li>
+            <li class="tweet">Tweet</li>
+          </ul>
+        </section>
+        
+        <section>
+          <div class="events-placeholder"> </div>
+        </section>
+      </div>
+    </div>
   </body>
   
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
