@@ -14,10 +14,18 @@ configure do
   EVENTS_COLLECTION = DATABASE.collection('events')
 end
 
-get '/history/:limit' do
+get '/history' do
   content_type 'text/javascript', :charset => 'utf-8'
+  options = {}
+  
+  if params[:limit] && params[:limit].to_i > 0
+    options[:limit] = params[:limit].to_i
+  else
+    options[:since] = Time.now - (24 * 60 * 60)
+  end
+  
   history = BurtCentral::History.new
-  history.restore(EVENTS_COLLECTION, :limit => params[:limit].to_i)
+  history.restore(EVENTS_COLLECTION, options)
   history.events.map { |e| e.to_h }.to_json
 end
 

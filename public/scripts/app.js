@@ -37,7 +37,8 @@ var app = (function() {
     var n = 100 //Math.floor((window.innerHeight - listElement().offset().top)/rowHeight()) 
     
     $.ajax({
-      url: "/history/" + n,
+      url: "/history",
+//      data: {"limit": n},
       dataType: "json",
       success: populate,
       error: error
