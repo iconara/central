@@ -11,6 +11,7 @@
 .list-icon (@url: url("")) {
   background-image: @url;
   background-repeat: no-repeat;
+  background-position: 0 2px;
   padding-left: 20px;
 }
 
@@ -26,6 +27,7 @@
 // Includes
 
 @import "views/layout";
+
 
 // Rules
 
@@ -76,6 +78,15 @@ section {
   margin-bottom: 1em;
 
   background-color: white;
+  
+  h2 {
+    margin-top: 0.5em;
+    margin-bottom: 0.25em;
+  }
+  
+  h2:first-child {
+    margin-top: 0;
+  }
 }
 
 ul.events {
