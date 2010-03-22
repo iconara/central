@@ -5,18 +5,18 @@ describe BurtCentral::History do
 
   before do
     @date = Time.utc(2010, 3, 14)
-    @event1 = BurtCentral::Event.new(:url => 'http://example.com/1', :title => 'Eventful',    :date => Time.utc(2010, 3, 10), :instigator => 'You',     :type => :tweet)
-    @event2 = BurtCentral::Event.new(:url => 'http://example.com/2', :title => 'Foo',         :date => Time.utc(2010, 3, 15), :instigator => 'Me',      :type => :story)
-    @event3 = BurtCentral::Event.new(:url => 'http://example.com/3', :title => 'Bar',         :date => Time.utc(2010, 3, 14), :instigator => 'Someone', :type => :error)
-    @event4 = BurtCentral::Event.new(:url => 'http://example.com/4', :title => 'Hello World', :date => Time.utc(2010, 2, 28), :instigator => 'Him',     :type => :tweet)
+    @event1 = BurtCentral::Event.new(:id => 'http://example.com/1', :url => 'http://example.com/1', :title => 'Eventful',    :date => Time.utc(2010, 3, 10), :instigator => 'You',     :type => :tweet)
+    @event2 = BurtCentral::Event.new(:id => 'http://example.com/2', :url => 'http://example.com/2', :title => 'Foo',         :date => Time.utc(2010, 3, 15), :instigator => 'Me',      :type => :story)
+    @event3 = BurtCentral::Event.new(:id => 'http://example.com/3', :url => 'http://example.com/3', :title => 'Bar',         :date => Time.utc(2010, 3, 14), :instigator => 'Someone', :type => :error)
+    @event4 = BurtCentral::Event.new(:id => 'http://example.com/4', :url => 'http://example.com/4', :title => 'Hello World', :date => Time.utc(2010, 2, 28), :instigator => 'Him',     :type => :tweet)
     @event1_h = @event1.to_h
-    @event1_h[:_id] = @event1_h.delete(:url)
+    @event1_h[:_id] = @event1_h.delete(:id)
     @event2_h = @event2.to_h
-    @event2_h[:_id] = @event2_h.delete(:url)
+    @event2_h[:_id] = @event2_h.delete(:id)
     @event3_h = @event3.to_h
-    @event3_h[:_id] = @event3_h.delete(:url)
+    @event3_h[:_id] = @event3_h.delete(:id)
     @event4_h = @event4.to_h
-    @event4_h[:_id] = @event4_h.delete(:url)
+    @event4_h[:_id] = @event4_h.delete(:id)
     @source1 = mock('Source1')
     @source2 = mock('Source2')
     @source1.stub!(:events).with(@date).and_return([@event1, @event2])
@@ -44,7 +44,7 @@ describe BurtCentral::History do
       @repository.should_receive(:save).with(hash_including(:_id => 'http://example.com/2', :title => 'Foo'))
       @repository.should_receive(:save).with(hash_including(:_id => 'http://example.com/3', :title => 'Bar'))
       @repository.should_receive(:save).with(hash_including(:_id => 'http://example.com/4', :title => 'Hello World'))
-      @history.load([@source1, @source2], :since =>   @date)
+      @history.load([@source1, @source2], :since => @date)
       @history.persist(@repository)
     end
   end

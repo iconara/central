@@ -42,7 +42,7 @@ module BurtCentral
       
       @events.each do |event|
         e = event.to_h
-        e[:_id] = e.delete(:url)
+        e[:_id] = e.delete(:id)
         repository.save(e)
       end
     end
@@ -66,7 +66,7 @@ module BurtCentral
       
       @events = repository.find(query, query_opts).map do |h|
         e = symbolize_keys(h)
-        e[:url] = e.delete(:_id)
+        e[:id] = e.delete(:_id)
         Event.new(e)
       end
       
