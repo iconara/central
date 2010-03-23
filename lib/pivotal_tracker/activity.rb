@@ -2,5 +2,5 @@ require 'active_resource'
 
 
 module PivotalTracker
-  class Story < ActiveResource::Base; end
+  class Activity < ActiveResource::Base; end
 end

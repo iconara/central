@@ -54,6 +54,8 @@ module BurtCentral
     def configure_pivotal_tracker(conf)
       PivotalTracker::Story.site = 'http://www.pivotaltracker.com/services/v3/projects/:project_id'
       PivotalTracker::Story.headers['X-TrackerToken'] = conf[:token]
+      PivotalTracker::Activity.site = 'http://www.pivotaltracker.com/services/v3/projects/:project_id'
+      PivotalTracker::Activity.headers['X-TrackerToken'] = conf[:token]
     end
   
     def configure_github(conf)

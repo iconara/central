@@ -2,8 +2,12 @@ require 'ext/time'
 
 
 autoload :Hoptoad, 'hoptoad/error'
-autoload :PivotalTracker, 'pivotal_tracker/story'
 autoload :Highrise, 'highrise/highrise'
+
+module PivotalTracker
+  autoload :Story, 'pivotal_tracker/story'
+  autoload :Activity, 'pivotal_tracker/activity'
+end
 
 module BurtCentral
   autoload :Configuration, 'burt_central/configuration'
