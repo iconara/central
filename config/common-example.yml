@@ -3,6 +3,9 @@ hoptoad:
 
 pivotal_tracker:
   token: 1234
+  projects:
+    - 123
+    - 456
 
 github:
   login: someone

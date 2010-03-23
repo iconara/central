@@ -24,6 +24,19 @@ module BurtCentral
       configure_github(@configuration[:github])
       configure_highrise(@configuration[:highrise])
     end
+    
+    def sources
+      sources = [
+        BurtCentral::Sources::Github.new,
+        BurtCentral::Sources::Hoptoad.new,
+        BurtCentral::Sources::Highrise.new,
+        BurtCentral::Sources::Twitter.new
+      ]
+      @configuration[:pivotal_tracker][:projects].each do |project|
+        sources << BurtCentral::Sources::PivotalTracker.new(project)
+      end
+      sources
+    end
   
   private
   

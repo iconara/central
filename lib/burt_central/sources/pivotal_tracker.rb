@@ -19,11 +19,15 @@ module BurtCentral
         # 'restarted'     => :restart,
       }
       
+      def initialize(project)
+        @project = project
+      end
+      
       def events(since)
-        logger.info('Loading Pivotal Tracker stories')
+        logger.info("Loading Pivotal Tracker activity for project #{@project}")
 
         activities = ::PivotalTracker::Activity.find(:all, :params => {
-          :project_id => '19935',
+          :project_id => @project,
           :occurred_since_date => since.strftime('%d %b %Y'),
           :limit => 100
         })
