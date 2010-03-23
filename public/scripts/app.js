@@ -8,44 +8,28 @@ var app = (function() {
   }
   
   function install() {
-    $(".events-placeholder").replaceWith(createEventsElement())
-    $(".legend-placeholder").replaceWith(createLegendElement())
+    $(".events-placeholder").replaceWith(createListElement("events"))
+    $(".legend-placeholder").replaceWith(createListElement("legend"))
   }
   
-  function createLegendElement() {
-    return $('<ul class="legend"></ul>')
+  function createListElement(type) {
+    return $('<ul class="' + type + '"></ul>')
   }
-  
-  function createEventsElement() {
-    return $('<ul class="events"></ul>')
-  }
-  
-  function legendElement() {
-    return $("ul.legend").last()
+    
+  function listElement(which) {
+    return $("ul." + which).last()
   }
 
-  function eventsElement() {
-    return $("ul.events").last()
+  function showListLoading(which) {
+    listElement(which).append('<li class="loading">loading…</li>')
   }
-
-  function showEventsLoading() {
-    eventsElement().append('<li class="loading">loading…</li>')
-  }
-  
-  function showLegendLoading() {
-    legendElement().append('<li class="loading">loading…</li>')
-  }
-  
-  function hideEventsLoading() {
-    $(".loading", eventsElement()).remove()
-  }
-  
-  function hideLegendLoading() {
-    $(".loading", legendElement()).remove()
+    
+  function hideListLoading(which) {
+    $(".loading", listElement(which)).remove()
   }
   
   function rowHeight() {
-    return $("*:first-child", eventsElement()).height()
+    return $("*:first-child", listElement("events")).height()
   }
   
   function load() {
@@ -54,7 +38,7 @@ var app = (function() {
   }
   
   function loadTypes() {
-    showLegendLoading()
+    showListLoading("legend")
     
     $.ajax({
       url: "/types",
@@ -65,22 +49,22 @@ var app = (function() {
   }
   
   function populateLegend(types) {
-    hideLegendLoading()
+    hideListLoading("legend")
     
     $.each(types, function() {
-      legendElement().append('<li class="' + this + '">' + this + '</li>')
+      listElement("legend").append('<li class="' + this + '">' + this + '</li>')
     })
   }
   
   function legendError() {
-    hideLegendLoading()
-    legendElement().append('<li class="error">error while loading legend</li>')
+    hideListLoading("legend")
+    listElement("legend").append('<li class="error">error while loading legend</li>')
   }
   
   function loadEvents() {
-    showEventsLoading()
+    showListLoading("events")
     
-    var n = 100 //Math.floor((window.innerHeight - eventsElement().offset().top)/rowHeight()) 
+    var n = 100 //Math.floor((window.innerHeight - listElement("legend").offset().top)/rowHeight()) 
     
     $.ajax({
       url: "/history",
@@ -110,11 +94,11 @@ var app = (function() {
   }
   
   function addHeader(str) {
-    eventsElement().before('<h2>' + str + '</h2>')
+    listElement("events").before('<h2>' + str + '</h2>')
   }
   
   function populateEvents(events) {
-    hideEventsLoading()
+    hideListLoading("events")
     
     if (events.length > 0) {
       addHeader(formatDate(events[0].date))
@@ -123,7 +107,7 @@ var app = (function() {
     
       $.each(events, function() {
         if (formatDate(previous.date) != formatDate(this.date)) {
-          eventsElement().after(createEventsElement())
+          listElement("events").after(createListElement("events"))
           addHeader(formatDate(this.date))
         }
       
@@ -133,7 +117,7 @@ var app = (function() {
           line = this.instigator + ': ' + line
         }
       
-        eventsElement().append('<li class="' + this.type + '">' + line + '</li>')
+        listElement("events").append('<li class="' + this.type + '">' + line + '</li>')
         
         previous = this
       })
@@ -141,8 +125,8 @@ var app = (function() {
   }
   
   function eventsError() {
-    hideEventsLoading()
-    eventsElement().append('<li class="error">error while loading events</li>')
+    hideListLoading("events")
+    listElement("events").append('<li class="error">error while loading events</li>')
   }
   
   return app
