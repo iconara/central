@@ -1,35 +1,50 @@
+var createList = function(type) {
+  var element = $('<ul></ul>')
+
+  element.addClass(type)
+  
+  element.showLoading = function() {
+    element.addRow("loading…", "loading")
+  }
+  
+  element.hideLoading = function() {
+     $(".loading", element).remove()
+  }
+  
+  element.rowHeight = function() {
+    return $("*:first-child", element).height()
+  }
+  
+  element.addRow = function(text, cls) {
+    var row = $('<li>' + text + '</li>')
+    row.addClass(cls)
+    element.append(row)
+  }
+  
+  element.addHeader = function(str) {
+    element.before('<h2>' + str + '</h2>')
+  }
+  
+  return element
+}
+
 var app = (function() {
   var app = {}
   
+  var eventsList
+  var legendList
+  
   app.start = function() {
-    install()
+    eventsList = createList("events")
+    legendList = createList("legend")
     
+    install()
     load()
   }
   
   function install() {
-    $(".events-placeholder").replaceWith(createListElement("events"))
-    $(".legend-placeholder").replaceWith(createListElement("legend"))
-  }
-  
-  function createListElement(type) {
-    return $('<ul class="' + type + '"></ul>')
-  }
-    
-  function listElement(which) {
-    return $("ul." + which).last()
-  }
-
-  function showListLoading(which) {
-    listElement(which).append('<li class="loading">loading…</li>')
-  }
-    
-  function hideListLoading(which) {
-    $(".loading", listElement(which)).remove()
-  }
-  
-  function rowHeight() {
-    return $("*:first-child", listElement("events")).height()
+    $(".events-placeholder").replaceWith(eventsList)
+    $(".legend-placeholder").replaceWith(legendList)
   }
   
   function load() {
@@ -38,7 +53,7 @@ var app = (function() {
   }
   
   function loadTypes() {
-    showListLoading("legend")
+    legendList.showLoading()
     
     $.ajax({
       url: "/types",
@@ -49,20 +64,20 @@ var app = (function() {
   }
   
   function populateLegend(types) {
-    hideListLoading("legend")
+    legendList.hideLoading()
     
     $.each(types, function() {
-      listElement("legend").append('<li class="' + this + '">' + this + '</li>')
+      legendList.addRow(this.toString(), this.toString())
     })
   }
   
   function legendError() {
-    hideListLoading("legend")
-    listElement("legend").append('<li class="error">error while loading legend</li>')
+    legendList.hideLoading()
+    legendList.addRow("error while loading legend", "error")
   }
   
   function loadEvents() {
-    showListLoading("events")
+    eventsList.showLoading()
     
     var n = 100 //Math.floor((window.innerHeight - listElement("legend").offset().top)/rowHeight()) 
     
@@ -93,22 +108,20 @@ var app = (function() {
     return str
   }
   
-  function addHeader(str) {
-    listElement("events").before('<h2>' + str + '</h2>')
-  }
-  
   function populateEvents(events) {
-    hideListLoading("events")
+    eventsList.hideLoading()
     
     if (events.length > 0) {
-      addHeader(formatDate(events[0].date))
+      eventsList.addHeader(formatDate(events[0].date))
     
       var previous = events[0]
     
       $.each(events, function() {
         if (formatDate(previous.date) != formatDate(this.date)) {
-          listElement("events").after(createListElement("events"))
-          addHeader(formatDate(this.date))
+          var newEventsList = createList("events")
+          eventsList.after(newEventsList)
+          eventsList = newEventsList
+          eventsList.addHeader(formatDate(this.date))
         }
       
         var line = '<a href="' + this.url + '">' + this.title + '</a>'
@@ -117,7 +130,7 @@ var app = (function() {
           line = this.instigator + ': ' + line
         }
       
-        listElement("events").append('<li class="' + this.type + '">' + line + '</li>')
+        eventsList.addRow(line, this.type)
         
         previous = this
       })
@@ -125,8 +138,8 @@ var app = (function() {
   }
   
   function eventsError() {
-    hideListLoading("events")
-    listElement("events").append('<li class="error">error while loading events</li>')
+    eventsList.hideLoading()
+    eventsList.addRow("error while loading events", "error")
   }
   
   return app
