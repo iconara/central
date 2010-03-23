@@ -8,40 +8,86 @@ var app = (function() {
   }
   
   function install() {
-    $(".events-placeholder").replaceWith(createListElement())
+    $(".events-placeholder").replaceWith(createEventsElement())
+    $(".legend-placeholder").replaceWith(createLegendElement())
   }
   
-  function createListElement() {
+  function createLegendElement() {
+    return $('<ul class="legend"></ul>')
+  }
+  
+  function createEventsElement() {
     return $('<ul class="events"></ul>')
   }
+  
+  function legendElement() {
+    return $("ul.legend").last()
+  }
 
-  function listElement() {
+  function eventsElement() {
     return $("ul.events").last()
   }
 
-  function showLoading() {
-    listElement().append('<li class="loading">loading…</li>')
+  function showEventsLoading() {
+    eventsElement().append('<li class="loading">loading…</li>')
   }
   
-  function hideLoading() {
-    $(".loading", listElement()).remove()
+  function showLegendLoading() {
+    legendElement().append('<li class="loading">loading…</li>')
+  }
+  
+  function hideEventsLoading() {
+    $(".loading", eventsElement()).remove()
+  }
+  
+  function hideLegendLoading() {
+    $(".loading", legendElement()).remove()
   }
   
   function rowHeight() {
-    return $("*:first-child", listElement()).height()
+    return $("*:first-child", eventsElement()).height()
   }
   
   function load() {
-    showLoading()
+    loadTypes()
+    loadEvents()
+  }
+  
+  function loadTypes() {
+    showLegendLoading()
     
-    var n = 100 //Math.floor((window.innerHeight - listElement().offset().top)/rowHeight()) 
+    $.ajax({
+      url: "/types",
+      dataType: "json",
+      success: populateLegend,
+      error: legendError
+    })
+  }
+  
+  function populateLegend(types) {
+    hideLegendLoading()
+    
+    $.each(types, function() {
+      legendElement().append('<li class="' + this + '">' + this + '</li>')
+    })
+  }
+  
+  function legendError() {
+    hideLegendLoading()
+    legendElement().append('<li class="error">error while loading legend</li>')
+  }
+  
+  function loadEvents() {
+    showEventsLoading()
+    
+    var n = 100 //Math.floor((window.innerHeight - eventsElement().offset().top)/rowHeight()) 
     
     $.ajax({
       url: "/history",
 //      data: {"limit": n},
       dataType: "json",
-      success: populate,
-      error: error
+      success: populateEvents,
+      error: eventsError
     })
   }
   
@@ -64,11 +110,11 @@ var app = (function() {
   }
   
   function addHeader(str) {
-    listElement().before('<h2>' + str + '</h2>')
+    eventsElement().before('<h2>' + str + '</h2>')
   }
   
-  function populate(events) {
-    hideLoading()
+  function populateEvents(events) {
+    hideEventsLoading()
     
     if (events.length > 0) {
       addHeader(formatDate(events[0].date))
@@ -77,7 +123,7 @@ var app = (function() {
     
       $.each(events, function() {
         if (formatDate(previous.date) != formatDate(this.date)) {
-          listElement().after(createListElement())
+          eventsElement().after(createEventsElement())
           addHeader(formatDate(this.date))
         }
       
@@ -87,15 +133,16 @@ var app = (function() {
           line = this.instigator + ': ' + line
         }
       
-        listElement().append('<li class="' + this.type + '">' + line + '</li>')
+        eventsElement().append('<li class="' + this.type + '">' + line + '</li>')
         
         previous = this
       })
     }
   }
   
-  function error() {
-    listElement().append('<li class="error">error while loading events</li>')
+  function eventsError() {
+    hideEventsLoading()
+    eventsElement().append('<li class="error">error while loading events</li>')
   }
   
   return app
