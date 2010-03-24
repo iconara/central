@@ -14,9 +14,11 @@ configure do
   EVENTS_COLLECTION = DATABASE.collection('events')
 end
 
-get '/history' do
-  content_type 'text/javascript', :charset => 'utf-8'
+before do
+  content_type :json
+end
 
+get '/history' do
   options = {}
   
   if params[:limit] && params[:limit].to_i > 0
@@ -31,8 +33,6 @@ get '/history' do
 end
 
 get '/types' do
-  content_type 'text/javascript', :charset => 'utf-8'
-  
   EVENTS_COLLECTION.distinct(:type).to_json
 end
 
