@@ -19,7 +19,7 @@ module BurtCentral
         host = @api.site.host
 
         errors.select { |error|
-          error.most_recent_notice_at >= since
+          error.most_recent_notice_at >= since && error.rails_env == 'production'
         }.map { |error|
           Event.new(
             :title => error.error_message,
