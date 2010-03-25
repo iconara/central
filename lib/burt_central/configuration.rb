@@ -21,13 +21,12 @@ module BurtCentral
       configure_logging(@configuration[:log_level])
       configure_hoptoad(@configuration[:hoptoad])
       configure_pivotal_tracker(@configuration[:pivotal_tracker])
-      configure_github(@configuration[:github])
       configure_highrise(@configuration[:highrise])
     end
     
     def sources
       sources = [
-        BurtCentral::Sources::Github.new(@configuration[:github][:login]),
+        BurtCentral::Sources::Github.new(@configuration[:github][:login], @configuration[:github][:token]),
         BurtCentral::Sources::Hoptoad.new,
         BurtCentral::Sources::Highrise.new,
         BurtCentral::Sources::Twitter.new(@configuration[:twitter][:user], @configuration[:twitter][:list])
@@ -72,11 +71,6 @@ module BurtCentral
       PivotalTracker::Story.headers['X-TrackerToken'] = conf[:token]
       PivotalTracker::Activity.site = 'http://www.pivotaltracker.com/services/v3/projects/:project_id'
       PivotalTracker::Activity.headers['X-TrackerToken'] = conf[:token]
-    end
-  
-    def configure_github(conf)
-      Sources::Github.send(:define_method, :login) { conf[:login] }
-      Sources::Github.send(:define_method, :token) { conf[:token] }
     end
   
     def configure_highrise(conf)

@@ -9,14 +9,14 @@ module BurtCentral
       REPOSITORIES_URL = 'https://github.com/api/v2/:format/repos/show/:user'
       COMMITS_URL = 'https://github.com/api/v2/:format/commits/list/:user/:repository/master'
       
-      def initialize(user)
-        @user = user
+      def initialize(login, token)
+        @login, @token = login, token
       end
       
       def events(since)
         logger.info('Loading GitHub repositories')
 
-        repos = repositories(@user)
+        repos = repositories
         
         logger.debug("Found #{repos.size} repositories")
         
@@ -29,7 +29,7 @@ module BurtCentral
             loop do
               logger.debug("Loading page #{page} for repository \"#{repository['name']}\"")
             
-              cs = commits(@user, repository, page)
+              cs = commits(repository, page)
               
               throw :all_found if cs.empty?
               
@@ -66,9 +66,9 @@ module BurtCentral
       
     private
     
-      def repositories(user)
-        url = REPOSITORIES_URL.sub(':format', 'json').sub(':user', user)
-        result = HTTParty.get(url, :query => {:login => login, :token => token})
+      def repositories
+        url = REPOSITORIES_URL.sub(':format', 'json').sub(':user', @login)
+        result = HTTParty.get(url, :query => {:login => @login, :token => @token})
         if result && result['repositories']
           result['repositories']
         else
@@ -76,23 +76,15 @@ module BurtCentral
         end
       end
       
-      def commits(user, repository, page=1)
-        url = COMMITS_URL.sub(':format', 'json').sub(':user', user).sub(':repository', repository['name'])
+      def commits(repository, page=1)
+        url = COMMITS_URL.sub(':format', 'json').sub(':user', @login).sub(':repository', repository['name'])
         url = url.sub('https://', 'http://') unless repository['private']
-        result = HTTParty.get(url, :query => {:login => login, :token => token, :page => page})
+        result = HTTParty.get(url, :query => {:login => @login, :token => @token, :page => page})
         if result && result['commits']
           result['commits']
         else
           []
         end
-      end
-      
-      def login
-        raise 'Github login not configured'
-      end
-      
-      def token
-        raise 'Github token not configured'
       end
       
     end
