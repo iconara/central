@@ -1,80 +1,155 @@
 require 'yaml'
+require 'twitter'
 
 
 module BurtCentral
   class Configuration
     include Utils
+    include Logging
     
     def initialize(conf)
       @configuration = symbolize_keys(conf)
 
-      check_config
+      configure_logging
     end
     
     def self.load(path)
       Configuration.new(YAML::load(open(path)))
     end
 
-    # Configures all services. Most things that are configured are global (e.g.
-    # ActiveResource models), so running this has quite extensive side effects.
-    def set!
-      configure_logging(@configuration[:log_level])
-      configure_hoptoad(@configuration[:hoptoad])
-      configure_pivotal_tracker(@configuration[:pivotal_tracker])
-      configure_highrise(@configuration[:highrise])
-    end
-    
     def sources
-      sources = [
-        BurtCentral::Sources::Github.new(@configuration[:github][:login], @configuration[:github][:token]),
-        BurtCentral::Sources::Hoptoad.new,
-        BurtCentral::Sources::Highrise.new,
-        BurtCentral::Sources::Twitter.new(@configuration[:twitter][:user], @configuration[:twitter][:list])
-      ]
-      @configuration[:pivotal_tracker][:projects].each do |project|
-        sources << BurtCentral::Sources::PivotalTracker.new(project)
-      end
-      @configuration[:feeds].each do |feed_url|
-        sources << BurtCentral::Sources::Feed.new(feed_url)
-      end
+      sources = []
+      sources << github_source
+      sources << hoptoad_source
+      sources << highrise_source
+      sources << twitter_source
+      sources += pivotal_tracker_sources
+      sources += feed_sources
       sources
     end
   
   private
   
-    def check_config
-      raise 'Configuration is nil!' if @configuration.nil?
-
-      required_keys = [:hoptoad, :pivotal_tracker, :github, :highrise]
-      missing_keys = required_keys.reject { |k| @configuration.has_key?(k) }
+    def configure_logging
+      level = @configuration[:log_level] || 'INFO'
       
-      raise "Missing configuration keys: #{missing_keys.join(', ')}" unless missing_keys.empty?
-      raise 'Hoptoad configuration missing or incomplete' unless @configuration[:hoptoad].has_key?(:token)
-      raise 'Pivotal Tracker configuration missing or incomplete' unless @configuration[:pivotal_tracker].has_key?(:token)
-      raise 'GitHub configuration missing or incomplete' unless @configuration[:github].has_key?(:login) && @configuration[:github].has_key?(:token)
-      raise 'Highrise configuration missing or incomplete' unless @configuration[:highrise].has_key?(:token)
-    end
-  
-    def configure_logging(log_level)
-      Logging.send(:define_method, :default_log_level) do
-        log_level
-      end
+      Logging.send(:define_method, :default_log_level) { level }
     end
 
-    def configure_hoptoad(conf)
-      Hoptoad::Error.site = 'http://burt.hoptoadapp.com'
-      Hoptoad::Error.auth_token = conf[:token]
+    def github_source
+      if @configuration.has_key?(:github)
+        login = @configuration[:github][:login]
+        token = @configuration[:github][:token]
+        
+        raise 'GitHub configuration is missing login' unless login
+        raise 'GitHub configuration is missing token' unless token
+      
+        BurtCentral::Sources::Github.new(login, token)
+      else
+        logger.warn('No GitHub configuration found')
+      end
+    rescue => e
+      logger.warn("Error while configuring the GitHub source: \"#{e.message}\"")
+      logger.debug(e.backtrace.join("\n"))
     end
-  
-    def configure_pivotal_tracker(conf)
-      PivotalTracker::Story.site = 'http://www.pivotaltracker.com/services/v3/projects/:project_id'
-      PivotalTracker::Story.headers['X-TrackerToken'] = conf[:token]
-      PivotalTracker::Activity.site = 'http://www.pivotaltracker.com/services/v3/projects/:project_id'
-      PivotalTracker::Activity.headers['X-TrackerToken'] = conf[:token]
+    
+    def hoptoad_source
+      if @configuration.has_key?(:hoptoad)
+        account = @configuration[:hoptoad][:account]
+        token   = @configuration[:hoptoad][:token]
+
+        raise 'Hoptoad configuration missing account' unless account
+        raise 'Hoptoad configuration missing token'   unless token
+
+        Hoptoad::Error.site = "http://#{account}.hoptoadapp.com"
+        Hoptoad::Error.auth_token = token
+
+        BurtCentral::Sources::Hoptoad.new(Hoptoad::Error)
+      else
+        logger.warn('No Hoptoad configuration found')
+      end
+    rescue => e
+      logger.warn("Error while configuring the Hoptoad source: \"#{e.message}\"")
+      logger.debug(e.backtrace.join("\n"))
     end
-  
-    def configure_highrise(conf)
-      Highrise::Base.site = "https://#{conf[:token]}:X@burt.highrisehq.com/"
+    
+    def highrise_source
+      if @configuration.has_key?(:highrise)
+        account = @configuration[:highrise][:account]
+        token   = @configuration[:highrise][:token]
+        
+        raise 'Highrise configuration missing account' unless account
+        raise 'Highrise configuration missing token'   unless token
+      
+        Highrise::Base.site = "https://#{token}:X@#{account}.highrisehq.com/"
+      
+        BurtCentral::Sources::Highrise.new(Highrise::User, Highrise::Kase)
+      else
+        logger.warn('No Highrise configuration found')
+      end
+    rescue => e
+      logger.warn("Error while configuring the Highrise source: \"#{e.message}\"")
+      logger.debug(e.backtrace.join("\n"))
+    end
+    
+    def twitter_source
+      if @configuration.has_key?(:twitter)
+        user = @configuration[:twitter][:user]
+        list = @configuration[:twitter][:list]
+        
+        raise 'Twitter configuration missing user' unless user
+        raise 'Twitter configuration missing list' unless list
+      
+        twitter = Twitter::Base.new(Twitter::HTTPAuth.new('', ''))
+      
+        BurtCentral::Sources::Twitter.new(twitter, user, list)
+      else
+        logger.warn('No Twitter configuration found')
+      end
+    rescue => e
+      logger.warn("Error while configuring the Twitter source: \"#{e.message}\"")
+      logger.debug(e.backtrace.join("\n"))
+    end
+    
+    def pivotal_tracker_sources
+      if @configuration.has_key?(:pivotal_tracker)
+        projects = @configuration[:pivotal_tracker][:projects]
+        token    = @configuration[:pivotal_tracker][:token]
+
+        raise 'Pivotal Tracker configuration missing projects' unless projects && projects.size > 0
+        raise 'Pivotal Tracker configuration missing token'    unless token
+
+        PivotalTracker::Story.site = 'http://www.pivotaltracker.com/services/v3/projects/:project_id'
+        PivotalTracker::Story.headers['X-TrackerToken'] = token
+        PivotalTracker::Activity.site = 'http://www.pivotaltracker.com/services/v3/projects/:project_id'
+        PivotalTracker::Activity.headers['X-TrackerToken'] = token
+      
+        projects.map do |project|
+          BurtCentral::Sources::PivotalTracker.new(PivotalTracker::Activity, project)
+        end
+      else
+        logger.warn('No Pivotal Tracker configuration found')
+      end
+    rescue => e
+      logger.warn("Error while configuring the Pivotal Tracker source: \"#{e.message}\"")
+      logger.debug(e.backtrace.join("\n"))
+    end
+    
+    def feed_sources
+      if @configuration.has_key?(:feeds)
+        feeds = @configuration[:feeds]
+        
+        raise 'Feeds configuration is missing feeds' unless feeds && feeds.size > 0
+        
+        feeds.map do |feed_url|
+          BurtCentral::Sources::Feed.new(feed_url)
+        end
+      else
+        logger.warn('No feed configuration found')
+      end
+    rescue => e
+      logger.warn("Error while configuring the feed source: \"#{e.message}\"")
+      logger.debug(e.backtrace.join("\n"))
     end
   end
 end

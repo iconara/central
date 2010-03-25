@@ -8,7 +8,6 @@ require 'burt_central'
 
 configure do
   configuration = BurtCentral::Configuration.load(File.expand_path('../config/common.yml', __FILE__))
-  configuration.set!
   
   DATABASE = Mongo::Connection.new.db('burt_central')
   EVENTS_COLLECTION = DATABASE.collection('events')
