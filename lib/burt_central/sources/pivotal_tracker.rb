@@ -7,9 +7,10 @@ module BurtCentral
       
       ACTIVITY_TYPES = {
         'finished'      => :completion,
-        'added comment' => :note,
+        'added comment' => :comment,
         'edited'        => :edit,
         'accepted'      => :accept,
+        'rejected'      => :rejection,
         # 'started'       => :start,
         # 'delivered'     => :deliver,
         # 'attached file' => :upload,
