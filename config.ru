@@ -9,6 +9,8 @@ rescue LoadError
   Bundler.setup
 end
 
+ENV['RACK_ENV'] ||= 'development'
+
 require 'app'
 
 run App

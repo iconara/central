@@ -1,3 +1,5 @@
+database: database_name # will be suffixed with "_<env>", e.g. "_development"
+
 hoptoad:
   token: 1234
 

@@ -1,3 +1,4 @@
+$: << File.expand_path('../lib', __FILE__)
 $: << File.expand_path('../../lib', __FILE__)
 
 begin
@@ -9,7 +10,13 @@ rescue LoadError
   Bundler.setup
 end
 
+ENV['RACK_ENV'] ||= 'test'
+
 require 'logger'
+require 'sinatra'
+require 'capybara'
+require 'capybara/dsl'
+require 'app'
 require 'burt_central'
 
 

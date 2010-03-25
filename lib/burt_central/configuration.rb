@@ -7,14 +7,15 @@ module BurtCentral
     include Utils
     include Logging
     
-    def initialize(conf)
+    def initialize(conf, environment=:development)
       @configuration = symbolize_keys(conf)
+      @environment = environment
 
       configure_logging
     end
     
-    def self.load(path)
-      Configuration.new(YAML::load(open(path)))
+    def self.load(path, environment=:development)
+      Configuration.new(YAML::load(open(path)), environment)
     end
 
     def sources
@@ -27,8 +28,30 @@ module BurtCentral
       sources += feed_sources
       sources
     end
+    
+    def events_collection
+      raise 'No database name specified!' unless @configuration.has_key?(:database)
+
+      configure_database
+
+      @db[:events_collection]
+    end
   
   private
+  
+    def configure_database
+      unless defined? @db
+        base_name = @configuration[:database]
+        database_name = "#{base_name}_#{@environment}"
+
+        logger.info("Using database \"#{database_name}\"")
+        
+        @db = {}
+        @db[:connection] = Mongo::Connection.new(nil, nil, :logger => logger)
+        @db[:dabatase] = @db[:connection].db(database_name)
+        @db[:events_collection] = @db[:dabatase].collection('events')
+      end
+    end
   
     def configure_logging
       level = @configuration[:log_level] || 'INFO'

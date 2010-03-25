@@ -18,7 +18,9 @@ group :development do
 end
 
 group :testing do
-  gem 'rspec'
+  gem 'rspec', '>= 1.3.0'
+  gem 'capybara', '>= 0.3.6'
+  gem 'selenium-webdriver'
 end
 
 group :production do

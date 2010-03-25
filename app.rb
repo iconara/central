@@ -6,21 +6,23 @@ require 'burt_central'
 
 
 class App < Sinatra::Base
-
-  set :environment, ENV['RACK_ENV'].to_sym
-  set :root,        File.dirname(__FILE__)
-
-  disable :run
   
   configure do
-    configuration = BurtCentral::Configuration.load(File.expand_path('../config/common.yml', __FILE__))
+    set :app_file, __FILE__
+    set :root, File.dirname(__FILE__)
+    
+    configuration_path = File.expand_path('../config/common.yml', __FILE__)
+    configuration = BurtCentral::Configuration.load(configuration_path, environment)
   
-    DATABASE = Mongo::Connection.new.db('burt_central')
-    EVENTS_COLLECTION = DATABASE.collection('events')
+    set :events_collection, configuration.events_collection
   end
 
   before do
     content_type :json
+  end
+  
+  get '/' do
+    redirect 'index.html'
   end
 
   get '/history' do
@@ -33,12 +35,12 @@ class App < Sinatra::Base
     end
   
     history = BurtCentral::History.new
-    history.restore(EVENTS_COLLECTION, options)
+    history.restore(settings.events_collection, options)
     history.events.map { |e| e.to_h }.to_json
   end
 
   get '/types' do
-    EVENTS_COLLECTION.distinct(:type).to_json
+    settings.events_collection.distinct(:type).to_json
   end
 
   get '/styles/app.css' do
