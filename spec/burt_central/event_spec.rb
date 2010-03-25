@@ -28,6 +28,11 @@ describe BurtCentral::Event do
       @hash[:url].should == 'http://example.com'
       @hash[:type].should == :test
     end
+    
+    it 'sets :id to the same value as :url if no ID was specified' do
+      @hash = BurtCentral::Event.new(:url => 'http://example.com').to_h
+      @hash[:id].should == 'http://example.com'
+    end
   end
   
   describe '#eql?' do

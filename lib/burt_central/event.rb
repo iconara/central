@@ -4,7 +4,13 @@ require 'immutable_struct'
 module BurtCentral
   class Event < ImmutableStruct.new(:id, :url, :title, :date, :instigator, :type)
     def id
-      self[:id] || self[:url]
+      self[:id]
+    end
+    
+    def [](p)
+      v = super
+      v = super(:url) if v.nil? && p.to_sym == :id
+      v
     end
     
     def <=>(other)
