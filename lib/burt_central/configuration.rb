@@ -27,10 +27,10 @@ module BurtCentral
     
     def sources
       sources = [
-        BurtCentral::Sources::Github.new,
+        BurtCentral::Sources::Github.new(@configuration[:github][:login]),
         BurtCentral::Sources::Hoptoad.new,
         BurtCentral::Sources::Highrise.new,
-        BurtCentral::Sources::Twitter.new
+        BurtCentral::Sources::Twitter.new(@configuration[:twitter][:user], @configuration[:twitter][:list])
       ]
       @configuration[:pivotal_tracker][:projects].each do |project|
         sources << BurtCentral::Sources::PivotalTracker.new(project)

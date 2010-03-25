@@ -6,8 +6,12 @@ module BurtCentral
     class Twitter
       include Logging
    
+      def initialize(user, list)
+        @user, @list = user, list
+      end
+
       def events(since)
-        logger.info('Loading tweets')
+        logger.info("Loading tweets from #{@user}/#{@list}")
         
         twitter = ::Twitter::Base.new(::Twitter::HTTPAuth.new('', ''))
         
@@ -19,7 +23,7 @@ module BurtCentral
             logger.debug("Loading page #{page}")
           
             begin
-              tweets = twitter.list_timeline('burtcorp', 'meet-the-burts', :page => page)
+              tweets = twitter.list_timeline(@user, @list, :page => page)
             rescue
               logger.warn("Error while listing timeline #{$!.message}")
               tweets = []

@@ -19,3 +19,7 @@ log_level: WARN
 feeds:
    - http://one.com/feed/atom
    - http://two.com/feed/atom
+   
+twitter:
+ user: jason
+ list: haters

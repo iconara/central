@@ -9,10 +9,14 @@ module BurtCentral
       REPOSITORIES_URL = 'https://github.com/api/v2/:format/repos/show/:user'
       COMMITS_URL = 'https://github.com/api/v2/:format/commits/list/:user/:repository/master'
       
+      def initialize(user)
+        @user = user
+      end
+      
       def events(since)
         logger.info('Loading GitHub repositories')
 
-        repos = repositories('burtcorp')
+        repos = repositories(@user)
         
         logger.debug("Found #{repos.size} repositories")
         
@@ -25,7 +29,7 @@ module BurtCentral
             loop do
               logger.debug("Loading page #{page} for repository \"#{repository['name']}\"")
             
-              cs = commits('burtcorp', repository, page)
+              cs = commits(@user, repository, page)
               
               throw :all_found if cs.empty?
               
@@ -34,9 +38,11 @@ module BurtCentral
               cs.each do |commit|
                 throw :all_found unless Time.parse(commit['committed_date']) >= since
                 
+                message = commit['message'].split("\n").first
+                
                 events << Event.new(
                   :id => commit['id'],
-                  :title => repository['name'] + ': ' + commit['message'].split("\n").first,
+                  :title => "#{repository['name']}: #{message}",
                   :date => Time.parse(commit['committed_date']),
                   :instigator => commit['author']['name'],
                   :url => commit['url'],
