@@ -22,5 +22,6 @@ module BurtCentral
     autoload :Hoptoad, 'burt_central/sources/hoptoad'
     autoload :Github, 'burt_central/sources/github'
     autoload :Twitter, 'burt_central/sources/twitter'
+    autoload :Feed, 'burt_central/sources/feed'
   end
 end

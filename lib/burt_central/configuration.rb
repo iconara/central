@@ -35,6 +35,9 @@ module BurtCentral
       @configuration[:pivotal_tracker][:projects].each do |project|
         sources << BurtCentral::Sources::PivotalTracker.new(project)
       end
+      @configuration[:feeds].each do |feed_url|
+        sources << BurtCentral::Sources::Feed.new(feed_url)
+      end
       sources
     end
   

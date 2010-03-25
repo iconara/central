@@ -10,6 +10,7 @@ gem 'httparty'
 gem 'sinatra', :git => 'git://github.com/sinatra/sinatra.git', :tag => '1.0.b'
 gem 'less'
 gem 'json'
+gem 'ratom'
 
 group :development do
   gem 'shotgun'
