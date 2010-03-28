@@ -9,7 +9,7 @@ module BurtCentral
     
     def initialize(conf, environment=:development)
       @configuration = symbolize_keys(conf)
-      @environment = environment
+      @environment = environment.to_sym
 
       configure_logging
     end
@@ -50,8 +50,10 @@ module BurtCentral
 
         logger.info("Using database \"#{database_name}\"")
         
+        mongo_logger = @environment == :test ? nil : logger
+        
         @db = {}
-        @db[:connection] = Mongo::Connection.new(nil, nil, :logger => logger)
+        @db[:connection] = Mongo::Connection.new(nil, nil, :logger => mongo_logger)
         @db[:dabatase] = @db[:connection].db(database_name)
         @db[:events_collection] = @db[:dabatase].collection('events')
       end
