@@ -5,18 +5,15 @@ module BurtCentral
   module Sources
     class Github
       include Logging
-      
-      REPOSITORIES_URL = 'https://github.com/api/v2/:format/repos/show/:user'
-      COMMITS_URL = 'https://github.com/api/v2/:format/commits/list/:user/:repository/master'
-      
-      def initialize(login, token)
-        @login, @token = login, token
+            
+      def initialize(github_api)
+        @github_api = github_api
       end
       
       def events(since)
         logger.info('Loading GitHub repositories')
 
-        repos = repositories
+        repos = @github_api.repositories
         
         logger.debug("Found #{repos.size} repositories")
         
@@ -29,7 +26,7 @@ module BurtCentral
             loop do
               logger.debug("Loading page #{page} for repository \"#{repository['name']}\"")
             
-              cs = commits(repository, page)
+              cs = @github_api.commits(repository, page)
               
               throw :all_found if cs.empty?
               
@@ -63,12 +60,19 @@ module BurtCentral
         logger.debug("Backtrace: #{$!.backtrace.join("\n")}")
         []
       end
+    end
+
+    class GithubApi
+      REPOSITORIES_URL = 'https://github.com/api/v2/:format/repos/show/:user'
+      COMMITS_URL = 'https://github.com/api/v2/:format/commits/list/:user/:repository/master'
       
-    private
-    
+      def initialize(login, token, http=HTTParty)
+        @login, @token, @http = login, token, http
+      end
+      
       def repositories
         url = REPOSITORIES_URL.sub(':format', 'json').sub(':user', @login)
-        result = HTTParty.get(url, :query => {:login => @login, :token => @token})
+        result = @http.get(url, :query => {:login => @login, :token => @token})
         if result && result['repositories']
           result['repositories']
         else
@@ -79,14 +83,13 @@ module BurtCentral
       def commits(repository, page=1)
         url = COMMITS_URL.sub(':format', 'json').sub(':user', @login).sub(':repository', repository['name'])
         url = url.sub('https://', 'http://') unless repository['private']
-        result = HTTParty.get(url, :query => {:login => @login, :token => @token, :page => page})
+        result = @http.get(url, :query => {:login => @login, :token => @token, :page => page})
         if result && result['commits']
           result['commits']
         else
           []
         end
       end
-      
     end
   end
 end

@@ -70,11 +70,11 @@ module BurtCentral
       if @configuration.has_key?(:github)
         login = @configuration[:github][:login]
         token = @configuration[:github][:token]
-        
+
         raise 'GitHub configuration is missing login' unless login
         raise 'GitHub configuration is missing token' unless token
       
-        BurtCentral::Sources::Github.new(login, token)
+        Sources::Github.new(Sources::GithubApi.new(login, token))
       else
         logger.warn('No GitHub configuration found')
       end
