@@ -10,7 +10,7 @@ gem 'httparty'
 gem 'sinatra', '>= 1.0'
 gem 'less'
 gem 'json'
-gem 'ratom'
+gem 'feed-normalizer'
 
 group :development do
   gem 'shotgun'

@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
+  <id>tag:github.com,2008:/blog</id>
+  <link type="text/html" href="http://github.com/blog" rel="alternate"/>
+  <link type="application/atom+xml" href="http://github.com/blog.atom" rel="self"/>
+  <title>The GitHub Blog</title>
+  <updated>2010-03-27T02:41:11-07:00</updated>
+  <entry>
+    <id>tag:github.com,2008:Post/622</id>
+    <published>2010-03-26T12:49:15-07:00</published>
+    <updated>2010-03-27T02:41:11-07:00</updated>
+    <link type="text/html" href="http://github.com/blog/622-inline-commit-notes" rel="alternate"/>
+    <title>Inline commit notes</title>
+    <content type="html">&lt;!-- -*-Markdown-*- --&gt;
+
+
+&lt;p&gt;In &lt;a href=&quot;http://github.com/blog/612-introducing-github-compare-view&quot;&gt;Ryan's Compare View post&lt;/a&gt; we promised that we'd be rolling out more code review features and today we're rolling out the latest: inline commit &lt;strike&gt;comments&lt;/strike&gt; &lt;ins&gt;notes&lt;/ins&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Comments &#8594; Notes&lt;/h3&gt;
+
+&lt;p&gt;GitHub has actually had commit and line-based commit comments for a very long time.  The problem was they were tucked into a facebox activated by a little bubble peeking out of the side of the source. Hard to find.&lt;/p&gt;
+
+&lt;div class=&quot;figure&quot;&gt;&lt;img src=&quot;http://share.kyleneath.com/captures/Dock-20100326-121823.jpg&quot; alt=&quot;Example of old style&quot; /&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, we've moved the comments inline and we're calling them &lt;strong&gt;notes&lt;/strong&gt;.  This terminology helps distinguish commit notes from comments on issues and other places.&lt;/p&gt;
+
+&lt;div class=&quot;figure&quot;&gt;&lt;img src=&quot;http://share.kyleneath.com/captures/Dock-20100326-124550.jpg&quot; alt=&quot;Example of old style&quot; /&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As a side-note, we've also deprecated file-based commit notes (that is notes that are attributed to a file, but not a line). Old comments will continue to show up indefinitely, but you will no longer be able to add them.&lt;/p&gt;
+
+&lt;h3&gt;Highlighting important people&lt;/h3&gt;
+
+&lt;p&gt;The new note styles also help to highlight people who you might want to listen to &#8212; notably repository owners &amp;amp; collaborators.&lt;/p&gt;
+
+&lt;div class=&quot;figure&quot;&gt;&lt;img src=&quot;http://share.kyleneath.com/captures/Dock-20100326-124826.jpg&quot; alt=&quot;Example of old style&quot; /&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Publish notes like a pro-fessional&lt;/h3&gt;
+
+&lt;p&gt;Previously with the old commit comments only repository collaborators could delete comments (and no one could edit them).  Now you can edit and delete your own notes (in addition to repository collabs).&lt;/p&gt;
+
+&lt;div class=&quot;figure&quot;&gt;&lt;img src=&quot;http://share.kyleneath.com/captures/Dock-20100326-123313.jpg&quot; alt=&quot;Example of old style&quot; /&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Another source of pain was the fact that you could only preview your comment under specific conditions. Now you'll see that everywhere you can make a note, there's a handy little preview tab that will give you a live preview.&lt;/p&gt;
+
+&lt;div class=&quot;figure&quot;&gt;&lt;img src=&quot;http://share.kyleneath.com/captures/Dock-20100326-122933.jpg&quot; alt=&quot;Preview comments&quot; /&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Things are a little rough around the edges, so let us know if you run into any issues using these new inline notes!&lt;/p&gt;
+</content>
+    <author>
+      <name>kneath</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/621</id>
+    <published>2010-03-24T11:45:21-07:00</published>
+    <updated>2010-03-27T18:19:27-07:00</updated>
+    <link type="text/html" href="http://github.com/blog/621-bye-bye-flash-network-graph-is-now-canvas" rel="alternate"/>
+    <title>Bye Bye Flash: Network Graph is now Canvas</title>
+    <content type="html">&lt;!-- -*-Markdown-*- --&gt;
+
+
+
+
+&lt;div align=&quot;center&quot;&gt;
+&lt;a href=&quot;http://github.com/mojombo/ernie&quot;&gt;&lt;img src=&quot;http://img.skitch.com/20100325-qjdq5mj9nbpwwm77fnw5gghdrm.png&quot;&gt;&lt;/a&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When I initially sat down to write the Network Graph two years ago, I chose Adobe Flash for two primary reasons: 1) I was already familiar with Flash, having worked with it professionally, and 2) plausible alternatives such as Canvas and SVG were poorly supported across browsers, buggy, and slow.&lt;/p&gt;
+
+&lt;p&gt;Times have changed, however, and the HTML5 Canvas draft specification is now almost fully implemented on the latest versions of Chrome, Safari, and Firefox. Opera supports Canvas but not the text API. Canvas is missing entirely from Internet Explorer, but the word on the street is that IE9 will finally offer support. In the meantime, the open source community has created &lt;a href=&quot;http://code.google.com/p/explorercanvas/&quot;&gt;excanvas&lt;/a&gt;, a way to get Canvas support on current versions of IE.&lt;/p&gt;
+
+&lt;p&gt;Given the current status of Canvas and the impending release of Apple's iPad (which will have no Flash support at all), I finally decided to bite the bullet and do a complete rewrite of the Network Graph in JavaScript and Canvas. All told, it took about four full days of coding to get all of the features of the Network Graph reimplemented.&lt;/p&gt;
+
+&lt;p&gt;To make the job as simple as possible, I decided to make the Canvas version of the Graph as much like the Flash version as possible. With the exception of a few tiny details, the Canvas version should behave identically to the Flash version, and it's unlikely that you'd even notice the difference unless you were looking for it. In fact, I pushed the Canvas graphs to production yesterday, right under your noses! For now, browsers with proper Canvas support will see the Canvas version and everyone else will see the Flash version. For an example, see &lt;a href=&quot;http://github.com/mojombo/ernie/network&quot;&gt;Ernie's Network Graph&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I'm quite pleased with the outcome of the project. I was a bit worried about how the JavaScript would handle the complex parts of the code, but modern JS implementations are so fast that performance is as good or better than the Flash equivalent.&lt;/p&gt;
+
+&lt;p&gt;As I was coding the new Network Graph, I jotted down a few notes about how Canvas compares to Flash. There are some areas where Canvas is a breath of fresh air compared to Flash, and others where Flash is clearly more refined. I expect many other developers will be doing Flash to Canvas conversions of their own in the coming months, and so I present to you a collection of these thoughts, in case they are helpful.&lt;/p&gt;
+
+&lt;h3&gt;Where Canvas/JavaScript is better than Flash&lt;/h3&gt;
+
+&lt;h4&gt;Fewer lines of code and smaller deliverable size&lt;/h4&gt;
+
+&lt;p&gt;The Flash version of the Network Graph was comprised of 1,215 lines of code while the Canvas version comes in at 1,064 lines. Not a huge difference, but less code is less code. Where Canvas really shines is in the final deliverable. The compiled SWF file clocks in at 111k compared to the minified Canvas version at just 25k!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt; As was pointed out in the comments, this comparison is not entirely fair since the SWF contains an embedded font and the animated loader gif. On the other hand, I'm quoting the raw size of the JS while it is actually sent over the wire gzipped. So for the sake of true fairness, I compiled the SWF without any assets and gzipped the minified JS. It turns out that the SWF ends up at 19k and the gzipped JS wins again at a mere 6k!&lt;/p&gt;
+
+&lt;h4&gt;Flash works badly on Linux (and friends)&lt;/h4&gt;
+
+&lt;p&gt;Flash is not well supported on Linux and a variety of other operating systems. Compared to many sites, we have a disproportionately high percentage of Linux users. Because of this, it's been a long-running complaint that we use Flash for the Network Graph. With excellent Canvas support in the latest versions of the browsers that Linux users use the most, Flash becomes increasingly less desirable.&lt;/p&gt;
+
+&lt;h4&gt;Inspectable/debuggable via browser&lt;/h4&gt;
+
+&lt;p&gt;Many of today's modern browsers have excellent inspectors and debuggers. It's great to be able to use these to see what's going on in your Canvas project. Getting log output from an embedded Flash component is a huge chore, but with Canvas you can simply use &lt;code&gt;console.log&lt;/code&gt; to output status messages to the inspector.&lt;/p&gt;
+
+&lt;h4&gt;No compilation step&lt;/h4&gt;
+
+&lt;p&gt;With JavaScript and Canvas, you can modify code in your text editor and then simply reload the browser page to see the results. With Flash, there is always a compilation step that gets in the way. I suppose there are workflows that mitigate this problem, but since I was using haXe for my source, I always ended up compiling the SWF file from the command line.&lt;/p&gt;
+
+&lt;h4&gt;Better cursor handling&lt;/h4&gt;
+
+&lt;p&gt;I'm not at all happy with how Flash handles cursors. Changing the cursor always seems to result in a laggy cursor that ruins the user experience and makes the entire Flash component feel shoddily done. With JavaScript I can change the cursor to a variety of built-in options that behave as they should. Custom cursors are still a problem in browsers since most do not respect the hotpoint in the cursor file, but just having access to a standard set of responsive cursors is a huge win.&lt;/p&gt;
+
+&lt;h4&gt;No need to focus to receive keyboard events&lt;/h4&gt;
+
+&lt;p&gt;Since canvas is a proper HTML element, it can receive mouse and keyboard events without any extra hassle. This is quite nice for the Network Graph since it allows you to scroll left and right with the keyboard as soon as the page loads, instead of having to focus the Flash component first.&lt;/p&gt;
+
+&lt;h3&gt;Where Canvas/JavaScript is worse than Flash&lt;/h3&gt;
+
+&lt;h4&gt;Have to handle clipping and redraw manually&lt;/h4&gt;
+
+&lt;p&gt;Probably the biggest difference between Canvas and Flash is the level of abstraction available. Canvas is really just a low-level 2D graphics API. There are no objects or layers or groups or anything beyond what you need to draw various shapes and lines and text on the canvas. Flash, on the other hand, gives you all kinds of constructs that make it conceptually simpler to work with objects.&lt;/p&gt;
+
+&lt;p&gt;For the Network Graph this is a huge difference. With Flash I can simply draw all the commit dots and connection lines onto a single, large layer and then position that layer to reflect the current viewing region. But with Canvas I have to manually redraw the Graph any time the state changes. In addition, to keep things snappy, I have to calculate which commits and connections are currently viewable and ONLY draw those. This results in a substantial amount of code that is completely unnecessary in Flash. Flash computes all that for me.&lt;/p&gt;
+
+&lt;p&gt;It is certainly possible to create a framework that takes care of these details, and over time I expect some very good options to arise. For now, there is &lt;a href=&quot;http://glimr.rubyforge.org/cake/canvas.html&quot;&gt;CAKE&lt;/a&gt; and my own &lt;a href=&quot;http://github.com/mojombo/primer&quot;&gt;Primer&lt;/a&gt;, but neither of those were suitable for this project. I do plan to work more on Primer and eventually convert the Network Graph to use it, but that will take time.&lt;/p&gt;
+
+&lt;h4&gt;No embedded font support&lt;/h4&gt;
+
+&lt;p&gt;With Flash, you can embed fonts right in the SWF and you don't have to worry about how fonts will render. With Canvas you're once again at the mercy of the browser. Depending on what fonts are available to the browser, the final rendering may be drastically different.&lt;/p&gt;
+
+&lt;h4&gt;No built-in multiline text wrap&lt;/h4&gt;
+
+&lt;p&gt;The Canvas spec does not include any way to automatically wrap text within a bounding box whereas Flash makes this task easy. It's not too hard to write a simple line wrapper in JavaScript, but I feel it's something that would be better served as part of the API.&lt;/p&gt;
+
+&lt;h4&gt;No HTML fragment rendering&lt;/h4&gt;
+
+&lt;p&gt;Flash allows you to render HTML fragments to the screen. Canvas does not. Though the draft spec does have this to say:&lt;/p&gt;
+
+&lt;blockquote&gt;
+A future version of the 2D context API may provide a way to render fragments of documents, rendered using CSS, straight to the canvas.
+&lt;/blockquote&gt;
+
+
+&lt;p&gt;So Canvas may get this functionality in the future, but for now we're out of luck.&lt;/p&gt;
+
+&lt;h4&gt;Back to dealing with browser implementation differences&lt;/h4&gt;
+
+&lt;p&gt;One of the biggest benefits of Flash is that you only have to target one implementation: Adobe's. With Canvas, you have to worry about what API methods are implemented on each browser, what bugs each browser introduces that may not be problems on other implementations, etc. As web developers, we're used to this already, but that never makes it feel any better. Fortunately, the browsers I tested all seem to obey the Canvas spec rather well, and I didn't hit any show-stopper differences between implementations. Hopefully as Canvas matures, this statement will remain true.&lt;/p&gt;
+
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;Canvas is the future of 2D (and possibly 3D) graphics on the web. Sure, it has a few shortcomings, but as time passes, it will only get better.&lt;/p&gt;
+
+&lt;p&gt;You can write it with the same language (JavaScript) as the rest of the interaction logic on your web page. It's fast and getting faster. Once a few competent frameworks appear, it will be just as easy to use as Flash for a huge variety of tasks. And once the iPad ships, Flash will become a liability.&lt;/p&gt;
+
+&lt;p&gt;My advice for web developers: if something on your site CAN be done in Canvas, it SHOULD be done in canvas.&lt;/p&gt;
+</content>
+    <author>
+      <name>mojombo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/620</id>
+    <published>2010-03-17T16:11:48-07:00</published>
+    <updated>2010-03-17T18:33:33-07:00</updated>
+    <link type="text/html" href="http://github.com/blog/620-committing-like-crazy" rel="alternate"/>
+    <title>Committing like Crazy</title>
+    <content type="html">&lt;p&gt;Google Code had an anniversary today and they mentioned some of their stats. There was one in particular that I thought was pretty interesting:&lt;/p&gt;
+&lt;blockquote&gt;Today, there are more than 240,000 projects registered, with commits coming in at about 17,000 per day&amp;#8230;about 1 every 5 seconds &lt;sup&gt;1&lt;/sup&gt;&lt;/blockquote&gt;
+&lt;p&gt;Interesting because I had a feeling GitHub&amp;#8217;s numbers were much higher. So, I hit our database with a couple of queries and here they are:&lt;/p&gt;
+&lt;p&gt;Yesterday, GitHub received &lt;strong&gt;33,154&lt;/strong&gt; pushes containing &lt;strong&gt;109,290&lt;/strong&gt; commits&amp;#8230;about 1 every second.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Edit:&lt;/strong&gt; In case you were also wondering about Sourceforge,  according to their homepage, they&amp;#8217;ve received 8,522 commits today.&lt;/p&gt;
+&lt;p&gt;&lt;small&gt;&lt;br /&gt;
+1. &lt;a href=&quot;http://googlecode.blogspot.com/2010/03/happy-5th-birthday-google-code.html&quot;&gt;http://googlecode.blogspot.com/2010/03/happy-5th-birthday-google-code.html&lt;/a&gt;&lt;br /&gt;
+&lt;/small&gt;&lt;/p&gt;</content>
+    <author>
+      <name>pjhyett</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/619</id>
+    <published>2010-03-16T13:48:50-07:00</published>
+    <updated>2010-03-16T14:34:33-07:00</updated>
+    <link type="text/html" href="http://github.com/blog/619-zach-holman-is-a-githubber" rel="alternate"/>
+    <title>Zach Holman is a GitHubber</title>
+    <content type="html">&lt;p&gt;Today is &lt;a href=&quot;http://github.com/holman&quot;&gt;Zach Holman&amp;#8217;s&lt;/a&gt; first day as a GitHubber. He&amp;#8217;ll be making &lt;a href=&quot;http://fi.github.com/&quot;&gt;GitHub:FI&lt;/a&gt; even more awesome.&lt;/p&gt;
+&lt;p&gt;When we met Zach we were immediately impressed. From his strange sense of humor to his &lt;a href=&quot;http://github.com/holman/holmalicious&quot;&gt;non-traditional uses of Git&lt;/a&gt;, we knew he&amp;#8217;d be a great fit for our team.&lt;/p&gt;
+&lt;div align=&quot;center&quot;&gt;&lt;a href=&quot;http://github.com/holman&quot;&gt;&lt;img src=&quot;http://img.skitch.com/20100316-k43sft25j7m6ueyx5kx4p9t1pn.jpg&quot;/&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt;When he&amp;#8217;s not &lt;a href=&quot;http://github.com/holman/stars&quot;&gt;ego surfing&lt;/a&gt;, he &lt;a href=&quot;http://zachholman.com/&quot;&gt;blogs&lt;/a&gt;, &lt;a href=&quot;http://twitter.com/holman&quot;&gt;tweets&lt;/a&gt;, and &lt;a href=&quot;http://github.com/holman&quot;&gt;codes&lt;/a&gt;. Bonus points for consistent usernames across services.&lt;/p&gt;
+&lt;p&gt;Welcome to the team, Zach!&lt;/p&gt;</content>
+    <author>
+      <name>defunkt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/618</id>
+    <published>2010-03-15T22:09:02-07:00</published>
+    <updated>2010-03-15T22:12:03-07:00</updated>
+    <link type="text/html" href="http://github.com/blog/618-github-rebase-39" rel="alternate"/>
+    <title>GitHub Rebase #39</title>
+    <content type="html">&lt;p&gt;Welcome to GitHub Rebase #39! Just remember, &lt;code&gt;git rot&lt;/code&gt; is a unique two-part liquid epoxy that saturates and restores original strength to wood by penetrating the rot. Not necessary to remove loose rotted fibers. Wood must be dry.&lt;/p&gt;
+&lt;p style=&quot;text-align:center;&quot;&gt;&lt;img src=&quot;http://github.com/downloads/rebase/rebase.github.com/s7_017641_imageset_01.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;h3&gt;Featured Project&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/rhomobile/rhodes&quot;&gt;rhodes&lt;/a&gt;&lt;/strong&gt; is a open framework for mobile application development that helps you write apps for the iPhone, Blackberry, Windows Mobile, Android, and Symbian using a bit of Ruby magic. Rhodes includes Rails-inspired template layouts, &lt;a href=&quot;http://code.google.com/p/xruby&quot;&gt;XRuby&lt;/a&gt; to avoid writing native code, and UI helpers like &lt;a href=&quot;http://code.google.com/p/iui/&quot;&gt;iUI&lt;/a&gt; to help with making the &lt;span class=&quot;caps&quot;&gt;HTML&lt;/span&gt; apps feel native. Plenty of device capabilities are also exposed, such as &lt;span class=&quot;caps&quot;&gt;GPS&lt;/span&gt;, contacts, camera, maps, push notifications, and more. Get started with an extensive &lt;a href=&quot;http://wiki.rhomobile.com/index.php/Tutorial&quot;&gt;tutorial&lt;/a&gt; and &lt;a href=&quot;http://wiki.rhomobile.com/index.php/Rhodes&quot;&gt;learn about the architecture&lt;/a&gt; of the framework. There&amp;#8217;s also a great &lt;a href=&quot;http://www.youtube.com/watch?v=T2pztOky_L0&quot;&gt;Google Tech Talk&lt;/a&gt; to get your own mobile app off the ground with Rhodes.&lt;/p&gt;
+&lt;h3&gt;Notably New Projects&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/hungryblank/octosquashes-pub&quot;&gt;octosquashes&lt;/a&gt;&lt;/strong&gt; is an experimental visualization of the public &lt;a href=&quot;http://github.com/timeline&quot;&gt;GitHub timeline&lt;/a&gt; done with Ruby. See it live at &lt;a href=&quot;http://octos.quash.es/&quot;&gt;octo.squash.es&lt;/a&gt;. The site shows the previous day&amp;#8217;s activity for 100 projects, with the most events appearing as the largest boxes. Behind the scenes, it uses &lt;a href=&quot;http://superfeedr.com/&quot;&gt;SuperFeedr&lt;/a&gt; and &lt;a href=&quot;http://github.com/apache/couchdb&quot;&gt;CouchDB&lt;/a&gt; to collect and aggregate the data. It would be neat to see your personal timeline octosquashed, so fork away!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/triplef/LastHistory&quot;&gt;LastHistory&lt;/a&gt;&lt;/strong&gt; is an &lt;span class=&quot;caps&quot;&gt;OSX&lt;/span&gt; visualizer for your &lt;a href=&quot;http://last.fm&quot;&gt;Last.fm&lt;/a&gt; playlists that explores the music you have listened to in whole new ways. Using analysis mode you can &lt;a href=&quot;http://lasthistory.tumblr.com/post/392969009/introducing-lasthistory&quot;&gt;dive into your history&lt;/a&gt;,&lt;/p&gt;
+&lt;blockquote&gt;finding that track that you played 42 times in a row back in 2007, listening to the playlists long deleted, finding out that you gradually moved from hip-hop to minimal electronic, and that you only listen to Radiohead between October and December.&lt;/blockquote&gt;
+&lt;p&gt;You could also jump into Personal mode, which overlays your photos and calendar entries on top of your historical data. Check out a video demo and plenty of screenshots on the &lt;a href=&quot;http://www.frederikseiffert.de/lasthistory/&quot;&gt;project&amp;#8217;s website&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/jaz303/phake&quot;&gt;phake&lt;/a&gt;&lt;/strong&gt; is a make/rake clone in &lt;span class=&quot;caps&quot;&gt;PHP&lt;/span&gt;. Set up a &lt;code&gt;Phakefile&lt;/code&gt;, drop a &lt;code&gt;task 'foo'&lt;/code&gt; and run it with &lt;code&gt;phake foo&lt;/code&gt;. You can set up dependencies for tasks, group them together logically, list tasks with &lt;code&gt;phake -T&lt;/code&gt; and there&amp;#8217;s even &lt;a href=&quot;http://www.capify.org/index.php/Capistrano&quot;&gt;Capistrano&lt;/a&gt; like &lt;code&gt;before&lt;/code&gt; and &lt;code&gt;after&lt;/code&gt; hooks. If you&amp;#8217;re a &lt;span class=&quot;caps&quot;&gt;PHP&lt;/span&gt; developer and would rather write &lt;span class=&quot;caps&quot;&gt;PHP&lt;/span&gt; to help with automated tasks in your web app, check this project out. Just remember, &lt;a href=&quot;http://twitter.com/bmabey/status/10380462742&quot;&gt;language geeks love &lt;span class=&quot;caps&quot;&gt;PHP&lt;/span&gt; too!&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/kangax/html-minifier&quot;&gt;html-minifier&lt;/a&gt;&lt;/strong&gt; is an extreme steamroller for your &lt;span class=&quot;caps&quot;&gt;HTML&lt;/span&gt; that you can &lt;a href=&quot;http://kangax.github.com/html-minifier/&quot;&gt;play with here&lt;/a&gt;. The author has taken web optimization to the next level with plenty of research into what &lt;a href=&quot;http://perfectionkills.com/optimizing-html/&quot;&gt;bloats your pages&lt;/a&gt;, including everything from useless comments, archaic markup habits, whitespace, and more. You can learn about how the parser and minifer works &lt;a href=&quot;http://perfectionkills.com/experimenting-with-html-minifier/#how_it_works&quot;&gt;here&lt;/a&gt; on the author&amp;#8217;s blog. For large production websites every kilobyte counts, and a command line implementation of this or even web frontend version would help with saving everyone some bandwidth.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/rantav/hector&quot;&gt;hector&lt;/a&gt;&lt;/strong&gt; is a Java client for &lt;a href=&quot;http://github.com/facebook/cassandra&quot;&gt;Cassandra&lt;/a&gt;, which is now used on &lt;a href=&quot;http://facebook.com&quot;&gt;plenty&lt;/a&gt; &lt;a href=&quot;http://reddit.com&quot;&gt;of&lt;/a&gt; &lt;a href=&quot;http://twitter.com&quot;&gt;sites&lt;/a&gt;. Hector comes out of the box with a high level, object oriented interface for Cassandra, automatic failover, connection pooling, and load balancing. Read up &lt;a href=&quot;http://prettyprint.me/2010/02/23/hector-a-java-cassandra-client/&quot;&gt;about its features and design process&lt;/a&gt; along with some code samples.&lt;/p&gt;</content>
+    <author>
+      <name>qrush</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/617</id>
+    <published>2010-03-10T11:27:25-08:00</published>
+    <updated>2010-03-10T12:05:05-08:00</updated>
+    <link type="text/html" href="http://github.com/blog/617-pro-git-bloggin" rel="alternate"/>
+    <title>Pro Git Bloggin'</title>
+    <content type="html">&lt;p&gt;Our very own international man of mystery &lt;a href=&quot;http://github.com/schacon&quot;&gt;Scott Chacon&lt;/a&gt; has been blogging some great blogs over at the &lt;a href=&quot;http://progit.org/blog.html&quot;&gt;Pro Git site&lt;/a&gt; recently:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;&lt;a href=&quot;http://progit.org/2010/03/02/undoing-merges.html&quot;&gt;Undoing Merges&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href=&quot;http://progit.org/2010/03/04/smart-http.html&quot;&gt;Smart &lt;span class=&quot;caps&quot;&gt;HTTP&lt;/span&gt; Transport&lt;/a&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;a href=&quot;http://progit.org/2010/03/08/rerere.html&quot;&gt;Rerere Your Boat&lt;/a&gt; (git-rerere)&lt;/li&gt;
+	&lt;li&gt;&lt;a href=&quot;http://progit.org/2010/03/10/bundles.html&quot;&gt;Git&amp;#8217;s Little Bundle of Joy&lt;/a&gt; (git-bundle)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All great! And if you&amp;#8217;re looking for more serious Git knowledge, check out &lt;a href=&quot;http://progit.org/book/&quot;&gt;the book&lt;/a&gt;. It&amp;#8217;s available online for free or you can buy a beautifully typeset print version.&lt;/p&gt;
+&lt;div align=&quot;center&quot;&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.amazon.com/gp/product/1430218339?ie=UTF8&amp;tag=prgi-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1430218339&quot;&gt;&lt;img src=&quot;https://images-na.ssl-images-amazon.com/images/I/41jTq%2B3EV5L._SL160_.jpg&quot;&gt;&lt;/a&gt;&lt;/div&gt;&lt;/p&gt;</content>
+    <author>
+      <name>defunkt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/616</id>
+    <published>2010-03-09T15:48:33-08:00</published>
+    <updated>2010-03-09T15:53:14-08:00</updated>
+    <link type="text/html" href="http://github.com/blog/616-phpbb-on-github" rel="alternate"/>
+    <title>phpBB on GitHub</title>
+    <content type="html">&lt;!-- -*-Markdown-*- --&gt;
+
+
+&lt;p&gt;The &lt;a href=&quot;http://www.phpbb.com/&quot;&gt;phpBB&lt;/a&gt; team recently completed a move from SVN to Git and are now hosting their repositories &lt;a href=&quot;/phpbb&quot;&gt;on GitHub&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.phpbb.com/&quot;&gt;&lt;img src=&quot;http://share.kyleneath.com/captures/skitched-20100309-154455.jpg&quot; alt=&quot;phpBB Logo&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I remember phpBB being one of my first experiences with online programming &#8212; trying to setup a forum for my now dead drumming site.&lt;/p&gt;
+
+&lt;p&gt;What's even better is how much the phpBB team is embracing Git(Hub). Just take a look at the &lt;a href=&quot;http://github.com/phpbb/phpbb3/network&quot;&gt;network graph for phpbb3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://github.com/phpbb/phpbb3/network&quot;&gt;&lt;img src=&quot;http://share.kyleneath.com/captures/The_phpbb3_Network_-_GitHub-20100309-154738.jpg&quot; alt=&quot;network graph&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Welcome, phpBB!  You can read more about their move &lt;a href=&quot;http://www.phpbb.com/community/viewtopic.php?f=14&amp;amp;t=2015905&amp;amp;sid=dfe424f8d740ca943ad9ea0b3c0ab6d9&quot;&gt;on the phpBB announcement&lt;/a&gt;.&lt;/p&gt;
+</content>
+    <author>
+      <name>kneath</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/609</id>
+    <published>2010-03-09T07:25:26-08:00</published>
+    <updated>2010-03-09T07:30:05-08:00</updated>
+    <link type="text/html" href="http://github.com/blog/609-tracking-deploys-with-compare-view" rel="alternate"/>
+    <title>Tracking Deploys with Compare View</title>
+    <content type="html">&lt;!-- -*-Markdown-*- --&gt;
+
+
+&lt;p&gt;We log a message to &lt;a href=&quot;http://campfirenow.com/&quot;&gt;Campfire&lt;/a&gt; anytime someone
+deploys code to staging or production. It looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://img.skitch.com/20100301-8jwyxdn77c32nsehp5afgan7ak.png&quot; alt=&quot;campfire notification screencap&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Recently, we added the link pointing to a &lt;a href=&quot;http://github.com/blog/612-introducing-github-compare-view&quot; title=&quot;Introducing GitHub Compare View&quot;&gt;Compare View&lt;/a&gt; where you
+can review the commits that were shipped out along with a full diff of
+changes:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://img.skitch.com/20100301-kwp9ndstb86ih97pc1u1nt8kni.png&quot; alt=&quot;compare view screencap&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This makes it really easy for everyone to keep tabs on what's being
+deployed and encourages &lt;em&gt;on the fly&lt;/em&gt; code review. And because Campfire
+keeps transcripts when you're offline, it doubles as a kind of
+deployment log. I typically start my day by catching up on the Campfire
+backlog, hitting the Compare View links as I go. When I'm done, I have a
+bunch of tabs queued up in my browser for review.&lt;/p&gt;
+
+&lt;h3&gt;How It Works&lt;/h3&gt;
+
+&lt;p&gt;The most important piece of this trick is generating the Compare View
+URL. The example in the screen cap above is truncated, so I'll reproduce
+it here in full here:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;http://github.com/defunkt/github/compare/&lt;strong&gt;88ad045&lt;/strong&gt;...&lt;strong&gt;46be4aa&lt;/strong&gt;&lt;/code&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Here, &lt;code&gt;defunkt/github&lt;/code&gt; is the repository with the code we're deploying.
+Just in case it isn't obvious: you'll need to change that to your own
+repository.&lt;/p&gt;
+
+&lt;p&gt;The last part of the URL is the commit range. It's important to use
+commit SHA1s as the starting and ending points. We could have used the
+name of the branch being deployed as the ending point, but doing so
+would cause the Compare View to change when commits are pushed to the
+branch in the future. By using the commit SHA1s, we're guaranteed that
+the Compare View will never change.&lt;/p&gt;
+
+&lt;p&gt;Here's the &lt;a href=&quot;http://www.capify.org/index.php/Capistrano&quot;&gt;Capistrano&lt;/a&gt;
+recipe we use to generate the Compare View URL and send the Campfire
+notification (&lt;code&gt;config/deploy/notify.rb&lt;/code&gt;):&lt;/p&gt;
+
+&lt;script src=&quot;http://gist.github.com/317992.js&quot;&gt;&lt;/script&gt;
+
+
+
+
+&lt;div&gt;
+&lt;noscript&gt;
+&lt;pre&gt;require 'campfire'
+
+namespace :notify do
+  desc 'Alert Campfire of a deploy'
+  task :campfire do
+    branch_name = branch.split('/', 2).last
+    deployer = Etc.getlogin
+    deployed = `curl -s http://github.com/site/sha`[0,7]
+    deploying = `git rev-parse HEAD`[0,7]
+    compare_url = &quot;#{source_repo_url}/compare/#{deployed}...#{deploying}&quot;
+
+    Campfire.notify(
+      &quot;#{deployer} is deploying &quot; +
+      &quot;#{branch_name} (#{deployed}..#{deploying}) to #{rails_env} &quot; +
+      &quot;with `cap #{ARGV.join(' ')}` (#{compare_url})&quot;
+    )
+  end
+end
+
+before &quot;deploy:update&quot;, &quot;notify:campfire&quot;
+&lt;/pre&gt;
+&lt;/noscript&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;This isn't something you can drop into an existing project unmodified,
+but it should serve as a good starting point. A bit more detail on
+what's happening in there:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;deployed = &amp;#96;curl -s http://github.com/site/sha&amp;#96;[0, 7]&lt;/code&gt;&lt;br&gt;
+This is how we figure out what's already deployed. The response
+is a 40 character SHA1 of the commit the site is currently running
+under.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;deploying = &amp;#96;git rev-parse HEAD&amp;#96;[0,7]&lt;/code&gt;&lt;br&gt;
+This is how we figure out what's being deployed right now. Again,
+a 40 character SHA1 of the working repository's HEAD commit.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Campfire.notify(...)&lt;/code&gt;
+This is a lightweight wrapper over the
+&lt;a href=&quot;http://developer.37signals.com/campfire/&quot;&gt;Campfire API&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;And that's it, really.&lt;/p&gt;
+
+&lt;p&gt;This technique could easily be adapted for other deployment strategies (&lt;a href=&quot;http://heroku.com&quot;&gt;Heroku&lt;/a&gt; -- where you at) or notification systems like email, IRC, or Twitter.&lt;/p&gt;
+</content>
+    <author>
+      <name>rtomayko</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/615</id>
+    <published>2010-03-08T19:58:11-08:00</published>
+    <updated>2010-03-08T20:02:52-08:00</updated>
+    <link type="text/html" href="http://github.com/blog/615-github-rebase-38" rel="alternate"/>
+    <title>GitHub Rebase #38</title>
+    <content type="html">&lt;p&gt;Welcome to Rebase 38. Suggestions for projects to cover are always welcome, check out the criteria &lt;a href=&quot;http://rebase.github.com/howto.html&quot;&gt;here&lt;/a&gt;. In the meantime, check out &lt;a href=&quot;http://lumberjaph.net/blog/index.php/2010/03/07/github-explorer-a-preview/&quot;&gt;this preview&lt;/a&gt; of some neat visualizations using the &lt;a href=&quot;http://develop.github.com&quot;&gt;GitHub &lt;span class=&quot;caps&quot;&gt;API&lt;/span&gt;&lt;/a&gt; of how developers are connected:&lt;/p&gt;
+&lt;p style=&quot;text-align:center;&quot;&gt;&lt;a href=&quot;http://lumberjaph.net/blog/index.php/2010/03/07/github-explorer-a-preview/&quot;&gt;&lt;img src=&quot;http://farm5.static.flickr.com/4019/4413528529_ed1326d072.jpg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Featured Project&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/facebook/hiphop-php&quot;&gt;hiphop&lt;/a&gt;&lt;/strong&gt; is &lt;a href=&quot;http://github.com/facebook&quot;&gt;Facebook&amp;#8217;s&lt;/a&gt; &lt;span class=&quot;caps&quot;&gt;PHP&lt;/span&gt; to C++ source code transformer that drops several language features such as &lt;code&gt;eval()&lt;/code&gt; in order to statically convert and compile it with &lt;code&gt;g++&lt;/code&gt;. This gives Facebook a huge &lt;span class=&quot;caps&quot;&gt;CPU&lt;/span&gt; reduction compared to using Apache and the Zend &lt;span class=&quot;caps&quot;&gt;PHP&lt;/span&gt; engine, which really adds up when you have 260 billion page views per month and 30,000+ servers. (&lt;a href=&quot;http://vimeo.com/9641036&quot;&gt;More numbers here.&lt;/a&gt;) The idea behind hiphop is that most high-traffic &lt;span class=&quot;caps&quot;&gt;PHP&lt;/span&gt; sites eventually have parts that get rewritten to C/C++ for performance reasons, so this transformation engine allows more engineers to continue writing &lt;span class=&quot;caps&quot;&gt;PHP&lt;/span&gt; instead of a lower level language. There&amp;#8217;s plenty of information on &lt;a href=&quot;http://wiki.github.com/facebook/hiphop-php/&quot;&gt;the wiki&lt;/a&gt; on how to get started and run it with nginx. Just keep in mind, &lt;a href=&quot;http://www.brandonsavage.net/hiphop-for-php-who-benefits-who-doesnt/&quot;&gt;hiphop isn&amp;#8217;t for everyone&lt;/a&gt;, but it could help if you&amp;#8217;re running a large &lt;span class=&quot;caps&quot;&gt;PHP&lt;/span&gt; app across multiple servers.&lt;/p&gt;
+&lt;h3&gt;Notably New Projects&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/residuum/Oileide&quot;&gt;Oileide&lt;/a&gt;&lt;/strong&gt; is an auto-bookmarking library that can really help out with perma-linking pages that are very &lt;span class=&quot;caps&quot;&gt;AJAX&lt;/span&gt; intensive. The gist is this: load in oileide&amp;#8217;s JS/&lt;span class=&quot;caps&quot;&gt;CSS&lt;/span&gt; scripts, use the unobtrusive helpers to load content, and then the IDs you set on links will be autoloaded if someone reloads the page. From the &lt;span class=&quot;caps&quot;&gt;README&lt;/span&gt;, if you have:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;p id=&quot;my-content&quot;&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;a href=&quot;test.html&quot;
+    rel=&quot;oileide[my-content]&quot; id=&quot;mylink&quot;&amp;gt;Click Me&amp;lt;/a&amp;gt;
+
+Clicking this link will add #mylink to the location in the
+browser, and load the body content of test.html into the 
+&amp;lt;p&amp;gt; with id=&quot;my-content&quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This library has no other dependencies (like &lt;a href=&quot;http://github.com/jquery/jquery&quot;&gt;jQuery&lt;/a&gt;) but the idea could easily be extended or adapted. If you&amp;#8217;re doing any &lt;span class=&quot;caps&quot;&gt;AJAX&lt;/span&gt; content that needs to be linked, check this project out.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/xiongchiamiov/sleeping-wolf&quot;&gt;sleeping-wolf&lt;/a&gt;&lt;/strong&gt; is a &lt;a href=&quot;http://rubygems.org/gems/sleeping-wolf&quot;&gt;RubyGem&lt;/a&gt; that synchronizes tickets in &lt;a href=&quot;http://wiki.github.com/schacon/ticgit/&quot;&gt;ticgit&lt;/a&gt;, a simple git ticket tracking system that uses your local repository, with GitHub Issues. Sounds great, but it&amp;#8217;s &lt;em&gt;super-alpha&lt;/em&gt; and needs help from the community. Better documentation for ticgit would be great to have, perhaps a cute logo, and the actual code for synchronization (perhaps using the &lt;a href=&quot;http://develop.github.com/p/issues.html&quot;&gt;Issues &lt;span class=&quot;caps&quot;&gt;API&lt;/span&gt;?&lt;/a&gt;). This project could really help out GitHub users that like to keep local backups of their project issues, so get hacking!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/andreyvit/funfix&quot;&gt;funfix&lt;/a&gt;&lt;/strong&gt; is a Python fixtures library that can whip up sample test data using Google App Engine&amp;#8217;s &lt;a href=&quot;http://code.google.com/appengine/docs/python/datastore/&quot;&gt;Datastore &lt;span class=&quot;caps&quot;&gt;API&lt;/span&gt;&lt;/a&gt;. Heavily inspired by Rails&amp;#8217; &lt;a href=&quot;http://api.rubyonrails.org/classes/Fixtures.html&quot;&gt;fixtures&lt;/a&gt; and &lt;a href=&quot;http://github.com/thoughtbot/factory_girl&quot;&gt;factory_girl&lt;/a&gt;, funfix includes plenty of examples on its &lt;span class=&quot;caps&quot;&gt;README&lt;/span&gt; about integrating it with your app, and some neat features including deriving fixtures from other fixtures. This project was &lt;a href=&quot;http://github.com/andreyvit/funfix/commit/06780efad4400e2f4a9de962255bf1d4946a963e&quot;&gt;extracted&lt;/a&gt; from &lt;a href=&quot;http://crashkitapp.appspot.com/&quot;&gt;CrashKit&lt;/a&gt;, which may be worth a look for those into &amp;#8216;Exception-driven development&amp;#8217;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/samuel/squawk&quot;&gt;squawk&lt;/a&gt;&lt;/strong&gt; is a command line tool for parsing and running &lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt;-like queries on your log files, which is also written in Python. I know, that sounds scary, but it&amp;#8217;s really useful if you&amp;#8217;re not already a Unix wizard. You can run queries such as &lt;code&gt;SELECT COUNT(1) AS n, remote_addr FROM file WHERE status = 200&lt;/code&gt; on Apache or nginx log files, or even &lt;code&gt;GROUP BY status&lt;/code&gt; to get an aggregate count of all statuses your web server has dealt out. With subqueries and aggregates, this tool could definitely save you time when hunting in log files. Combined with &lt;a href=&quot;http://github.com/tobi/clarity&quot;&gt;clarity&lt;/a&gt; for a web interface view to &lt;code&gt;grep&lt;/code&gt; and &lt;code&gt;tail -f&lt;/code&gt;, this is pretty much a sysadmin&amp;#8217;s dream.&lt;/p&gt;</content>
+    <author>
+      <name>qrush</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/614</id>
+    <published>2010-03-08T12:43:46-08:00</published>
+    <updated>2010-03-08T12:45:25-08:00</updated>
+    <link type="text/html" href="http://github.com/blog/614-ncsa-mosaic-on-github" rel="alternate"/>
+    <title>NCSA Mosaic on GitHub</title>
+    <content type="html">&lt;p&gt;This is just great: &lt;span class=&quot;caps&quot;&gt;NCSA&lt;/span&gt; Mosaic on GitHub at &lt;a href=&quot;http://github.com/alandipert/ncsa-mosaic&quot;&gt;http://github.com/alandipert/ncsa-mosaic&lt;/a&gt;.&lt;/p&gt;
+&lt;div align=&quot;center&quot;&gt;&lt;a href=&quot;http://github.com/alandipert/ncsa-mosaic&quot;&gt;&lt;img src=&quot;http://img.skitch.com/20100308-pw11fgabs4ukqf89c29dy6wipn.png&quot;/&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt;This now joins the &lt;a href=&quot;http://github.com/defunkt/quake&quot;&gt;Quake source&lt;/a&gt; as one of my favorite old school projects.&lt;/p&gt;
+&lt;p&gt;(Hat tip &lt;a href=&quot;http://twitter.com/flangy/status/10186763390&quot;&gt;flangy&lt;/a&gt;.)&lt;/p&gt;</content>
+    <author>
+      <name>defunkt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/613</id>
+    <published>2010-03-05T14:24:29-08:00</published>
+    <updated>2010-03-05T14:26:49-08:00</updated>
+    <link type="text/html" href="http://github.com/blog/613-github-drinkup-peninsula-edition" rel="alternate"/>
+    <title>GitHub Drinkup, Peninsula Edition</title>
+    <content type="html">&lt;p&gt;It&amp;#8217;s about time &amp;#8211; the GitHub drinkup is moving to the peninsula!  One week only, don&amp;#8217;t miss out!  If you&amp;#8217;re a peninsula dweller like me, join me at &lt;a href=&quot;http://www.city-pub.com/html/home.html&quot;&gt;CityPub&lt;/a&gt; in Redwood City at 8pm next Thursday, March 11.  It&amp;#8217;s right by the CalTrain stop, so you have no excuse:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=city+pub&amp;sll=37.481164,-122.227181&amp;sspn=0.006845,0.01442&amp;ie=UTF8&amp;hq=city+pub&amp;hnear=&amp;ll=37.48848,-122.23069&amp;spn=0.006845,0.01442&amp;z=16&amp;iwloc=A&quot;&gt;&lt;img src=&quot;http://img.skitch.com/20100305-1dhbiwxtj195md9f4g53ps1s1u.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;2620 Broadway Street&lt;br /&gt;
+Redwood City, CA 94063-1533&lt;br /&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Hope to see you there!&lt;/p&gt;</content>
+    <author>
+      <name>schacon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/612</id>
+    <published>2010-03-01T09:09:55-08:00</published>
+    <updated>2010-03-02T15:59:50-08:00</updated>
+    <link type="text/html" href="http://github.com/blog/612-introducing-github-compare-view" rel="alternate"/>
+    <title>Introducing GitHub Compare View</title>
+    <content type="html">&lt;!-- -*-Markdown-*- --&gt;
+
+
+&lt;p&gt;Picking up where Kyle left off in his &lt;a href=&quot;http://github.com/blog/611-branch-lists&quot;&gt;Branch List post&lt;/a&gt;, we're all very
+excited to announce a new feature designed to ease the process of
+comparing two points in a repository's history. It's called
+&lt;em&gt;GitHub Compare View&lt;/em&gt; and it's going to change the way you review code.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://github.com/magnetised/mongomapper/compare/master...proxy_owner&quot;&gt;&lt;img src=&quot;http://img.skitch.com/20100227-r25g98yw9qe6kr92nj4ysu4dki.png&quot;  alt=&quot;compare view example&quot; height=&quot;901&quot; width=&quot;540&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The Compare View brings all information needed to determine what changed
+over a series of commits onto a single page: a condensed commit list in
+chronological order, followed by a rollup diff of all changes between
+the two points, followed by any relevant commit comments. All in the
+same place and with a single well-defined URL.&lt;/p&gt;
+
+&lt;p&gt;It's a versatile feature with many potential uses. Some of our favorites
+are detailed below with links to live examples of Compare View in
+action.&lt;/p&gt;
+
+&lt;h3&gt;Reviewing topic branches before merging&lt;/h3&gt;
+
+&lt;p&gt;Reviewing topic branches is a fundamental activity for anyone
+maintaining an active open source project or working with a team on a
+private project. Until now, the easiest way to do a thorough review of a
+complex topic branch was to drop down to the shell and run some
+combination of the &lt;code&gt;git log&lt;/code&gt;, &lt;code&gt;git cherry&lt;/code&gt;, and &lt;code&gt;git diff&lt;/code&gt; commands.
+With Compare View, we've taken that process and put it behind a single
+URL, so jumping into the review process is usually as simple as
+following a link.&lt;/p&gt;
+
+&lt;p&gt;Follow the examples below to see it live:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://github.com/jquery/jquery/compare/omgrequire&quot;&gt;&lt;img src=&quot;http://img.skitch.com/20100228-rn7t316n1fmbm3hayum6csrd3h.png&quot; alt=&quot;jquery omgrequire branch screen cap&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/jquery/jquery/compare/omgrequire&quot;&gt;jQuery require support branch&lt;/a&gt; (pictured above)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/defunkt/mustache/compare/pragmas&quot;&gt;Mustache pragma support branch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/mxcl/homebrew/compare/rename&quot;&gt;Homebrew Pathname.rename branch&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Generating comprehensive change logs for releases&lt;/h3&gt;
+
+&lt;p&gt;While Compare View was initially designed to supplement our code review
+process, we quickly found that it was useful in a variety of other
+scenarios. Projects that are diligent about tagging can use Compare View
+to generate a comprehensive list of changes between any two releases.&lt;/p&gt;
+
+&lt;p&gt;A few examples in the wild:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://github.com/sinatra/sinatra/compare/0.9.4...1.0.a&quot;&gt;&lt;img src=&quot;http://img.skitch.com/20100228-k58rujt9ndjpeatwuhncydkaes.png&quot; alt=&quot;Sinatra 0.9.4...1.0.a screen cap&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/sinatra/sinatra/compare/0.9.4...1.0.a&quot;&gt;Changes between the Sinatra 0.9.4 and 1.0.a releases&lt;/a&gt; (pictured above)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/rails/rails/compare/v3.0.0.beta1...master&quot;&gt;Changes between the Rails 3.0 beta and current master&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/git/git/compare/master...next&quot;&gt;Changes slated for the next version of Git&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;How to customize the commit range&lt;/h3&gt;
+
+&lt;p&gt;The commit range determines the starting and ending point to use in the
+comparison. It looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;img src=&quot;http://img.skitch.com/20100228-ri1swsxfentnhf489kkqg7m18q.png&quot; style=&quot;margin:0 auto&quot;&gt;&lt;/center&gt;&lt;/p&gt;
+
+
+&lt;p&gt;Here, we're reviewing the &lt;code&gt;proxy_owner&lt;/code&gt; topic branch using the &lt;code&gt;master&lt;/code&gt;
+branch as the starting point. Hitting the
+&lt;img src=&quot;http://github.com/images/modules/compare/switch_icon.png&quot; style=&quot;border:0;padding:0;margin:0;display:inline;vertical-align:middle&quot;&gt;
+button switches the starting and ending points. Clicking the starting
+or ending point label brings up the ref selector:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://img.skitch.com/20100228-bk54e2yr28mec1utx3w9dbsfrg.png&quot; alt=&quot;ref selector&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Enter any branch, tag, or commit SHA1 in the little box there and get
+an instant preview of the newly selected revision. Hit &lt;em&gt;Save &amp;amp; Refresh&lt;/em&gt;
+once you're happy with the selection.&lt;/p&gt;
+
+&lt;h3&gt;Getting There&lt;/h3&gt;
+
+&lt;p&gt;We've seen what the Compare View feels like and how to change the commit
+range once there, but how do you get to a Compare View in the first
+place?&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;The Branch List page.&lt;/strong&gt; Click the &lt;em&gt;Compare&lt;/em&gt; button next to any
+branch to jump into a Compare View with that branch as the ending point.
+See &lt;a href=&quot;http://github.com/blog/611-branch-lists&quot;&gt;Kyle's post introducing the Branch List page&lt;/a&gt; for more
+information.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Push and Branch Create events.&lt;/strong&gt; All &lt;em&gt;push&lt;/em&gt; events with more than
+one commit now link to a Compare View over all commits included
+in the push. All &lt;em&gt;create branch&lt;/em&gt; events now link to a Compare View
+between the repository's default branch (typically &lt;code&gt;master&lt;/code&gt;) and the
+branch head. This effects dashboards, repository timelines, and activity
+feeds.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Service Hooks.&lt;/strong&gt; The IRC and Campfire &lt;a href=&quot;http://github.com/blog/41-service-integration&quot;&gt;service hooks&lt;/a&gt; now
+drop a Compare View link when more than one commit is included
+in the push. More service hooks will follow.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Compare View URLs&lt;/h3&gt;
+
+&lt;p&gt;We wanted Compare View to be something we could link to from external
+sites and services anytime we were referring to a range of commits in a
+git repository. As such, we thought it would be worthwhile to document
+the basic structure of a Compare View URL:&lt;/p&gt;
+
+&lt;p&gt;&lt;code style='background-color:#fff;border-width:0'&gt;http://github.com/&lt;b&gt;&amp;lt;USER&gt;&lt;/b&gt;/&lt;b&gt;&amp;lt;REPO&gt;&lt;/b&gt;/compare/&lt;b&gt;[&amp;lt;START&gt;&lt;/b&gt;...&lt;b&gt;]&amp;lt;END&gt;&lt;/b&gt;&lt;/i&gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Where &lt;strong&gt;&lt;code&gt;&amp;lt;USER&amp;gt;&lt;/code&gt;&lt;/strong&gt; and &lt;strong&gt;&lt;code&gt;&amp;lt;REPO&amp;gt;&lt;/code&gt;&lt;/strong&gt; are obvious, and &lt;strong&gt;&lt;code&gt;&amp;lt;START&amp;gt;&lt;/code&gt;&lt;/strong&gt; and
+&lt;strong&gt;&lt;code&gt;&amp;lt;END&amp;gt;&lt;/code&gt;&lt;/strong&gt; are branch names, tag names, or commit SHA1s specifying the
+range of history to compare. If &lt;strong&gt;&lt;code&gt;&amp;lt;START&amp;gt;&lt;/code&gt;&lt;/strong&gt; is omitted, the
+repository's default branch is assumed.&lt;/p&gt;
+
+&lt;h3&gt;Big Plans&lt;/h3&gt;
+
+&lt;p&gt;Compare View is the first of many code review related features we plan
+to introduce this year. We'll be incorporating Compare View into other
+areas of the site and developing entirely new features with Compare View
+as a core component.&lt;/p&gt;
+
+&lt;p&gt;That being said, we felt it was important that the basic task of
+comparing two points in a repository's history stand on its own and have
+a well defined URL so that the feature is useful in a broad number of
+circumstances. If everything goes to plan, you'll be seeing Compare View
+links tossed around on mailing lists, forums, IRC channels, Campfire,
+blog posts, release announcements, issue trackers, etc. in the very
+near future.&lt;/p&gt;
+</content>
+    <author>
+      <name>rtomayko</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/611</id>
+    <published>2010-03-01T09:07:18-08:00</published>
+    <updated>2010-03-01T12:42:13-08:00</updated>
+    <link type="text/html" href="http://github.com/blog/611-branch-lists" rel="alternate"/>
+    <title>Branch Lists</title>
+    <content type="html">&lt;!-- -*-Markdown-*- --&gt;
+
+
+&lt;p&gt;Git's branching model is one of it's best features.  Branches are cheap, fast and extremely flexible.  They're great for developing features, maintaining old releases, or just plain experimentation.&lt;/p&gt;
+
+&lt;p&gt;If you spend a lot of time with git, you'll also find that there's a lot of really useful information to be discovered in the way git can compare various branches.  We're using some of this information to generate our new &lt;a href=&quot;http://github.com/merbjedi/mongomapper/branches/master&quot;&gt;branch list&lt;/a&gt; page (you can get to this page from the 'Branch List' subnav item under Source).&lt;/p&gt;
+
+&lt;h3&gt;Check in on your topic branches in one glance&lt;/h3&gt;
+
+&lt;p&gt;Not only do these new branch list pages show you which branches exist on your remote, but you can see at a glance how they compare to any branch.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://github.com/merbjedi/mongomapper/branches/master&quot;&gt;&lt;img src=&quot;http://share.kyleneath.com/captures/All_Branches_for_merbjedi_s_mongomapper_-_GitHub-20100226-182612.jpg&quot; alt=&quot;Example Branch List Page&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Each branch has what we call a divergence graph. On the left side of the black bar we show how many commits that branch is behind (commits in master not found in the branch).  On the right side, we show how many commits that branch is ahead (commits found in the branch, but not in master).  The colors of the bars indicate how recent the last commit was.&lt;/p&gt;
+
+&lt;p&gt;In that one graphic, you get an idea of when the last time each branch was updated with master, how far along that branch is, and if people have been working on it recently.&lt;/p&gt;
+
+&lt;p&gt;These graphs also have some implicit rules that can help when merging:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;No left side bar&lt;/strong&gt; - This branch is safe to merge with your base branch and there will not be any conflicts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;No right side bar&lt;/strong&gt; - This branch has already been merged into your base branch, so it's probably ready to be deleted.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Large left and right side bars&lt;/strong&gt; - This branch is probably going to be difficult to merge. There's a lot of unique commits in the branch and in your base branch so the likelihood of merge conflicts is much higher.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Having fun with Rails releases&lt;/h3&gt;
+
+&lt;p&gt;This view can also be fun to glean some information out of Rails releases.  Rails keeps a branch for each point release.  If we take a look at the branches with 2.2 as the base, we &lt;a href=&quot;http://github.com/rails/rails/branches/2-2-stable&quot;&gt;get a pretty interesting page&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://github.com/rails/rails/branches/2-2-stable&quot;&gt;&lt;img src=&quot;http://share.kyleneath.com/captures/All_Branches_for_rails_s_rails_-_GitHub-20100226-184625.jpg&quot; alt=&quot;Rails Releases&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Using the divergence graphs, we can see how each of the point releases of Rails compare to the 2.2 release. You can also see that there was almost as many commits from 1.2-&gt;2.2 as there has been from 2.2-&gt;master (Rails 3 beta).&lt;/p&gt;
+
+&lt;h3&gt;Compare View&lt;/h3&gt;
+
+&lt;p&gt;The last piece of the branch lists page is the compare button on each branch.  This is an &lt;em&gt;awesome&lt;/em&gt; feature--but I think I'll &lt;a href=&quot;http://github.com/blog/612-introducing-github-compare-view&quot;&gt;leave it to Ryan to explain in more detail&lt;/a&gt;.&lt;/p&gt;
+</content>
+    <author>
+      <name>kneath</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/610</id>
+    <published>2010-03-01T06:16:02-08:00</published>
+    <updated>2010-03-01T06:21:02-08:00</updated>
+    <link type="text/html" href="http://github.com/blog/610-github-rebase-37" rel="alternate"/>
+    <title>GitHub Rebase #37</title>
+    <content type="html">&lt;p&gt;According to &lt;a href=&quot;http://www.kernel.org/pub/software/scm/git/docs/git-checkout.html&quot; title=&quot;1&quot;&gt;git-checkout&lt;/a&gt;: &amp;#8220;You can make changes and create a new commit on top of a detached &lt;span class=&quot;caps&quot;&gt;HEAD&lt;/span&gt;&amp;#8221;. &lt;a href=&quot;http://hades.name/blog/2010/01/22/git-your-friend-not-foe-vol-2-branches/&quot;&gt;Git is your Friend, not a Foe&lt;/a&gt; explains how this is possible.&lt;/p&gt;
+&lt;p style=&quot;text-align:center;&quot;&gt;&lt;img src=&quot;http://github.com/downloads/rebase/rebase.github.com/git.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;h3&gt;Featured Project&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/simplestation/mediacore&quot;&gt;mediacore&lt;/a&gt;&lt;/strong&gt; is a audio and video content management system built on top of Python&amp;#8217;s &lt;a href=&quot;http://turbogears.org/&quot;&gt;TurboGears&lt;/a&gt; and &lt;a href=&quot;http://github.com/mootools/mootools-core&quot;&gt;MooTools&lt;/a&gt;. If you&amp;#8217;re looking for a YouTube inspired site complete with comments, podcast publication for iTunes, and a great theme out of the box, look no further. It can handle video or audio posted on other sites such as Google Video or Vimeo, or you can distribute media straight from the site. Check out the &lt;a href=&quot;http://getmediacore.com/demo&quot;&gt;demo&lt;/a&gt; or even &lt;a href=&quot;http://assistivetechnology.tv/&quot;&gt;some&lt;/a&gt; &lt;a href=&quot;http://tmcyouth.com/media/&quot;&gt;existing&lt;/a&gt; installs of the system in use to see what can be done with it. The project&amp;#8217;s &lt;a href=&quot;http://getmediacore.com/&quot;&gt;site&lt;/a&gt; and &lt;a href=&quot;http://getmediacore.com/docs&quot;&gt;documentation&lt;/a&gt; can help you get started with your own MediaCore site.&lt;/p&gt;
+&lt;h3&gt;Notably New Projects&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/OneGeek/WebGLU&quot;&gt;WebGLU&lt;/a&gt;&lt;/strong&gt; makes developing &lt;a href=&quot;http://khronos.org/webgl/wiki/Main_Page&quot;&gt;WebGL&lt;/a&gt; applications fun. It provides a series of higher level functions that makes common rendering, animation, and shading techniques easier while still allowing developers to dip down into lower level APIs if necessary. There&amp;#8217;s plenty of &lt;a href=&quot;http://github.com/OneGeek/WebGLU/tree/master/examples/&quot;&gt;examples&lt;/a&gt; in the repo, and you can get started in only &lt;a href=&quot;http://bjartr.blogspot.com/2010/01/remember-that-50-line-webgl-demo-now.html#more&quot;&gt;25 lines&lt;/a&gt; of JavaScript. The only catch is that you&amp;#8217;ll need the &lt;a href=&quot;http://hacks.mozilla.org/2009/09/webgl-for-firefox/&quot;&gt;3.7 Alpha&lt;/a&gt; of Firefox to try it out, and then &lt;a href=&quot;http://hacks.mozilla.org/2009/12/webgl-draft-released-today/&quot;&gt;enable it&lt;/a&gt; in about:config. One step closer to &lt;a href=&quot;http://www.slideshare.net/madrobby/i-cant-believe-its-not-flash&quot;&gt;no more Flash!&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/kremso/serenity&quot;&gt;serenity&lt;/a&gt;&lt;/strong&gt; is a Ruby library that helps with creating OpenOffice documents (.odt), complete with Firefly inspired examples. You can essentially think of it as &lt;span class=&quot;caps&quot;&gt;ERB&lt;/span&gt;, just instead of text or &lt;span class=&quot;caps&quot;&gt;HTML&lt;/span&gt;, you&amp;#8217;re producing an actual word processing document. The neat part is that you can use Ruby blocks and code inside of the .odt template. Clone away and browse the &lt;a href=&quot;http://github.com/kremso/serenity/tree/master/showcase/&quot;&gt;showcase&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/bortzmeyer/grong&quot;&gt;grong&lt;/a&gt;&lt;/strong&gt; is a &lt;a href=&quot;http://en.wikipedia.org/wiki/Grong&quot;&gt;municipality in Nord-Tr&#248;ndelag county, Norway&lt;/a&gt; and a Gross and ROugh Nameserver written in Go. &lt;span class=&quot;caps&quot;&gt;GRONG&lt;/span&gt; can be used as an authoritative name server like &lt;a href=&quot;http://www.nlnetlabs.nl/projects/nsd/&quot;&gt;nsd&lt;/a&gt;, and it comes with a few test built-in responders including an in-progress &lt;a href=&quot;http://public.as112.net/&quot;&gt;AS112&lt;/a&gt; implementation. It&amp;#8217;s in a very experimental state, but it&amp;#8217;s definitely a great example of what&amp;#8217;s possible with Go, since it uses &lt;a href=&quot;http://golang.org/doc/effective_go.html#goroutines&quot;&gt;Goroutines&lt;/a&gt; and also &lt;a href=&quot;http://groups.google.com/group/golang-nuts/browse_thread/thread/01ec4cf9cfa8e9e5&quot;&gt;binary protocol reading and writing&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;http://github.com/paulj/webgac&quot;&gt;webgac&lt;/a&gt;&lt;/strong&gt; is a dependency manager much in the style of &lt;a href=&quot;http://maven.apache.org/&quot;&gt;Maven&lt;/a&gt;, &lt;a href=&quot;http://ant.apache.org/ivy&quot;&gt;Ivy&lt;/a&gt;, and maybe even a little bit of &lt;a href=&quot;http://rubygems.org&quot;&gt;RubyGems&lt;/a&gt; for .&lt;span class=&quot;caps&quot;&gt;NET&lt;/span&gt;. This project uses &lt;a href=&quot;http://www.webdav.org/&quot;&gt;WebDAV&lt;/a&gt; to store the dependencies and can be served up by Apache. From the developer perspective, you can use the project&amp;#8217;s VisualStudio Addin to configure it and set a custom Import MSBuild target that will pull in the binaries you need. For more info check out the &lt;span class=&quot;caps&quot;&gt;README&lt;/span&gt; and this &lt;a href=&quot;http://www.lshift.net/blog/2010/02/27/webgac-minding-your-net-dependencies&quot;&gt;blog post&lt;/a&gt; from the author about how it works.&lt;/p&gt;</content>
+    <author>
+      <name>qrush</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Post/606</id>
+    <published>2010-02-25T11:28:31-08:00</published>
+    <updated>2010-02-25T11:38:24-08:00</updated>
+    <link type="text/html" href="http://github.com/blog/606-announcing-ernie-2-0-and-2-1" rel="alternate"/>
+    <title>Announcing Ernie 2.0 and 2.1</title>
+    <content type="html">&lt;!-- -*-Markdown-*- --&gt;
+
+
+&lt;p&gt;Over the past few months I've been working on a major new version of &lt;a href=&quot;http://github.com/mojombo/ernie&quot;&gt;Ernie&lt;/a&gt;, the RPC server I wrote to power GitHub's sharded file server architecture. As a reminder, Ernie is an Erlang/Ruby hybrid &lt;a href=&quot;http://bert-rpc.org&quot;&gt;BERT-RPC&lt;/a&gt; server (packaged as a Rubygem) that let's you expose Ruby modules as an RPC service. It spawns, manages, and load balances between a set of Ruby processes that allow access to the Git repositories.&lt;/p&gt;
+
+&lt;p&gt;Over the past four months Ernie has proven to be extremely stable and reliable. Each of our five file servers is handling an average of 50 req/sec (4.3 million req/day), bursting up to 200 req/sec, and transferring over 11GB of data per day (just to the web frontend and jobs; this number does not reflect pushes/pulls/clones/etc.).&lt;/p&gt;
+
+&lt;p&gt;Last week I released Ernie 2.0 and upgraded all of our file servers to use it. Last night I released and upgraded everything to 2.1. Here's a breakdown of what's new in Ernie 2.0/2.1 and how we're using these new features to give you an even better GitHub experience.&lt;/p&gt;
+
+&lt;h3&gt;Native Modules&lt;/h3&gt;
+
+&lt;p&gt;The biggest new feature in Ernie 2.0 is the ability to define handlers in pure Erlang (instead of just Ruby). These are known as native handlers. Native handlers execute within the Erlang server's VM and therefor do not have concurrency limits like the Ruby handlers. In addition, the roundtrip to an external process is eliminated, boosting overall performance for those functions. About half of the RPC calls that are issued to Ernie are very simple file existence checks. By implementing these actions in pure Erlang, we've reduced the amount of work being done by the Ruby processes and freed them up for other tasks, all of which means our maximum concurrency has increased significantly.&lt;/p&gt;
+
+&lt;h3&gt;Language Agnosticism&lt;/h3&gt;
+
+&lt;p&gt;Ernie no longer assumes that your handlers are written in Ruby. You can now use any language to implement your handlers as long as they speak the external handler protocol. Non-Erlang handlers are called external handlers. Currently only Ruby support is included in the distribution but I'll be adding other languages as the need arises or as contributions come in.&lt;/p&gt;
+
+&lt;h3&gt;Shadowing&lt;/h3&gt;
+
+&lt;p&gt;As time goes by, we will be converting more and more Ruby to Erlang to take advantage of the native handlers that Ernie 2.x supports. To make this task as simple as possible, Ernie supports a concept called shadowing. If you define an external handler and a native handler of the same name, Ernie will check the native handler for an exported function of the requested name and use it if it exists. If it does not, it will fall back to the external handler. This feature makes it incredibly simple to migrate functions one at a time to pure Erlang without having to change a single line of client code!&lt;/p&gt;
+
+&lt;h3&gt;Predicate Shadowing&lt;/h3&gt;
+
+&lt;p&gt;In addition to basic shadowing, you can choose whether to run the native or external version of a specific function based on the arguments. This is called predicate shadowing and is accomplished by returning a boolean from a complementary native function named &lt;code&gt;myfun_pred&lt;/code&gt; where &lt;code&gt;myfun&lt;/code&gt; is the name of your function. We use this to selectively implement parts of the proxied Grit in pure Erlang.&lt;/p&gt;
+
+&lt;h3&gt;Connection Priority Queue&lt;/h3&gt;
+
+&lt;p&gt;Requests can now be classified as either high or low priority. Ernie will immediately process any connections marked as high priority. Low priority connections will only be processed if there are no high priority connections pending. We will be using this feature to keep low priority jobs from saturating the file servers with requests that are not time critical, thereby keeping the servers responsive to website requests. While this specific treatment of the high/low queue is rather rudimentary, I plan to include more advanced strategies in a later release. This is really just the groundwork.&lt;/p&gt;
+
+&lt;h3&gt;Access Logging&lt;/h3&gt;
+
+&lt;p&gt;Ernie 2.1 introduces a proper access log to make it simple to track what your Ernies are up to. The log file contains the message type (access or error), the time of the initial connection, the number of seconds between connection and when the request is selected for processing, the number of seconds the request took to process, the lengths of the high and low priority queues, the type of handler (native or external), the priority of the request (high or low), and the first 150 bytes of the request.&lt;/p&gt;
+
+&lt;h3&gt;The Future&lt;/h3&gt;
+
+&lt;p&gt;BERT and BERT-RPC along with our Ruby and Erlang client/server implementations have made it possible for us to build a high performance, sharded file system architecture for a vanishingly small amount of money. We currently have five terabytes of active storage exposed via BERT-RPC and are adding a new file server pair every few months. In the long run, I intend to make Ernie the most robust and flexible RPC server available while preserving the simplicity of writing handler code in the language of your choice. &lt;a href=&quot;http://github.com/mojombo/ernie&quot;&gt;Keep an eye on the project&lt;/a&gt;, there are plenty more improvements to come!&lt;/p&gt;
+</content>
+    <author>
+      <name>mojombo</name>
+    </author>
+  </entry>
+</feed>
