@@ -1,5 +1,7 @@
 database: database_name # will be suffixed with "_<env>", e.g. "_development"
 
+password: helloworld # the password needed to view the event stream in the web app
+
 hoptoad:
   token: 1234
 

@@ -11,11 +11,13 @@ rescue LoadError
 end
 
 ENV['RACK_ENV'] ||= 'test'
+ENV['CONFIGURATION_PATH'] = File.expand_path('../resources/config/common.yml', __FILE__)
 
 require 'logger'
 require 'sinatra'
 require 'capybara'
 require 'capybara/dsl'
+require 'rack/test'
 require 'app'
 require 'burt_central'
 
@@ -26,6 +28,10 @@ module BurtCentral
       @logger ||= Logger.new(File.new('/dev/null', 'w'))
     end
   end
+end
+
+Spec::Runner.configure do |conf|
+  conf.include(Rack::Test::Methods)
 end
 
 

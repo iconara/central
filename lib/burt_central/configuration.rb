@@ -36,6 +36,10 @@ module BurtCentral
 
       @db[:events_collection]
     end
+    
+    def password
+      @configuration[:password]
+    end
   
   private
   

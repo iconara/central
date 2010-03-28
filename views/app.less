@@ -15,6 +15,12 @@
   padding-left: 20px;
 }
 
+.box-shadow (@hOffset: 0px, @vOffset: 0px, @blurRadius: 0px, @color: black) {
+  -moz-box-shadow:    @hOffset @vOffset @blurRadius @color;
+  -webkit-box-shadow: @hOffset @vOffset @blurRadius @color;
+  box-shadow:         @hOffset @vOffset @blurRadius @color;
+}
+
 
 // Reset
 
@@ -38,6 +44,7 @@ body {
   color: #colors[@text];
   font: 16px/150% "Helvetica Neue", Arial, Verdana, sans-serif;
   text-align: center;
+  width: 100%;
 }
 
 .wrapper {
@@ -54,20 +61,79 @@ a {
   text-decoration: none;
 }
 
-a:hover {
+form {
+  text-align: left;
+}
+
+div.error,
+span.error {
+  color: #CC0000;
+}
+
+input.error {
+  border: 1px solid #CC0000;
+}
+
+#content {
+  display: none;
+}
+
+#header-shadow {
+  .box-shadow(0px, 0px, 4px, #666666);
   
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 40px;
+  margin-left: -4px;
+  margin-right: -4px;
 }
 
 #header {
   float: left;
   width: 100%;
-  height: 45px;
+  height: 40px;
   margin: 0 0 30px;
-  background: #colors[@header-background] url(../images/top-shadow.png) bottom left repeat-x; 
+  background-color: #colors[@header-background];
   
   #logo {
     float: left;
     margin-top: 9px;
+  }
+  
+  #status {
+    float: right;
+    margin-top: 5px;
+    
+    #login-trigger {
+      padding: 3px;
+      
+      a {
+        color: white;
+      }
+    }
+    
+    #login-trigger.active {
+      background-color: white;
+      
+      a {
+        color: black;
+      }
+    }
+  }
+}
+
+#login-form {
+  .box-shadow(0px, 1px, 4px, #222222);
+  
+  display: none;
+  position: absolute;
+  background: white;
+  padding: 1em;
+  
+  label,
+  input {
+    margin-right: 0.2em;
   }
 }
 

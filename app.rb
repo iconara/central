@@ -11,10 +11,33 @@ class App < Sinatra::Base
     set :app_file, __FILE__
     set :root, File.dirname(__FILE__)
     
-    configuration_path = File.expand_path('../config/common.yml', __FILE__)
+    enable :sessions
+    
+    configuration_path = ENV['CONFIGURATION_PATH'] || File.expand_path('../config/common.yml', __FILE__)
     configuration = BurtCentral::Configuration.load(configuration_path, environment)
+
+    EVENTS_COLLECTION = configuration.events_collection
+    PASSWORD = configuration.password
+  end
   
-    set :events_collection, configuration.events_collection
+  helpers do
+    include BurtCentral::Logging
+    
+    def events_collection
+      EVENTS_COLLECTION
+    end
+    
+    def password
+      PASSWORD
+    end
+    
+    def when_authenticated
+      if session[:authenticated]
+        yield
+      else
+        status 401
+      end
+    end
   end
 
   before do
@@ -26,21 +49,40 @@ class App < Sinatra::Base
   end
 
   get '/history' do
-    options = {}
+    when_authenticated do
+      options = {}
   
-    if params[:limit] && params[:limit].to_i > 0
-      options[:limit] = params[:limit].to_i
-    else
-      options[:since] = Time.now - (24 * 60 * 60)
+      if params[:limit] && params[:limit].to_i > 0
+        options[:limit] = params[:limit].to_i
+      else
+        options[:since] = Time.now - (24 * 60 * 60)
+      end
+  
+      history = BurtCentral::History.new
+      history.restore(events_collection, options)
+      history.events.map { |e| e.to_h }.to_json
     end
-  
-    history = BurtCentral::History.new
-    history.restore(settings.events_collection, options)
-    history.events.map { |e| e.to_h }.to_json
   end
 
   get '/types' do
-    settings.events_collection.distinct(:type).to_json
+    when_authenticated do
+      events_collection.distinct(:type).to_json
+    end
+  end
+
+  get '/ping' do
+    when_authenticated do
+      status 200
+    end
+  end
+  
+  post '/session' do
+    if params[:password] == password
+      session[:authenticated] = true
+      status 200
+    else
+      status 401
+    end
   end
 
   get '/styles/app.css' do

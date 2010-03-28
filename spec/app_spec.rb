@@ -1,15 +1,11 @@
 require File.expand_path('../spec_helper', __FILE__)
+require 'yaml'
 
 
 describe 'Burt Central Webapp' do
   
-  include Capybara
-  
   before(:all) do
-    Capybara.app = App
-    Capybara.default_driver = :selenium
-    
-    @configuration = BurtCentral::Configuration.new({:database => 'burt_central'}, :test)
+    @configuration = BurtCentral::Configuration.load(ENV['CONFIGURATION_PATH'], :test)
     @events_collection = @configuration.events_collection
 
     @events_collection.remove
@@ -36,18 +32,72 @@ describe 'Burt Central Webapp' do
     @events_collection.remove
   end
   
-  before do
-    visit('/index.html')
+  context 'authentication' do
+    def app
+      @app ||= App.new
+    end
+    
+    it 'redirects / to /index.html' do
+      get '/'
+      last_response.should be_redirect
+      last_response.location.should == 'index.html'
+    end
+
+    it 'responds with 401 unauthorized when the wrong password is passed to /session' do
+      post '/session', {:password => 'xyz'}
+      last_response.status.should == 401
+    end
+    
+    it 'authenticates via a post to /session' do
+      post '/session', {:password => 'password'}
+      last_response.should be_ok
+    end
+    
+    %w(/history /types /ping).each do |path|
+      it "disallows #{path} from non-authenticated users" do
+        get path
+        last_response.status.should == 401
+      end
+      
+      it "allows #{path} when the user is authenticated" do
+        post '/session', {:password => 'password'}
+        get path
+        last_response.should be_ok
+      end
+    end
   end
   
-  it 'loads events and displays them' do
-    page.should have_content('The message is a massage')
-    page.should have_content('All good things come to a beginning')
-  end
+  context 'as a user' do
+    before do
+      @session = Capybara::Session.new(:selenium, App)
+      @session.visit('/index.html')
+    end
+    
+    context 'when not logged in' do
+      it 'asks the user to log in' do
+        @session.should have_content('log in')
+      end
+    end
   
-  it 'creates a legend from the event types' do
-    page.should have_content('rambling')
-    page.should have_content('nonsense')
+    context 'when logged in' do
+      before do
+        if @session.find_link('log in').visible?
+          @session.click('log in')
+          @session.fill_in('Password', :with => 'password')
+          @session.click('Ok')
+        end
+      end
+    
+      it 'loads events and displays them' do
+        @session.should have_content('The message is a massage')
+        @session.should have_content('All good things come to a beginning')
+      end
+  
+      it 'creates a legend from the event types' do
+        @session.should have_content('rambling')
+        @session.should have_content('nonsense')
+      end
+    end
   end
   
 end
