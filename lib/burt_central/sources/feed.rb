@@ -6,8 +6,9 @@ module BurtCentral
     class Feed
       include Logging
 
-      def initialize(url)
+      def initialize(url, feed_loader=Atom::Feed)
         @url = url
+        @feed_loader = feed_loader
       end
 
       def events(since)
@@ -17,7 +18,7 @@ module BurtCentral
         
         events = []
         
-        feed = Atom::Feed.load_feed(URI.parse(@url))
+        feed = @feed_loader.load_feed(URI.parse(@url))
         feed.each_entry(:since => since, :paginate => true) do |entry|
           events << Event.new(
             :id => entry.id,
