@@ -30,8 +30,6 @@ module BurtCentral
     end
     
     def events_collection
-      raise 'No database name specified!' unless @configuration.has_key?(:database)
-
       configure_database
 
       @db[:events_collection]
@@ -44,23 +42,26 @@ module BurtCentral
   private
   
     def configure_database
+      raise 'No database name specified!' unless @configuration.has_key?(:database)
+      
       unless defined? @db
         base_name = @configuration[:database]
         database_name = "#{base_name}_#{@environment}"
 
         logger.info("Using database \"#{database_name}\"")
         
-        mongo_logger = @environment == :test ? nil : logger
-        
         @db = {}
-        @db[:connection] = Mongo::Connection.new(nil, nil, :logger => mongo_logger)
+        @db[:connection] = Mongo::Connection.new(nil, nil, :logger => logger)
         @db[:dabatase] = @db[:connection].db(database_name)
         @db[:events_collection] = @db[:dabatase].collection('events')
       end
     end
   
     def configure_logging
-      level = @configuration[:log_level] || 'INFO'
+      level = case @environment
+              when :test then 'WARN'
+              else @configuration[:log_level] || 'INFO'
+              end
       
       Logging.send(:define_method, :default_log_level) { level }
     end
