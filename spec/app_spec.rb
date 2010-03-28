@@ -34,7 +34,7 @@ describe 'Burt Central Webapp' do
   
   context 'authentication' do
     def app
-      @app ||= App.new
+      App
     end
     
     it 'redirects / to /index.html' do
