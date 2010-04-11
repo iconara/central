@@ -1,0 +1,170 @@
+--- 
+dependencies: 
+  bson_ext: 
+    group: 
+    - :production
+    version: ">= 0"
+  activeresource: 
+    group: 
+    - :default
+    version: ">= 2.3.5"
+  immutable_struct: 
+    group: 
+    - :default
+    version: ">= 0"
+  mongo: 
+    group: 
+    - :default
+    version: ">= 0"
+  httparty: 
+    group: 
+    - :default
+    version: ">= 0"
+  log4r: 
+    group: 
+    - :default
+    version: ">= 0"
+  rake: 
+    group: 
+    - :default
+    version: ">= 0.8.7"
+  selenium-webdriver: 
+    group: 
+    - :testing
+    version: ">= 0"
+  yard: 
+    group: 
+    - :development
+    version: ">= 0"
+  rspec: 
+    group: 
+    - :testing
+    version: ">= 1.3.0"
+  thin: 
+    group: 
+    - :development
+    version: ">= 0"
+  json: 
+    group: 
+    - :default
+    version: ">= 0"
+  sinatra: 
+    group: 
+    - :default
+    version: ">= 1.0"
+  rcov: 
+    group: 
+    - :testing
+    version: ">= 0"
+  less: 
+    group: 
+    - :default
+    version: ">= 0"
+  rack-test: 
+    group: 
+    - :testing
+    version: ">= 0"
+  feed-normalizer: 
+    group: 
+    - :default
+    version: ">= 0"
+  capybara: 
+    group: 
+    - :testing
+    version: ">= 0.3.6"
+  shotgun: 
+    group: 
+    - :development
+    version: ">= 0"
+  twitter: 
+    group: 
+    - :default
+    version: ">= 0"
+specs: 
+- rake: 
+    version: 0.8.7
+- activesupport: 
+    version: 2.3.5
+- activeresource: 
+    version: 2.3.5
+- bson: 
+    version: 0.20.1
+- bson_ext: 
+    version: 0.20.1
+- culerity: 
+    version: 0.2.9
+- mime-types: 
+    version: "1.16"
+- nokogiri: 
+    version: 1.4.1
+- rack: 
+    version: 1.1.0
+- rack-test: 
+    version: 0.5.3
+- ffi: 
+    version: 0.6.3
+- json_pure: 
+    version: 1.2.4
+- selenium-webdriver: 
+    version: 0.0.17
+- capybara: 
+    version: 0.3.7
+- crack: 
+    version: 0.1.6
+- daemons: 
+    version: 1.0.10
+- eventmachine: 
+    version: 0.12.10
+- hpricot: 
+    version: 0.8.2
+- simple-rss: 
+    version: 1.2.2
+- feed-normalizer: 
+    version: 1.5.2
+- hashie: 
+    version: 0.2.0
+- httparty: 
+    version: 0.5.2
+- immutable_struct: 
+    version: 1.0.0
+    source: 0
+- json: 
+    version: 1.2.4
+- mutter: 
+    version: 0.5.3
+- polyglot: 
+    version: 0.3.1
+- treetop: 
+    version: 1.4.5
+- less: 
+    version: 1.2.21
+- log4r: 
+    version: 1.1.7
+- mongo: 
+    version: 0.20.1
+- ruby-hmac: 
+    version: 0.4.0
+- oauth: 
+    version: 0.3.6
+- rcov: 
+    version: 0.9.8
+- rspec: 
+    version: 1.3.0
+- shotgun: 
+    version: "0.6"
+- sinatra: 
+    version: "1.0"
+- thin: 
+    version: 1.2.7
+- twitter: 
+    version: 0.9.4
+- yard: 
+    version: 0.5.4
+hash: 3882ce8a4f7cbb39d922092009e6ff8b86e6bab0
+sources: 
+- Git: 
+    uri: git://github.com/iconara/immutable_struct.git
+    git: git://github.com/iconara/immutable_struct.git
+    ref: e497795ef6c8e57415e59b24176739baa0e622af
+- Rubygems: 
+    uri: http://rubygems.org

@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rake'
-gem 'activeresource'
+gem 'rake', '>= 0.8.7'
+gem 'activeresource', '>= 2.3.5'
 gem 'immutable_struct', :git => 'git://github.com/iconara/immutable_struct.git'
 gem 'log4r'
 gem 'mongo'
