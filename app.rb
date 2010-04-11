@@ -10,25 +10,25 @@ class App < Sinatra::Base
   configure do
     set :app_file, __FILE__
     set :root, File.dirname(__FILE__)
-    
     enable :sessions
-    
+  end
+  
+  configure do
     configuration_path = ENV['CONFIGURATION_PATH'] || File.expand_path('../config/common.yml', __FILE__)
-    configuration = Central::Configuration.load(configuration_path, environment)
-
-    EVENTS_COLLECTION = configuration.events_collection
-    PASSWORD = configuration.password
+    $configuration = Central::Configuration.load(configuration_path, ENV['RACK_ENV'])
+  end
+  
   end
   
   helpers do
     include Central::Logging
     
     def events_collection
-      EVENTS_COLLECTION
+      $configuration.events_collection
     end
     
     def password
-      PASSWORD
+      $configuration.password
     end
     
     def when_authenticated

@@ -9,7 +9,7 @@ module Central
     
     def initialize(conf, environment=:development)
       @configuration = symbolize_keys(conf)
-      @environment = environment.to_sym
+      @environment = (environment || 'development').to_sym
 
       configure_logging
     end
@@ -33,6 +33,10 @@ module Central
       configure_database
 
       @db[:events_collection]
+    end
+    
+    def reconnect_db
+      @db.connect_to_master
     end
     
     def password
