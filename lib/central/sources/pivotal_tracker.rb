@@ -6,6 +6,7 @@ module Central
       DESCRIPTION_PATTERN = /^([\w\s]+):? "?(.+?)"?$/m
       
       ACTIVITY_TYPES = {
+        'added'         => :add,
         'finished'      => :completion,
         'added comment' => :comment,
         'edited'        => :edit,
