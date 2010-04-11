@@ -18,10 +18,10 @@ require 'sinatra'
 require 'capybara'
 require 'capybara/dsl'
 require 'rack/test'
-require 'burt_central'
+require 'central'
 
 
-module BurtCentral
+module Central
   module Logging
     def logger
       @logger ||= Logger.new(File.new('/dev/null', 'w'))

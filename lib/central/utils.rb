@@ -1,4 +1,4 @@
-module BurtCentral
+module Central
   module Utils
     # Recursively changes all keys to symbols
     def symbolize_keys(conf)

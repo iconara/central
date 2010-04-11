@@ -2,7 +2,7 @@ require 'sinatra'
 require 'mongo'
 require 'json'
 require 'less'
-require 'burt_central'
+require 'central'
 
 
 class App < Sinatra::Base
@@ -14,14 +14,14 @@ class App < Sinatra::Base
     enable :sessions
     
     configuration_path = ENV['CONFIGURATION_PATH'] || File.expand_path('../config/common.yml', __FILE__)
-    configuration = BurtCentral::Configuration.load(configuration_path, environment)
+    configuration = Central::Configuration.load(configuration_path, environment)
 
     EVENTS_COLLECTION = configuration.events_collection
     PASSWORD = configuration.password
   end
   
   helpers do
-    include BurtCentral::Logging
+    include Central::Logging
     
     def events_collection
       EVENTS_COLLECTION
@@ -58,7 +58,7 @@ class App < Sinatra::Base
         options[:since] = Time.now - (24 * 60 * 60)
       end
   
-      history = BurtCentral::History.new
+      history = Central::History.new
       history.restore(events_collection, options)
       history.events.map { |e| e.to_h }.to_json
     end

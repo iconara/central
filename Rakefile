@@ -13,7 +13,7 @@ end
 require 'mongo'
 require 'spec/rake/spectask'
 require 'yard'
-require 'burt_central'
+require 'central'
 
 
 task :default => :events
@@ -21,10 +21,10 @@ task :default => :events
 task :setup do
   configuration_path = File.expand_path('../config/common.yml', __FILE__)
   
-  env = ENV['BURT_ENV'] || 'development'
+  env = ENV['CENTRAL_ENV'] || 'development'
   
-  $configuration = BurtCentral::Configuration.load(configuration_path, env.to_sym)
-  $history = BurtCentral::History.new
+  $configuration = Central::Configuration.load(configuration_path, env.to_sym)
+  $history = Central::History.new
 end
 
 task :events => :setup do

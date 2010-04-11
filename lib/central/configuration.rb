@@ -2,7 +2,7 @@ require 'yaml'
 require 'twitter'
 
 
-module BurtCentral
+module Central
   class Configuration
     include Utils
     include Logging
@@ -94,7 +94,7 @@ module BurtCentral
         Hoptoad::Error.site = "http://#{account}.hoptoadapp.com"
         Hoptoad::Error.auth_token = token
 
-        BurtCentral::Sources::Hoptoad.new(Hoptoad::Error)
+        Sources::Hoptoad.new(Hoptoad::Error)
       else
         logger.warn('No Hoptoad configuration found')
       end
@@ -113,7 +113,7 @@ module BurtCentral
       
         Highrise::Base.site = "https://#{token}:X@#{account}.highrisehq.com/"
       
-        BurtCentral::Sources::Highrise.new(Highrise::User, Highrise::Kase)
+        Sources::Highrise.new(Highrise::User, Highrise::Kase)
       else
         logger.warn('No Highrise configuration found')
       end
@@ -132,7 +132,7 @@ module BurtCentral
       
         twitter = Twitter::Base.new(Twitter::HTTPAuth.new('', ''))
       
-        BurtCentral::Sources::Twitter.new(twitter, user, list)
+        Sources::Twitter.new(twitter, user, list)
       else
         logger.warn('No Twitter configuration found')
       end
@@ -155,7 +155,7 @@ module BurtCentral
         PivotalTracker::Activity.headers['X-TrackerToken'] = token
       
         projects.map do |project|
-          BurtCentral::Sources::PivotalTracker.new(PivotalTracker::Activity, project)
+          Sources::PivotalTracker.new(PivotalTracker::Activity, project)
         end
       else
         logger.warn('No Pivotal Tracker configuration found')
@@ -172,7 +172,7 @@ module BurtCentral
         raise 'Feeds configuration is missing feeds' unless feeds && feeds.size > 0
         
         feeds.map do |feed_url|
-          BurtCentral::Sources::Feed.new(feed_url)
+          Sources::Feed.new(feed_url)
         end
       else
         logger.warn('No feed configuration found')

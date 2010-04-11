@@ -1,12 +1,12 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 
-describe BurtCentral::Sources::Highrise do
+describe Central::Sources::Highrise do
   
   before do
     @user_api = mock('UserApi')
     @case_api = mock('CaseApi')
-    @highrise = BurtCentral::Sources::Highrise.new(@user_api, @case_api)
+    @highrise = Central::Sources::Highrise.new(@user_api, @case_api)
   end
   
   describe '#events' do

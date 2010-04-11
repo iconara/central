@@ -2,7 +2,7 @@ require 'feed-normalizer'
 require 'open-uri'
 
 
-module BurtCentral
+module Central
   module Sources
     class Feed
       include Logging

@@ -3,10 +3,10 @@ require 'yaml'
 require 'app'
 
 
-describe 'Burt Central Webapp' do
+describe 'Central Webapp' do
   
   before(:all) do
-    @configuration = BurtCentral::Configuration.load(ENV['CONFIGURATION_PATH'], :test)
+    @configuration = Central::Configuration.load(ENV['CONFIGURATION_PATH'], :test)
     @events_collection = @configuration.events_collection
 
     @events_collection.remove

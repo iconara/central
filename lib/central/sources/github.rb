@@ -1,7 +1,7 @@
 require 'httparty'
 
 
-module BurtCentral
+module Central
   module Sources
     class Github
       include Logging

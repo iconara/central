@@ -1,7 +1,7 @@
 require 'immutable_struct'
 
 
-module BurtCentral
+module Central
   class Event < ImmutableStruct.new(:id, :url, :title, :date, :instigator, :type)
     def id
       self[:id]

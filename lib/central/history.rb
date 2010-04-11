@@ -1,4 +1,4 @@
-module BurtCentral
+module Central
   class History
     include Logging
     include Utils

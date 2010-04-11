@@ -1,14 +1,14 @@
 require 'log4r'
 
 
-module BurtCentral
+module Central
   module Logging
     def logger
       unless defined? @logger
         begin
-          @logger = Log4r::Logger.get('burt_central')
+          @logger = Log4r::Logger.get('central')
         rescue 
-          @logger = Log4r::Logger.new('burt_central')
+          @logger = Log4r::Logger.new('central')
           @logger.add(Log4r::Outputter.stdout)
           @logger.level = a2level(default_log_level)
         end

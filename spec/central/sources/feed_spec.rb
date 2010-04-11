@@ -1,10 +1,10 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 
-describe BurtCentral::Sources::Feed do
+describe Central::Sources::Feed do
   
   before do
-    @source = BurtCentral::Sources::Feed.new(File.expand_path('../../../resources/feed.xml', __FILE__))
+    @source = Central::Sources::Feed.new(File.expand_path('../../../resources/feed.xml', __FILE__))
   end
   
   it 'returns all entries in the feed newer than the specified date' do

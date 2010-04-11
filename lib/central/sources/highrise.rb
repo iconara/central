@@ -1,4 +1,4 @@
-module BurtCentral
+module Central
   module Sources
     class Highrise
       include Logging
@@ -23,10 +23,6 @@ module BurtCentral
           notes += c.notes(:since => since.strftime('%Y%m%d'))
           notes
         end
-
-        #<Highrise::User:0x104b83760 @attributes={"name"=>"Axel von Sydow", "created_at"=>Sat Jun 13 09:21:30 UTC 2009, "updated_at"=>Sat Jun 13 09:21:30 UTC 2009, "id"=>155735, "email_address"=>"axel@byburt.com"}, @prefix_options={}>
-        #<Highrise::Kase:0x104b80a38 @attributes={"name"=>"Advertiser customer development", "created_at"=>Wed Jan 20 21:36:31 UTC 2010, "background"=>nil, "updated_at"=>Thu Aug 27 14:07:45 UTC 2009, "group_id"=>nil, "id"=>203730, "owner_id"=>nil, "closed_at"=>nil, "visible_to"=>"Everyone", "author_id"=>nil}, @prefix_options={}>
-        #<Highrise::Note:0x104b07570 @attributes={"created_at"=>Thu Aug 27 14:07:45 UTC 2009, "body"=>"Held one hour talk …", "updated_at"=>Wed Jan 20 21:36:31 UTC 2010, "group_id"=>nil, "id"=>14236161, "owner_id"=>nil, "subject_id"=>203730, "collection_type"=>"Kase", "subject_type"=>"Kase", "visible_to"=>"Everyone", "author_id"=>104692, "subject_name"=>"Advertiser customer development", "collection_id"=>203730}, @prefix_options={}>
 
         host = @case_api.site.host
         

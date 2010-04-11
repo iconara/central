@@ -1,14 +1,14 @@
 require File.expand_path('../../spec_helper', __FILE__)
 
 
-describe BurtCentral::History do
+describe Central::History do
 
   before do
     @date = Time.utc(2010, 3, 14)
-    @event1 = BurtCentral::Event.new(:id => 'http://example.com/1', :url => 'http://example.com/1', :title => 'Eventful',    :date => Time.utc(2010, 3, 10), :instigator => 'You',     :type => :tweet)
-    @event2 = BurtCentral::Event.new(:id => 'http://example.com/2', :url => 'http://example.com/2', :title => 'Foo',         :date => Time.utc(2010, 3, 15), :instigator => 'Me',      :type => :story)
-    @event3 = BurtCentral::Event.new(:id => 'http://example.com/3', :url => 'http://example.com/3', :title => 'Bar',         :date => Time.utc(2010, 3, 14), :instigator => 'Someone', :type => :error)
-    @event4 = BurtCentral::Event.new(:id => 'http://example.com/4', :url => 'http://example.com/4', :title => 'Hello World', :date => Time.utc(2010, 2, 28), :instigator => 'Him',     :type => :tweet)
+    @event1 = Central::Event.new(:id => 'http://example.com/1', :url => 'http://example.com/1', :title => 'Eventful',    :date => Time.utc(2010, 3, 10), :instigator => 'You',     :type => :tweet)
+    @event2 = Central::Event.new(:id => 'http://example.com/2', :url => 'http://example.com/2', :title => 'Foo',         :date => Time.utc(2010, 3, 15), :instigator => 'Me',      :type => :story)
+    @event3 = Central::Event.new(:id => 'http://example.com/3', :url => 'http://example.com/3', :title => 'Bar',         :date => Time.utc(2010, 3, 14), :instigator => 'Someone', :type => :error)
+    @event4 = Central::Event.new(:id => 'http://example.com/4', :url => 'http://example.com/4', :title => 'Hello World', :date => Time.utc(2010, 2, 28), :instigator => 'Him',     :type => :tweet)
     @event1_h = @event1.to_h
     @event1_h[:_id] = @event1_h.delete(:id)
     @event2_h = @event2.to_h
@@ -21,7 +21,7 @@ describe BurtCentral::History do
     @source2 = mock('Source2')
     @source1.stub!(:events).with(@date).and_return([@event1, @event2])
     @source2.stub!(:events).with(@date).and_return([@event3, @event4])
-    @history = BurtCentral::History.new
+    @history = Central::History.new
     @repository = mock('Repository')
   end
 

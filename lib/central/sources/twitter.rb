@@ -1,4 +1,4 @@
-module BurtCentral
+module Central
   module Sources
     class Twitter
       include Logging

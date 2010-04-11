@@ -1,11 +1,11 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 
-describe BurtCentral::Sources::Github do
+describe Central::Sources::Github do
   
   before do
     @api = mock('GithubApi')
-    @source = BurtCentral::Sources::Github.new(@api)
+    @source = Central::Sources::Github.new(@api)
   end
   
   describe '#events' do
@@ -55,11 +55,11 @@ describe BurtCentral::Sources::Github do
   
 end
 
-describe BurtCentral::Sources::GithubApi do
+describe Central::Sources::GithubApi do
   
   before do
     @http = mock('HTTP')
-    @api = BurtCentral::Sources::GithubApi.new('tog', 'xyz', @http)
+    @api = Central::Sources::GithubApi.new('tog', 'xyz', @http)
   end
   
   describe '#repositories' do

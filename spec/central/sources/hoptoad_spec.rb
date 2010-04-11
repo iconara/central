@@ -1,11 +1,11 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 
-describe BurtCentral::Sources::Hoptoad do
+describe Central::Sources::Hoptoad do
 
   before do
     @api = mock('HoptoadApi')
-    @hoptoad = BurtCentral::Sources::Hoptoad.new(@api)
+    @hoptoad = Central::Sources::Hoptoad.new(@api)
   end
 
   describe '#events' do

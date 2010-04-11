@@ -1,11 +1,11 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 
-describe BurtCentral::Sources::Twitter do
+describe Central::Sources::Twitter do
   
   before do
     @api = mock('TwitterApi')
-    @twitter = BurtCentral::Sources::Twitter.new(@api, 'tog', 'enemies')
+    @twitter = Central::Sources::Twitter.new(@api, 'tog', 'enemies')
   end
   
   describe '#events' do

@@ -1,11 +1,11 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
 
-describe BurtCentral::Sources::PivotalTracker do
+describe Central::Sources::PivotalTracker do
 
   before do
     @api = double('PivotalTrackerApi')
-    @source = BurtCentral::Sources::PivotalTracker.new(@api, '2345')
+    @source = Central::Sources::PivotalTracker.new(@api, '2345')
   end
   
   describe '#events' do

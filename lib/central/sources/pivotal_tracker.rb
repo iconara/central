@@ -1,4 +1,4 @@
-module BurtCentral
+module Central
   module Sources
     class PivotalTracker
       include Logging
@@ -33,8 +33,6 @@ module BurtCentral
           :limit => 100
         })
         
-        #<PivotalTracker::Activity:0x103a84388 @attributes={"author"=>"Gustav von Sydow", "occurred_at"=>Mon Mar 22 16:42:24 UTC 2010, "id"=>15142937, "version"=>10411, "description"=>"Gustav von Sydow edited \"Update framework and processes for idea-code-learn feedback loop\"", "event_type"=>"story_update", "stories"=>#<PivotalTracker::Activity::Stories:0x103a7cfc0 @attributes={"story"=>#<PivotalTracker::Story:0x103a7bc60 @attributes={"name"=>"Update framework and processes for idea-code-learn feedback loop", "url"=>"http://www.pivotaltracker.com/services/v3/projects/19935/stories/2862565", "id"=>2862565}, @prefix_options={}>}, @prefix_options={}>}, @prefix_options={:project_id=>"19935"}>
-
         events = activities.map do |activity|
           description = activity.description.sub(activity.author, '').strip
           
