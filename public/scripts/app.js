@@ -279,8 +279,8 @@ var app = (function() {
   function populateLegend(types) {
     legendList.clear()
     
-    $.each(types, function() {
-      legendList.addRow(this.toString(), this.toString())
+    _(types).each(function(type) {
+      legendList.addRow(type, type)
     })
   }
   
@@ -292,23 +292,23 @@ var app = (function() {
     
       var previous = events[0]
     
-      $.each(events, function() {
-        if (formatDate(previous.date) != formatDate(this.date)) {
+      _(events).each(function(event) {
+        if (formatDate(previous.date) != formatDate(event.date)) {
           var newEventsList = createList("events")
           eventsList.after(newEventsList)
           eventsList = newEventsList
-          eventsList.addHeader(formatDate(this.date))
+          eventsList.addHeader(formatDate(event.date))
         }
       
-        var line = '<a href="' + this.url + '">' + this.title + '</a>'
+        var line = '<a href="' + event.url + '">' + event.title + '</a>'
         
-        if (this.instigator) {
-          line = this.instigator + ': ' + line
+        if (event.instigator) {
+          line = event.instigator + ': ' + line
         }
       
-        eventsList.addRow(line, this.type)
+        eventsList.addRow(line, event.type)
         
-        previous = this
+        previous = event
       })
     }
   }
