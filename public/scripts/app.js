@@ -10,13 +10,19 @@ $.fn.bounds = function() {
   return bounds
 }
 
-var createList = function(type) {
+var createList = function(type, addMode) {
   var element = $('<ul></ul>')
+  
+  addMode = addMode || "append"
 
   element.addClass(type)
   
   element.showLoading = function() {
-    element.addRow("loading…", "loading")
+    if (addMode == "append") {
+      element.addRow("loading…", "loading")
+    } else {
+      element.prependRow("loading…", "loading") 
+    }
   }
   
   element.hideLoading = function() {
@@ -27,14 +33,27 @@ var createList = function(type) {
     return $("*:first-child", element).height()
   }
   
-  element.addRow = function(text, cls) {
+  function createRow(text, cls) {
     var row = $('<li>' + text + '</li>')
     row.addClass(cls)
-    element.append(row)
+    return row
+  }
+  
+  element.addRow = function(text, cls) {
+    element.append(createRow(text, cls))
+  }
+  
+  element.prependRow = function(text, cls) {
+    element.prepend(createRow(text, cls))
   }
   
   element.addHeader = function(str) {
     element.before('<h2>' + str + '</h2>')
+  }
+  
+  element.clear = function() {
+    element.empty()
+    element.siblings("h2").remove()
   }
   
   return element
@@ -122,20 +141,83 @@ var createLogInController = function(form, authenticatedCallback) {
   return controller
 }
 
+var createEventLoader = function(loadedListener, errorListener) {
+  var loader = {}
+  
+  var types
+  var history
+  
+  loader.load = function() {
+    $.ajax({
+      url: "/types",
+      dataType: "json",
+      success: onTypesLoaded,
+      error: onTypesError
+    })
+    
+    $.ajax({
+      url: "/history",
+//    data: {"limit": n},
+      dataType: "json",
+      success: onHistoryLoaded,
+      error: onHistoryError
+    })
+  }
+  
+  function onTypesLoaded(data) {
+    types = data
+
+    if (history) {
+      onBothLoaded()
+    }
+  }
+  
+  function onHistoryLoaded(data) {
+    history = data
+    
+    if (types) {
+      onBothLoaded()
+    }
+  }
+  
+  function onBothLoaded() {
+    loadedListener(types, history)
+  }
+  
+  function onTypesError(e) {
+    errorListener("types", e)
+  }
+  
+  function onHistoryError(e) {
+    errorListener("history", e)
+  }
+  
+  return loader
+}
+
 var app = (function() {
   var app = {}
+  
+  var UPDATE_INTERVAL = 5 * 60 * 1000
   
   var eventsList
   var legendList
   
+  var activeLoader
+  var updateTimer
+  
   app.start = function() {
-    eventsList = createList("events")
-    legendList = createList("legend")
+    eventsList = createList("events", "prepend")
+    legendList = createList("legend", "append")
     logInController = createLogInController("#login-form", onAuthenticated)
     
     install()
 
     logInController.checkAuthentication()
+  }
+  
+  app.forceLoad = function() {
+    load()
   }
   
   function install() {
@@ -147,72 +229,63 @@ var app = (function() {
     $("#login-trigger").hide()
     $("#content").show()
     
+    enableAutoUpdate()
+    
+    load()
+  }
+  
+  function enableAutoUpdate() {
+    updateTimer = setInterval(autoUpdate, UPDATE_INTERVAL)
+  }
+  
+  function disableAutoUpdate() {
+    clearInterval(updateTimer)
+  }
+  
+  function autoUpdate() {
     load()
   }
   
   function load() {
-    loadTypes()
-    loadEvents()
+    if (activeLoader == null) {
+      legendList.showLoading()
+      eventsList.showLoading()
+
+      activeLoader = createEventLoader(onEventsLoaded, onLoadError)
+      activeLoader.load()
+    }
   }
   
-  function loadTypes() {
-    legendList.showLoading()
+  function onEventsLoaded(types, events) {
+    legendList.hideLoading()
+    eventsList.hideLoading()
     
-    $.ajax({
-      url: "/types",
-      dataType: "json",
-      success: populateLegend,
-      error: legendError
-    })
+    populateLegend(types)
+    populateEvents(events)
+    
+    activeLoader = null
+  }
+  
+  function onLoadError(which, errorEvent) {
+    if (which == "types") {
+      legendList.hideLoading()
+      legendList.addRow("error while loading legend", "error")
+    } else if (which == "history") {
+      eventsList.hideLoading()
+      eventsList.addRow("error while loading events", "error")
+    }
   }
   
   function populateLegend(types) {
-    legendList.hideLoading()
+    legendList.clear()
     
     $.each(types, function() {
       legendList.addRow(this.toString(), this.toString())
     })
   }
   
-  function legendError() {
-    legendList.hideLoading()
-    legendList.addRow("error while loading legend", "error")
-  }
-  
-  function loadEvents() {
-    eventsList.showLoading()
-    
-    var n = 100 //Math.floor((window.innerHeight - listElement("legend").offset().top)/rowHeight()) 
-    
-    $.ajax({
-      url: "/history",
-//      data: {"limit": n},
-      dataType: "json",
-      success: populateEvents,
-      error: eventsError
-    })
-  }
-  
-  function formatDate(date) {
-    if (typeof date == "string") {
-      date = new Date(date)
-    }
-    
-    return date.getFullYear() + '-' + zeroFill(date.getMonth() + 1, 2) + '-' + zeroFill(date.getDate(), 2)
-  }
-  
-  function zeroFill(n, length) {
-    var str = "" + n
-    
-    while (str.length < length) {
-      str = "0" + str
-    }
-    
-    return str
-  }
-  
   function populateEvents(events) {
-    eventsList.hideLoading()
+    eventsList.clear()
     
     if (events.length > 0) {
       eventsList.addHeader(formatDate(events[0].date))
@@ -240,11 +313,24 @@ var app = (function() {
     }
   }
   
-  function eventsError() {
-    eventsList.hideLoading()
-    eventsList.addRow("error while loading events", "error")
+  function formatDate(date) {
+    if (typeof date == "string") {
+      date = new Date(date)
+    }
+    
+    return date.getFullYear() + '-' + zeroFill(date.getMonth() + 1, 2) + '-' + zeroFill(date.getDate(), 2)
   }
   
+  function zeroFill(n, length) {
+    var str = "" + n
+    
+    while (str.length < length) {
+      str = "0" + str
+    }
+    
+    return str
+  }
+    
   return app
 })()
 
