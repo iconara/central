@@ -38,7 +38,7 @@ module BurtCentral
     #
     # @param [Mongo::Collection] repository The collection to persist to.
     def persist(repository)
-      logger.info("Persisting events")
+      logger.info("Persisting #{@events.size} events")
       
       @events.each do |event|
         e = event.to_h
