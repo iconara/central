@@ -1,15 +1,15 @@
 $: << File.expand_path('../lib', __FILE__)
 
-begin
-  require File.expand_path('../.bundle/environment', __FILE__)
-rescue LoadError
-  require 'rubygems'
-  require 'bundler'
-  
-  Bundler.setup
-end
+require 'rubygems'
+require 'bundler'
 
 ENV['RACK_ENV'] ||= 'development'
+
+if ENV['RACK_ENV'] == 'production'
+  Bundler.setup(:default, :production)
+else
+  Bundler.setup(:default)
+end
 
 require 'app'
 

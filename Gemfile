@@ -1,4 +1,4 @@
-source :gemcutter
+source 'http://rubygems.org'
 
 gem 'rake'
 gem 'activeresource'

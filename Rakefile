@@ -1,18 +1,17 @@
 $: << File.expand_path('../lib', __FILE__)
 
+require 'rubygems'
+require 'bundler'
 
-begin
-  require File.expand_path('../.bundle/environment', __FILE__)
-rescue LoadError
-  require 'rubygems'
-  require 'bundler'
-  
-  Bundler.setup
+ENV['CENTRAL_ENV'] ||= 'development'
+
+if ENV['CENTRAL_ENV'] == 'production'
+  Bundler.setup(:default, :production)
+else
+  Bundler.setup(:default, :development, :testing)
 end
 
 require 'mongo'
-require 'spec/rake/spectask'
-require 'yard'
 require 'central'
 
 
@@ -21,9 +20,7 @@ task :default => :events
 task :setup do
   configuration_path = File.expand_path('../config/common.yml', __FILE__)
   
-  env = ENV['CENTRAL_ENV'] || 'development'
-  
-  $configuration = Central::Configuration.load(configuration_path, env.to_sym)
+  $configuration = Central::Configuration.load(configuration_path, ENV['CENTRAL_ENV'].to_sym)
   $history = Central::History.new
 end
 
@@ -50,23 +47,35 @@ task :cache => :setup do
   $history.persist($configuration.events_collection)
 end
 
-Spec::Rake::SpecTask.new(:spec) do |spec|
-  spec.spec_opts << '--options' << 'spec/spec.opts'
-  spec.spec_files = FileList['spec/**/*_spec.rb'].exclude('spec/app_spec.rb')
+begin
+  require 'spec/rake/spectask'
+
+  Spec::Rake::SpecTask.new(:spec) do |spec|
+    spec.spec_opts << '--options' << 'spec/spec.opts'
+    spec.spec_files = FileList['spec/**/*_spec.rb'].exclude('spec/app_spec.rb')
+  end
+
+  Spec::Rake::SpecTask.new(:rcov) do |spec|
+    spec.spec_opts << '--options' << 'spec/spec.opts'
+    spec.spec_files = FileList['spec/**/*_spec.rb'].exclude('spec/app_spec.rb')
+    spec.rcov = true
+  end
+
+  Spec::Rake::SpecTask.new(:webspec) do |spec|
+    spec.spec_opts << '--options' << 'spec/spec.opts'
+    spec.spec_files = FileList['spec/app_spec.rb']
+  end
+rescue => e
+  puts e.class
 end
 
-Spec::Rake::SpecTask.new(:rcov) do |spec|
-  spec.spec_opts << '--options' << 'spec/spec.opts'
-  spec.spec_files = FileList['spec/**/*_spec.rb'].exclude('spec/app_spec.rb')
-  spec.rcov = true
-end
+begin
+  require 'yard'
 
-Spec::Rake::SpecTask.new(:webspec) do |spec|
-  spec.spec_opts << '--options' << 'spec/spec.opts'
-  spec.spec_files = FileList['spec/app_spec.rb']
-end
-
-YARD::Rake::YardocTask.new do |t|
-  t.files   = ['lib/**/*.rb']
-  t.options = []
+  YARD::Rake::YardocTask.new do |t|
+    t.files   = ['lib/**/*.rb']
+    t.options = []
+  end
+rescue
+  
 end
