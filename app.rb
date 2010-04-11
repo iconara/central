@@ -18,6 +18,14 @@ class App < Sinatra::Base
     $configuration = Central::Configuration.load(configuration_path, ENV['RACK_ENV'])
   end
   
+  configure do
+    if defined?(PhusionPassenger)
+      PhusionPassenger.on_event(:starting_worker_process) do |forked|
+        if forked
+          $configuration.reconnect_db
+        end
+      end
+    end
   end
   
   helpers do
