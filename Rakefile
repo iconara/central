@@ -1,8 +1,5 @@
 $: << File.expand_path('../lib', __FILE__)
 
-require 'rubygems'
-require 'bundler'
-
 ENV['CENTRAL_ENV'] ||= 'development'
 
 if ENV['CENTRAL_ENV'] == 'production'
