@@ -55,6 +55,12 @@ Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.spec_files = FileList['spec/**/*_spec.rb'].exclude('spec/app_spec.rb')
 end
 
+Spec::Rake::SpecTask.new(:rcov) do |spec|
+  spec.spec_opts << '--options' << 'spec/spec.opts'
+  spec.spec_files = FileList['spec/**/*_spec.rb'].exclude('spec/app_spec.rb')
+  spec.rcov = true
+end
+
 Spec::Rake::SpecTask.new(:webspec) do |spec|
   spec.spec_opts << '--options' << 'spec/spec.opts'
   spec.spec_files = FileList['spec/app_spec.rb']

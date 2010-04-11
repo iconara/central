@@ -4,3 +4,4 @@
 !/config/*-example.yml
 /.yardoc
 /doc
+/coverage

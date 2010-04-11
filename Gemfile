@@ -22,6 +22,7 @@ group :testing do
   gem 'capybara', '>= 0.3.6'
   gem 'selenium-webdriver'
   gem 'rack-test'
+  gem 'rcov'
 end
 
 group :production do
