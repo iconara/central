@@ -14,6 +14,7 @@ gem 'feed-normalizer'
 
 group :development do
   gem 'shotgun'
+  gem 'thin'
   gem 'yard'
 end
 
