@@ -21,9 +21,9 @@ describe Central::Sources::Github do
       commits2 = [commit3, commit4]
       commits3 = [commit5]
       @api.stub!(:repositories).and_return([repository1, repository2])
-      @api.stub!(:commits).with(repository1, 1).and_return(commits1)
-      @api.stub!(:commits).with(repository2, 1).and_return(commits2)
-      @api.stub!(:commits).with(repository2, 2).and_return(commits3)
+      @api.stub!(:commits).with(repository1, :page => 1).and_return(commits1)
+      @api.stub!(:commits).with(repository2, :page => 1).and_return(commits2)
+      @api.stub!(:commits).with(repository2, :page => 2).and_return(commits3)
     end
     
     it 'loads all commits after the specified date form all repositories' do
@@ -84,15 +84,19 @@ describe Central::Sources::GithubApi do
     end
   end
   
+  describe '#branches' do
+    
+  end
+  
   describe '#commits' do
     it 'requests the right URL, when the repository is private' do
       @http.should_receive(:get).with(%r(https://github.com/api/v2/\w+/commits/list/tog/repo1/master), :query => {:page => 3, :login => 'tog', :token => 'xyz'})
-      @api.commits({'name' => 'repo1', 'private' => true}, 3)
+      @api.commits({'name' => 'repo1', 'private' => true}, :page => 3)
     end
 
     it 'requests the right URL, when the repository is public' do
       @http.should_receive(:get).with(%r(http://github.com/api/v2/\w+/commits/list/tog/repo1/master), :query => {:page => 3, :login => 'tog', :token => 'xyz'})
-      @api.commits({'name' => 'repo1', 'private' => false}, 3)
+      @api.commits({'name' => 'repo1', 'private' => false}, :page => 3)
     end
     
     it 'strips the first level off of the returned hash' do

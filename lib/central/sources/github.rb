@@ -26,7 +26,7 @@ module Central
             loop do
               logger.debug("Loading page #{page} for repository \"#{repository['name']}\"")
             
-              cs = @github_api.commits(repository, page)
+              cs = @github_api.commits(repository, :page => page)
               
               throw :all_found if cs.empty?
               
@@ -63,8 +63,9 @@ module Central
     end
 
     class GithubApi
-      REPOSITORIES_URL = 'https://github.com/api/v2/:format/repos/show/:user'
-      COMMITS_URL = 'https://github.com/api/v2/:format/commits/list/:user/:repository/master'
+      BASE_URL = 'https://github.com/api/v2/:format'
+      REPOSITORIES_URL = BASE_URL + '/repos/show/:user'
+      COMMITS_URL = BASE_URL + '/commits/list/:user/:repository/:branch'
       
       def initialize(login, token, http=HTTParty)
         @login, @token, @http = login, token, http
@@ -80,10 +81,11 @@ module Central
         end
       end
       
-      def commits(repository, page=1)
-        url = COMMITS_URL.sub(':format', 'json').sub(':user', @login).sub(':repository', repository['name'])
+      def commits(repository, options={})
+        options = {:page => 1, :branch => 'master'}.merge(options)
+        url = COMMITS_URL.sub(':format', 'json').sub(':user', @login).sub(':repository', repository['name']).sub(':branch', options[:branch])
         url = url.sub('https://', 'http://') unless repository['private']
-        result = @http.get(url, :query => {:login => @login, :token => @token, :page => page})
+        result = @http.get(url, :query => {:login => @login, :token => @token, :page => options[:page]})
         if result && result['commits']
           result['commits']
         else
