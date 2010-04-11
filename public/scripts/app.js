@@ -40,58 +40,35 @@ var createList = function(type) {
   return element
 }
 
-var createLogInController = function(trigger, form, authenticatedCallback) {
+var createLogInController = function(form, authenticatedCallback) {
   var controller = {authenticated: false}
   
   var trigger = $(trigger)
   var form = $(form)
   var passwordField = $("input[type=password]", form)
   
-  $(trigger).click(showPasswordForm)
   $(form).submit(logIn)
   $(passwordField).focus(resetErrors)
-  $(window).resize(align)
   
   controller.isAuthenticated = function() {
     return controller.authenticated
   }
   
   controller.checkAuthentication = function() {
-    $.ajax({
-      url: "/ping",
-      success: loggedIn
-    })
+    $.ajax({url: "/ping", success: loggedIn, error: showPasswordForm})
   }
   
-  function showPasswordForm(e) {
-    e.preventDefault()
-
-    trigger.addClass("active")
-    
+  function showPasswordForm() {
     form.show()
-    
-    align()
-  }
-  
-  function align() {
-    var triggerBounds = trigger.bounds()
-    var formBounds    = form.bounds()
-    
-    form.offset({
-      left: triggerBounds.left + triggerBounds.width - formBounds.width,
-       top: triggerBounds.top + triggerBounds.height
-    })
   }
   
   function hidePasswordForm() {
-    trigger.removeClass("active")
     form.hide()
   }
   
   function resetErrors() {
     passwordField.removeClass("error")
     $("div.error", form).remove()
-    align()
   }
   
   function logIn(e) {
@@ -140,8 +117,6 @@ var createLogInController = function(trigger, form, authenticatedCallback) {
     } else {
       form.append('<div class="error">unknown authentication error</div>')
     }
-    
-    align()
   }
   
   return controller
@@ -156,7 +131,7 @@ var app = (function() {
   app.start = function() {
     eventsList = createList("events")
     legendList = createList("legend")
-    logInController = createLogInController("#login-trigger", "#login-form", onAuthenticated)
+    logInController = createLogInController("#login-form", onAuthenticated)
     
     install()
 

@@ -75,15 +75,15 @@ describe 'Burt Central Webapp' do
     end
     
     context 'when not logged in' do
-      it 'asks the user to log in' do
-        @session.should have_content('log in')
+      it 'shows a log in form' do
+        @session.should have_content('Password')
+        @session.should have_css('input[type=password]')
       end
     end
   
     context 'when logged in' do
       before do
-        if @session.find_link('log in').visible?
-          @session.click('log in')
+        if @session.find(:css, '#login-form').visible?
           @session.fill_in('Password', :with => 'password')
           @session.click('Ok')
         end

@@ -3,43 +3,27 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Burt Central</title>
+    <title>Central</title>
     <link rel="stylesheet" href="styles/app.css" type="text/css" media="screen" charset="utf-8"/>
   </head>
   <body>
-    <div id="header">
-      <div class="wrapper">
-        <div id="logo">
-          <img src="images/logo-burt.png" class="logo" alt="Burt" width="63" height="20" />
-        </div>
-        
-        <div id="status">
-          <div id="login-trigger">
-            <a href="#">log in</a>
-          </div>
-        </div>
-      </div>
+    <div id="login-form">
+      <form>
+        <label for="password">Password</label>
+        <input type="password" id="password" />
+        <input type="submit" value="Ok"/>
+      </form>
     </div>
-    
-    <div id="header-shadow"></div>
-    
+
     <div id="content">
-      <div class="wrapper">
-        <section>
-          <div class="legend-placeholder"> </div>
-        </section>
+      <section class="clear">
+        <div class="legend-placeholder"> </div>
+      </section>
         
-        <section>
-          <div class="events-placeholder"> </div>
-        </section>
-      </div>
+      <section class="clear">
+        <div class="events-placeholder"> </div>
+      </section>
     </div>
-    
-    <form id="login-form">
-      <label for="password">Password</label>
-      <input type="password" id="password" />
-      <input type="submit" value="Ok"/>
-    </form>
   </body>
   
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
