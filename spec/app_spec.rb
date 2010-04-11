@@ -1,5 +1,6 @@
 require File.expand_path('../spec_helper', __FILE__)
 require 'yaml'
+require 'app'
 
 
 describe 'Burt Central Webapp' do

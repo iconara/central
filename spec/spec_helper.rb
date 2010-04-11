@@ -18,7 +18,6 @@ require 'sinatra'
 require 'capybara'
 require 'capybara/dsl'
 require 'rack/test'
-require 'app'
 require 'burt_central'
 
 
