@@ -3,6 +3,7 @@ database: database_name # will be suffixed with "_<env>", e.g. "_development"
 password: helloworld # the password needed to view the event stream in the web app
 
 hoptoad:
+  account: hoptoad_account_name # the subdomain you use to access hoptoad, e.g. example.hoptoadapp.com
   token: 1234
 
 pivotal_tracker:
