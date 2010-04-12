@@ -6,17 +6,18 @@ module Central
       DESCRIPTION_PATTERN = /^([\w\s]+):? "?(.+?)"?$/m
       
       ACTIVITY_TYPES = {
-        'added'         => :add,
-        'finished'      => :completion,
-        'added comment' => :comment,
-        'edited'        => :edit,
-        'accepted'      => :accept,
-        'rejected'      => :rejection,
+        'added'          => :add,
+        'delivered'      => :completion,
+        'added comment'  => :comment,
+        'edited'         => :edit,
+        'accepted'       => :accept,
+        'rejected'       => :rejection,
+        'deleted'        => :deletion,
         # 'started'       => :start,
-        # 'delivered'     => :deliver,
+        # 'finished'      => :finish,
         # 'attached file' => :upload,
         # 'moved'         => :move,
-        # 'deleted'       => :delete,
+        # 
         # 'estimated'     => :estimation,
         # 'restarted'     => :restart,
       }
