@@ -21,13 +21,13 @@ describe Central::Sources::PivotalTracker do
     
     it 'creates an event out of relevant activities' do
       activities = [
-        stub(:id => 1, :description => 'A.C. Clarke added comment "All sufficiently advanced technology, etc."', :author => 'A.C. Clarke', :occurred_at => Time.utc(2010, 5, 1, 10, 12), :stories => stub(:story => stub(:url => 'http://example.com/1'))),
-        stub(:id => 2, :description => 'Carl Sagan finished "Contact"', :author => 'Carl Sagan', :occurred_at => Time.utc(2010, 5, 2, 10, 12), :stories => stub(:story => stub(:url => 'http://example.com/2'))),
-        stub(:id => 3, :description => 'P.K. Dick edited "Do Androids, etc."', :author => 'P.K. Dick', :occurred_at => Time.utc(2010, 5, 3, 10, 12), :stories => stub(:story => stub(:url => 'http://example.com/3'))),
+        stub(:id => 1, :description => 'A.C. Clarke added comment "All sufficiently advanced technology, etc."', :author => 'A.C. Clarke', :occurred_at => Time.utc(2010, 5, 1, 10, 12), :stories => stub(:story => stub(:id => 'story1'))),
+        stub(:id => 2, :description => 'Carl Sagan finished "Contact"', :author => 'Carl Sagan', :occurred_at => Time.utc(2010, 5, 2, 10, 12), :stories => stub(:story => stub(:id => 'story2'))),
+        stub(:id => 3, :description => 'P.K. Dick edited "Do Androids, etc."', :author => 'P.K. Dick', :occurred_at => Time.utc(2010, 5, 3, 10, 12), :stories => stub(:story => stub(:id => 'story3'))),
 
-        stub(:id => 4, :description => 'Someone estimated "Some story"', :author => 'Someone', :occurred_at => Time.utc(2010, 5, 3, 10, 12), :stories => stub(:story => stub(:url => 'http://example.com/4'))),
-        stub(:id => 5, :description => 'Someone restarted "Some story"', :author => 'Someone', :occurred_at => Time.utc(2010, 5, 3, 10, 12), :stories => stub(:story => stub(:url => 'http://example.com/5'))),
-        stub(:id => 6, :description => 'Malformed description', :author => 'Someone', :occurred_at => Time.utc(2010, 5, 3, 10, 12), :stories => stub(:story => stub(:url => 'http://example.com/6'))),
+        stub(:id => 4, :description => 'Someone estimated "Some story"', :author => 'Someone', :occurred_at => Time.utc(2010, 5, 3, 10, 12), :stories => stub(:story => stub(:id => 'story4'))),
+        stub(:id => 5, :description => 'Someone restarted "Some story"', :author => 'Someone', :occurred_at => Time.utc(2010, 5, 3, 10, 12), :stories => stub(:story => stub(:id => 'story5'))),
+        stub(:id => 6, :description => 'Malformed description', :author => 'Someone', :occurred_at => Time.utc(2010, 5, 3, 10, 12), :stories => stub(:story => stub(:id => 'story6'))),
       ]
       @api.stub(:find).and_return(activities)
       events = @source.events(Time.utc(2010, 5, 1))
@@ -36,7 +36,7 @@ describe Central::Sources::PivotalTracker do
       events[2].title.should == 'Do Androids, etc.'
       events[2].type.should == :edit
       events[2].date.should == Time.utc(2010, 5, 3, 10, 12)
-      events[2].url.should == 'http://example.com/3'
+      events[2].url.should == 'http://www.pivotaltracker.com/story/show/story3'
     end
   end
 

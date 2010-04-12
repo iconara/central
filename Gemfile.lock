@@ -64,10 +64,6 @@ dependencies:
     group: 
     - :testing
     version: ">= 0"
-  railsless-deploy: 
-    group: 
-    - :development
-    version: ">= 0"
   feed-normalizer: 
     group: 
     - :default
@@ -84,10 +80,6 @@ dependencies:
     group: 
     - :default
     version: ">= 0"
-  capistrano: 
-    group: 
-    - :development
-    version: ">= 0"
 specs: 
 - rake: 
     version: 0.8.7
@@ -99,18 +91,6 @@ specs:
     version: 0.20.1
 - bson_ext: 
     version: 0.20.1
-- highline: 
-    version: 1.5.2
-- net-ssh: 
-    version: 2.0.21
-- net-scp: 
-    version: 1.0.2
-- net-sftp: 
-    version: 2.0.4
-- net-ssh-gateway: 
-    version: 1.0.1
-- capistrano: 
-    version: 2.5.18
 - culerity: 
     version: 0.2.9
 - mime-types: 
@@ -166,8 +146,6 @@ specs:
     version: 0.4.0
 - oauth: 
     version: 0.3.6
-- railsless-deploy: 
-    version: 1.0.0
 - rcov: 
     version: 0.9.8
 - rspec: 
@@ -182,7 +160,7 @@ specs:
     version: 0.9.4
 - yard: 
     version: 0.5.4
-hash: 30b72a3822e972c5b323b289b190e6957315de56
+hash: 3882ce8a4f7cbb39d922092009e6ff8b86e6bab0
 sources: 
 - Git: 
     uri: git://github.com/iconara/immutable_struct.git

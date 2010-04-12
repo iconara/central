@@ -47,7 +47,7 @@ module Central
                 :title => title,
                 :date => activity.occurred_at,
                 :instigator => activity.author,
-                :url => activity.stories.story.url,
+                :url => "http://www.pivotaltracker.com/story/show/#{activity.stories.story.id}",
                 :type => ACTIVITY_TYPES[action]
               )
             else
