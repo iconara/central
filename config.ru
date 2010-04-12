@@ -1,7 +1,9 @@
 $: << File.expand_path('../lib', __FILE__)
 
-require 'rubygems'
-require 'bundler'
+unless defined?(Bundler)
+  require 'rubygems'
+  require 'bundler'
+end
 
 ENV['RACK_ENV'] ||= 'development'
 
