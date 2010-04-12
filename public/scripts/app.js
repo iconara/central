@@ -53,7 +53,7 @@ var createList = function(type, addMode) {
   
   element.clear = function() {
     element.empty()
-    element.siblings("h2").remove()
+    element.prev("h2").remove()
   }
   
   return element
@@ -200,6 +200,7 @@ var app = (function() {
   
   var UPDATE_INTERVAL = 5 * 60 * 1000
   
+  var oldEventsLists = []
   var eventsList
   var legendList
   
@@ -285,7 +286,7 @@ var app = (function() {
   }
   
   function populateEvents(events) {
-    eventsList.clear()
+    resetEventList()
     
     if (events.length > 0) {
       eventsList.addHeader(formatDate(events[0].date))
@@ -294,7 +295,8 @@ var app = (function() {
     
       _(events).each(function(event) {
         if (formatDate(previous.date) != formatDate(event.date)) {
-          var newEventsList = createList("events")
+          oldEventsLists.push(eventsList)
+          var newEventsList = createList("events", "prepend")
           eventsList.after(newEventsList)
           eventsList = newEventsList
           eventsList.addHeader(formatDate(event.date))
@@ -311,6 +313,14 @@ var app = (function() {
         previous = event
       })
     }
+  }
+  
+  function resetEventList() {
+    _(oldEventsLists).each(function(list) {
+      list.clear()
+      list.remove()
+    })
+    eventsList.clear()
   }
   
   function formatDate(date) {
