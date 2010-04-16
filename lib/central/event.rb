@@ -10,6 +10,8 @@ module Central
     def date
       if Time === self[:date]
         self[:date]
+      elsif self[:date].nil?
+        Time.now
       else
         Time.parse(self[:date].to_s)
       end
@@ -32,7 +34,7 @@ module Central
     
     def to_h
       members.inject({}) do |h, m|
-        h[m.to_sym] = self[m]
+        h[m.to_sym] = self.send(m)
         h
       end
     end
