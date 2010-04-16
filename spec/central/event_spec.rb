@@ -17,13 +17,14 @@ describe Central::Event do
   
   describe '#to_h' do
     before do
-      @hash = Central::Event.new(:id => 'abc', :title => 'Hello world', :date => Time.today, :instigator => 'Phil', :url => 'http://example.com', :type => :test).to_h
+      @now = Time.now
+      @hash = Central::Event.new(:id => 'abc', :title => 'Hello world', :date => @now, :instigator => 'Phil', :url => 'http://example.com', :type => :test).to_h
     end
     
     it 'creates a hash from the event' do
       @hash[:id].should == 'abc'
       @hash[:title].should == 'Hello world'
-      @hash[:date].should == Time.today
+      @hash[:date].should == @now
       @hash[:instigator].should == 'Phil'
       @hash[:url].should == 'http://example.com'
       @hash[:type].should == :test

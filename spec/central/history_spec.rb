@@ -51,7 +51,7 @@ describe Central::History do
   
   describe '#restore' do
     it 'asks the repository for events and creates Event objects' do
-      @repository.should_receive(:find).with({:date => {'$gt' => Time.today.getutc}}, {:sort => [:date, :descending]}).and_return([@event2_h, @event3_h, @event1_h, @event4_h])
+      @repository.should_receive(:find).with({:date => {'$gt' => Time.utc(Time.now.year, Time.now.month, Time.now.day)}}, {:sort => [:date, :descending]}).and_return([@event2_h, @event3_h, @event1_h, @event4_h])
       @history.restore(@repository)
       @history.events.should == [@event2, @event3, @event1, @event4]
     end

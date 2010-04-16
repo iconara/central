@@ -1,4 +1,3 @@
-require 'ext/time'
 require 'active_support'
 
 

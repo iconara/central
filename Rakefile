@@ -36,7 +36,7 @@ end
 
 task :cache => :setup do
   #default_since = Time.local(2000, 1, 1)
-  default_since = Time.today - (24 * 60 * 60 * 4)
+  default_since = Time.now - (24 * 60 * 60 * 4)
   
   newest_item = $configuration.events_collection.find_one({}, {:fields => [:date], :sort => [:date, :descending]}) || {'date' => default_since}
 
