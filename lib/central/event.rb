@@ -40,7 +40,13 @@ module Central
     end
     
     def valid?
-      [:id, :title, :type, :date].inject(true) { |ac, p| ac && ! self.send(p).blank? }
+      [:id, :title, :type, :date].inject(true) { |ac, p| ac && ! blank?(self.send(p)) }
+    end
+    
+  private
+  
+    def blank?(v)
+      v.nil? || v.to_s.strip.empty?
     end
   end
 end

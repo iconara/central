@@ -1,6 +1,3 @@
-require 'active_support'
-
-
 autoload :Hoptoad, 'hoptoad/error'
 autoload :Highrise, 'highrise/highrise'
 
