@@ -69,5 +69,20 @@ describe Central::History do
       @history.events.should == [@event2, @event3, @event1]
     end
   end
+ 
+  describe '#add_event' do
+    it 'adds the event to the list of events' do
+      @history.add_event(@event1)
+      @history.events.should have(1).items
+    end
+    
+    it 'keeps the list of events ordered' do
+      @history.add_event(@event1)
+      @history.add_event(@event2)
+      @history.add_event(@event3)
+      @history.add_event(@event4)
+      @history.events.should == [@event2, @event3, @event1, @event4]
+    end
+  end
   
 end

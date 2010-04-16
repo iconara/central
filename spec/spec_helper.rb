@@ -1,6 +1,11 @@
 $: << File.expand_path('../lib', __FILE__)
 $: << File.expand_path('../../lib', __FILE__)
 
+unless defined?(Bundler)
+  require 'rubygems'
+  require 'bundler'
+end
+
 Bundler.setup(:default, :testing)
 
 ENV['RACK_ENV'] ||= 'test'

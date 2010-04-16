@@ -33,6 +33,14 @@ module Central
       @events
     end
     
+    def add_event(event)
+      @events ||= []
+      @events << event
+      @events.sort!
+      @events.reverse!
+      @events
+    end
+    
     # Persist the history to a database collection. Events will be stored with
     # their URL as key.
     #

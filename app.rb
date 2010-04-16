@@ -30,6 +30,7 @@ class App < Sinatra::Base
   
   helpers do
     include Central::Logging
+    include Central::Utils
     
     def events_collection
       $configuration.events_collection
@@ -42,9 +43,16 @@ class App < Sinatra::Base
     def when_authenticated
       if session[:authenticated]
         yield
+      elsif http_basic_authenticated?
+        yield
       else
         status 401
       end
+    end
+    
+    def http_basic_authenticated?
+      @auth ||= Rack::Auth::Basic::Request.new(request.env)
+      @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials.last == password
     end
   end
 
@@ -69,6 +77,30 @@ class App < Sinatra::Base
       history = Central::History.new
       history.restore(events_collection, options)
       history.events.map { |e| e.to_h }.to_json
+    end
+  end
+  
+  post '/history' do
+    when_authenticated do
+      begin
+        event_hash = JSON.parse(request.body.read.to_s)
+        event_hash = symbolize_keys(event_hash)
+        if event_hash[:id] || event_hash[:url]
+          event = Central::Event.new(event_hash)
+          history = Central::History.new
+          history.add_event(event)
+          history.persist(events_collection)
+          event.to_h.to_json
+        else
+          logger.debug('Event missing ID or URL')
+          status 400
+          ''
+        end
+      rescue JSON::ParserError => e
+        logger.debug("JSON parsing error: #{e.message}")
+        status 400
+        ''
+      end
     end
   end
 
