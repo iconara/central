@@ -7,6 +7,14 @@ module Central
       self[:id]
     end
     
+    def date
+      if Time === self[:date]
+        self[:date]
+      else
+        Time.parse(self[:date].to_s)
+      end
+    end
+    
     def [](p)
       v = super
       v = super(:url) if v.nil? && p.to_sym == :id
@@ -27,6 +35,10 @@ module Central
         h[m.to_sym] = self[m]
         h
       end
+    end
+    
+    def valid?
+      [:id, :title, :type, :date].inject(true) { |ac, p| ac && ! self.send(p).blank? }
     end
   end
 end

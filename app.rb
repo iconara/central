@@ -46,7 +46,7 @@ class App < Sinatra::Base
       elsif http_basic_authenticated?
         yield
       else
-        status 401
+        error 401
       end
     end
     
@@ -85,21 +85,20 @@ class App < Sinatra::Base
       begin
         event_hash = JSON.parse(request.body.read.to_s)
         event_hash = symbolize_keys(event_hash)
-        if event_hash[:id] || event_hash[:url]
-          event = Central::Event.new(event_hash)
-          history = Central::History.new
-          history.add_event(event)
-          history.persist(events_collection)
-          event.to_h.to_json
-        else
-          logger.debug('Event missing ID or URL')
-          status 400
-          ''
-        end
+
+        error 400 unless Hash === event_hash
+
+        event = Central::Event.new(event_hash)
+
+        error 400 unless event.valid?
+
+        history = Central::History.new
+        history.add_event(event)
+        history.persist(events_collection)
+
+        event.to_h.to_json
       rescue JSON::ParserError => e
-        logger.debug("JSON parsing error: #{e.message}")
-        status 400
-        ''
+        error 400
       end
     end
   end

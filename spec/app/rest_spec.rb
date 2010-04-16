@@ -70,9 +70,26 @@ describe 'Central Webapp REST API' do
         last_response.status.should == 400
       end
       
-      it 'rejects events without ID or URL' do
+      it 'rejects events without ID and URL' do
         @event.delete(:url)
         post '/history', @event.to_json, @http_credentials
+        last_response.status.should == 400
+      end
+      
+      it 'rejects events without a title' do
+        @event[:title] = ''
+        post '/history', @event.to_json, @http_credentials
+        last_response.status.should == 400
+      end
+      
+      it 'rejects events without a type' do
+        @event[:type] = nil
+        post '/history', @event.to_json, @http_credentials
+        last_response.status.should == 400
+      end
+      
+      it 'rejects JSON that is not a hash' do
+        post '/history', [@event].to_json, @http_credentials
         last_response.status.should == 400
       end
     end

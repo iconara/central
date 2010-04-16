@@ -56,4 +56,54 @@ describe Central::Event do
     end
   end
   
+  describe '#date' do
+    it 'returns the Time object that was passed to the constructor' do
+      time  = Time.now
+      event = Central::Event.new(:date => time)
+      event.date.should == time
+    end
+    
+    it 'parses a string passed as date' do
+      event = Central::Event.new(:date => '2010-03-24')
+      event.date.should == Time.local(2010, 3, 24)
+    end
+    
+    it 'defaults to now if the date is missing' do
+      event = Central::Event.new()
+      event.date.to_i.should be_close(Time.now.to_i, 1)
+    end
+  end
+  
+  describe '#valid?' do
+    context 'when all properties are set' do
+      subject { Central::Event.new(:id => '3', :url => 'http://www.example.com/', :title => 'Test', :date => Time.now, :instigator => 'You', :type => 'example') }
+      it { should be_valid }
+    end
+
+    context 'when no ID, but a URL is set' do
+      subject { Central::Event.new(:url => 'http://www.example.com/', :title => 'Test', :date => Time.now, :instigator => 'You', :type => 'example') }
+      it { should be_valid }
+    end
+    
+    context 'when the title is empty' do
+      subject { Central::Event.new(:id => '3', :url => 'http://www.example.com/', :title => '', :date => Time.now, :instigator => 'You', :type => 'example') }
+      it { should_not be_valid }
+    end
+    
+    context 'when the type is empty' do
+      subject { Central::Event.new(:id => '3', :url => 'http://www.example.com/', :title => 'Test', :date => Time.now, :instigator => 'You', :type => '') }
+      it { should_not be_valid }
+    end
+    
+    context 'without instigator' do
+      subject { Central::Event.new(:id => '3', :url => 'http://www.example.com/', :title => 'Test', :date => Time.now, :type => 'xyz') }
+      it { should be_valid }
+    end
+    
+    context 'without date' do
+      subject { Central::Event.new(:id => '3', :url => 'http://www.example.com/', :title => 'Test', :date => nil, :instigator => 'You', :type => 'example') }
+      it { should be_valid }
+    end
+  end
+  
 end
