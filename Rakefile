@@ -60,7 +60,7 @@ begin
 
   Spec::Rake::SpecTask.new(:webspec) do |spec|
     spec.spec_opts << '--options' << 'spec/spec.opts'
-    spec.spec_files = FileList['spec/app_spec.rb']
+    spec.spec_files = FileList['spec/app/**/*_spec.rb']
   end
 rescue => e
   puts e.class
